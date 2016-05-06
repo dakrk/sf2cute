@@ -8,6 +8,7 @@
 
 #include <memory>
 #include <utility>
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -104,6 +105,11 @@ public:
   void RemoveZone(
       std::vector<std::unique_ptr<SFInstrumentZone>>::const_iterator first,
       std::vector<std::unique_ptr<SFInstrumentZone>>::const_iterator last);
+
+  /// Removes instrument zones from the instrument.
+  /// @param predicate unary predicate which returns true if the instrument zone should be removed.
+  void RemoveZoneIf(
+      std::function<bool(const std::unique_ptr<SFInstrumentZone> &)> predicate);
 
   /// Removes all of the instrument zones.
   void ClearZones();

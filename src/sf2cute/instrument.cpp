@@ -5,6 +5,13 @@
 
 #include <sf2cute/instrument.hpp>
 
+#include <algorithm>
+#include <memory>
+#include <utility>
+#include <functional>
+#include <string>
+#include <vector>
+
 #include <sf2cute/instrument_zone.hpp>
 #include <sf2cute/file.hpp>
 
@@ -179,6 +186,20 @@ void SFInstrument::RemoveZone(
     std::vector<std::unique_ptr<SFInstrumentZone>>::const_iterator first,
     std::vector<std::unique_ptr<SFInstrumentZone>>::const_iterator last) {
   zones_.erase(first, last);
+}
+
+/// Removes instrument zones from the instrument.
+void SFInstrument::RemoveZoneIf(
+    std::function<bool(const std::unique_ptr<SFInstrumentZone> &)> predicate) {
+  zones_.erase(std::remove_if(zones_.begin(), zones_.end(),
+    [&predicate](const std::unique_ptr<SFInstrumentZone> & zone) -> bool {
+    if (predicate(zone)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }), zones_.end());
 }
 
 /// Removes all of the instrument zones.

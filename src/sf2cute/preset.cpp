@@ -5,6 +5,13 @@
 
 #include <sf2cute/preset.hpp>
 
+#include <algorithm>
+#include <memory>
+#include <utility>
+#include <functional>
+#include <string>
+#include <vector>
+
 #include <sf2cute/preset_zone.hpp>
 #include <sf2cute/file.hpp>
 
@@ -279,6 +286,20 @@ void SFPreset::RemoveZone(
     std::vector<std::unique_ptr<SFPresetZone>>::const_iterator first,
     std::vector<std::unique_ptr<SFPresetZone>>::const_iterator last) {
   zones_.erase(first, last);
+}
+
+/// Removes preset zones from the preset.
+void SFPreset::RemoveZoneIf(
+    std::function<bool(const std::unique_ptr<SFPresetZone> &)> predicate) {
+  zones_.erase(std::remove_if(zones_.begin(), zones_.end(),
+    [&predicate](const std::unique_ptr<SFPresetZone> & zone) -> bool {
+    if (predicate(zone)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }), zones_.end());
 }
 
 /// Removes all of the preset zones.

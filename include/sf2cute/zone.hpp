@@ -7,6 +7,7 @@
 #define SF2CUTE_ZONE_HPP_
 
 #include <memory>
+#include <functional>
 #include <vector>
 
 #include "types.hpp"
@@ -66,6 +67,23 @@ public:
   const std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator
       FindGenerator(SFGenerator op) const;
 
+  /// Removes a generator from the zone.
+  /// @param position the generator to remove.
+  void RemoveGenerator(
+      std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator position);
+
+  /// Removes generators from the zone.
+  /// @param first the first generator to remove.
+  /// @param last the last generator to remove.
+  void RemoveGenerator(
+      std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator first,
+      std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator last);
+
+  /// Removes generators from the zone.
+  /// @param predicate unary predicate which returns true if the generator should be removed.
+  void RemoveGeneratorIf(
+      std::function<bool(const std::unique_ptr<SFGeneratorItem> &)> predicate);
+
   /// Removes all of the generators.
   void ClearGenerators();
 
@@ -82,6 +100,23 @@ public:
   /// @return the position of the found modulator or std::end(modulators()) if no such modulator is found.
   const std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator
       FindModulator(SFModulatorIdentifier identifier) const;
+
+  /// Removes a modulator from the zone.
+  /// @param position the modulator to remove.
+  void RemoveModulator(
+      std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator position);
+
+  /// Removes modulators from the zone.
+  /// @param first the first modulator to remove.
+  /// @param last the last modulator to remove.
+  void RemoveModulator(
+      std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator first,
+      std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator last);
+
+  /// Removes modulators from the zone.
+  /// @param predicate unary predicate which returns true if the modulator should be removed.
+  void RemoveModulatorIf(
+      std::function<bool(const std::unique_ptr<SFModulatorItem> &)> predicate);
 
   /// Removes all of the modulators.
   void ClearModulators();

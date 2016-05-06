@@ -6,6 +6,8 @@
 #include <sf2cute/zone.hpp>
 
 #include <algorithm>
+#include <utility>
+#include <functional>
 #include <vector>
 
 #include <sf2cute/generator_item.hpp>
@@ -95,6 +97,33 @@ const std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator
     });
 }
 
+/// Removes a generator from the zone.
+void SFZone::RemoveGenerator(
+    std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator position) {
+  generators_.erase(position);
+}
+
+/// Removes generators from the zone.
+void SFZone::RemoveGenerator(
+    std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator first,
+    std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator last) {
+  generators_.erase(first, last);
+}
+
+/// Removes generators from the zone.
+void SFZone::RemoveGeneratorIf(
+    std::function<bool(const std::unique_ptr<SFGeneratorItem> &)> predicate) {
+  generators_.erase(std::remove_if(generators_.begin(), generators_.end(),
+    [&predicate](const std::unique_ptr<SFGeneratorItem> & generator) -> bool {
+    if (predicate(generator)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }), generators_.end());
+}
+
 /// Removes all of the generators.
 void SFZone::ClearGenerators() {
   generators_.clear();
@@ -125,6 +154,33 @@ const std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator
     [&identifier](const std::unique_ptr<SFModulatorItem> & modulator) {
       return modulator->identifier() == identifier;
     });
+}
+
+/// Removes a modulator from the zone.
+void SFZone::RemoveModulator(
+    std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator position) {
+  modulators_.erase(position);
+}
+
+/// Removes modulators from the zone.
+void SFZone::RemoveModulator(
+    std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator first,
+    std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator last) {
+  modulators_.erase(first, last);
+}
+
+/// Removes modulators from the zone.
+void SFZone::RemoveModulatorIf(
+    std::function<bool(const std::unique_ptr<SFModulatorItem> &)> predicate) {
+  modulators_.erase(std::remove_if(modulators_.begin(), modulators_.end(),
+    [&predicate](const std::unique_ptr<SFModulatorItem> & modulator) -> bool {
+    if (predicate(modulator)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }), modulators_.end());
 }
 
 /// Removes all of the modulators.

@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <memory>
 #include <utility>
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -168,6 +169,11 @@ public:
   void RemoveZone(
       std::vector<std::unique_ptr<SFPresetZone>>::const_iterator first,
       std::vector<std::unique_ptr<SFPresetZone>>::const_iterator last);
+
+  /// Removes preset zones from the preset.
+  /// @param predicate unary predicate which returns true if the preset zone should be removed.
+  void RemoveZoneIf(
+      std::function<bool(const std::unique_ptr<SFPresetZone> &)> predicate);
 
   /// Removes all of the preset zones.
   void ClearZones();
