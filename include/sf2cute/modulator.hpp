@@ -7,6 +7,7 @@
 #define SF2CUTE_MODULATOR_HPP_
 
 #include <stdint.h>
+#include <utility>
 
 #include "types.hpp"
 
@@ -153,7 +154,7 @@ public:
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "not equal to" the other one.
   friend inline bool operator!=(const SFModulator & x, const SFModulator & y) noexcept {
-    return uint16_t(x) != uint16_t(y);
+    return std::rel_ops::operator!=(x, y);
   }
 
   /// Indicates a SFModulator object is "less than" the other one.
@@ -169,7 +170,7 @@ public:
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "less than or equal to" the other one.
   friend inline bool operator<=(const SFModulator & x, const SFModulator & y) noexcept {
-    return uint16_t(x) <= uint16_t(y);
+    return std::rel_ops::operator<=(x, y);
   }
 
   /// Indicates a SFModulator object is "greater than" the other one.
@@ -177,7 +178,7 @@ public:
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "greater than" the other one.
   friend inline bool operator>(const SFModulator & x, const SFModulator & y) noexcept {
-    return uint16_t(x) > uint16_t(y);
+    return std::rel_ops::operator>(x, y);
   }
 
   /// Indicates a SFModulator object is "greater than or equal to" the other one.
@@ -185,7 +186,7 @@ public:
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "greater than or equal to" the other one.
   friend inline bool operator>=(const SFModulator & x, const SFModulator & y) noexcept {
-    return uint16_t(x) >= uint16_t(y);
+    return std::rel_ops::operator>=(x, y);
   }
 
 private:

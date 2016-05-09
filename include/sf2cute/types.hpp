@@ -7,6 +7,7 @@
 #define SF2CUTE_TYPES_HPP_
 
 #include <stdint.h>
+#include <utility>
 #include <tuple>
 #include <string>
 #include <ostream>
@@ -429,7 +430,7 @@ struct SFVersionTag {
   friend inline bool operator!=(
       const SFVersionTag & x,
       const SFVersionTag & y) noexcept {
-    return std::tie(x.major, x.minor) != std::tie(y.major, y.minor);
+    return std::rel_ops::operator!=(x, y);
   }
 
   /// Indicates a SFVersionTag object is "less than" the other one.
@@ -449,7 +450,7 @@ struct SFVersionTag {
   friend inline bool operator<=(
       const SFVersionTag & x,
       const SFVersionTag & y) noexcept {
-    return std::tie(x.major, x.minor) <= std::tie(y.major, y.minor);
+    return std::rel_ops::operator<=(x, y);
   }
 
   /// Indicates a SFVersionTag object is "greater than" the other one.
@@ -459,7 +460,7 @@ struct SFVersionTag {
   friend inline bool operator>(
       const SFVersionTag & x,
       const SFVersionTag & y) noexcept {
-    return std::tie(x.major, x.minor) > std::tie(y.major, y.minor);
+    return std::rel_ops::operator>(x, y);
   }
 
   /// Indicates a SFVersionTag object is "greater than or equal to" the other one.
@@ -469,7 +470,7 @@ struct SFVersionTag {
   friend inline bool operator>=(
       const SFVersionTag & x,
       const SFVersionTag & y) noexcept {
-    return std::tie(x.major, x.minor) >= std::tie(y.major, y.minor);
+    return std::rel_ops::operator>=(x, y);
   }
 
   /// Outputs the version number to the specified output stream.

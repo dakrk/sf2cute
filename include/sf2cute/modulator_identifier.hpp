@@ -6,6 +6,8 @@
 #ifndef SF2CUTE_MODULATOR_IDENTIFIER_HPP_
 #define SF2CUTE_MODULATOR_IDENTIFIER_HPP_
 
+#include <utility>
+
 #include "types.hpp"
 #include "modulator.hpp"
 
@@ -90,8 +92,7 @@ public:
   friend inline bool operator!=(
       const SFModulatorIdentifier & x,
       const SFModulatorIdentifier & y) noexcept {
-    return std::tie(x.source_op_, x.destination_op_, x.amount_source_op_) !=
-      std::tie(y.source_op_, y.destination_op_, y.amount_source_op_);
+    return std::rel_ops::operator!=(x, y);
   }
 
   /// Indicates a SFModulatorIdentifier object is "less than" the other one.
@@ -112,8 +113,7 @@ public:
   friend inline bool operator<=(
       const SFModulatorIdentifier & x,
       const SFModulatorIdentifier & y) noexcept {
-    return std::tie(x.source_op_, x.destination_op_, x.amount_source_op_) <=
-      std::tie(y.source_op_, y.destination_op_, y.amount_source_op_);
+    return std::rel_ops::operator<=(x, y);
   }
 
   /// Indicates a SFModulatorIdentifier object is "greater than" the other one.
@@ -123,8 +123,7 @@ public:
   friend inline bool operator>(
       const SFModulatorIdentifier & x,
       const SFModulatorIdentifier & y) noexcept {
-    return std::tie(x.source_op_, x.destination_op_, x.amount_source_op_) >
-      std::tie(y.source_op_, y.destination_op_, y.amount_source_op_);
+    return std::rel_ops::operator>(x, y);
   }
 
   /// Indicates a SFModulatorIdentifier object is "greater than or equal to" the other one.
@@ -134,8 +133,7 @@ public:
   friend inline bool operator>=(
       const SFModulatorIdentifier & x,
       const SFModulatorIdentifier & y) noexcept {
-    return std::tie(x.source_op_, x.destination_op_, x.amount_source_op_) >=
-      std::tie(y.source_op_, y.destination_op_, y.amount_source_op_);
+    return std::rel_ops::operator>=(x, y);
   }
 
 private:
