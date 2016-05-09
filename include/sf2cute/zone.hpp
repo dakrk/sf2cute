@@ -55,7 +55,7 @@ public:
 
   /// Returns the list of generators.
   /// @return the list of generators assigned to the zone.
-  const std::vector<std::unique_ptr<SFGeneratorItem>> & generators() const;
+  const std::vector<std::unique_ptr<SFGeneratorItem>> & generators() const noexcept;
 
   /// Sets a generator to the zone.
   /// @param generator a generator to be assigned to the zone.
@@ -85,11 +85,11 @@ public:
       std::function<bool(const std::unique_ptr<SFGeneratorItem> &)> predicate);
 
   /// Removes all of the generators.
-  void ClearGenerators();
+  void ClearGenerators() noexcept;
 
   /// Returns the list of modulators.
   /// @return the list of modulators assigned to the zone.
-  const std::vector<std::unique_ptr<SFModulatorItem>> & modulators() const;
+  const std::vector<std::unique_ptr<SFModulatorItem>> & modulators() const noexcept;
 
   /// Sets a modulator to the zone.
   /// @param modulator a modulator to be assigned to the zone.
@@ -119,7 +119,7 @@ public:
       std::function<bool(const std::unique_ptr<SFModulatorItem> &)> predicate);
 
   /// Removes all of the modulators.
-  void ClearModulators();
+  void ClearModulators() noexcept;
 
 protected:
   /// The list of generators.

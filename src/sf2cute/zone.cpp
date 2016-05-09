@@ -71,7 +71,7 @@ SFZone & SFZone::operator=(const SFZone & origin) {
 }
 
 /// Returns the list of generators.
-const std::vector<std::unique_ptr<SFGeneratorItem>> & SFZone::generators() const {
+const std::vector<std::unique_ptr<SFGeneratorItem>> & SFZone::generators() const noexcept {
   return generators_;
 }
 
@@ -125,12 +125,12 @@ void SFZone::RemoveGeneratorIf(
 }
 
 /// Removes all of the generators.
-void SFZone::ClearGenerators() {
+void SFZone::ClearGenerators() noexcept {
   generators_.clear();
 }
 
 /// Returns the list of modulators.
-const std::vector<std::unique_ptr<SFModulatorItem>> & SFZone::modulators() const {
+const std::vector<std::unique_ptr<SFModulatorItem>> & SFZone::modulators() const noexcept {
   return modulators_;
 }
 
@@ -184,7 +184,7 @@ void SFZone::RemoveModulatorIf(
 }
 
 /// Removes all of the modulators.
-void SFZone::ClearModulators() {
+void SFZone::ClearModulators() noexcept {
   modulators_.clear();
 }
 

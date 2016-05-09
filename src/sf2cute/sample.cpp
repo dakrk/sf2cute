@@ -110,7 +110,7 @@ SFSample & SFSample::operator=(const SFSample & origin) {
 }
 
 /// Returns the name of this sample.
-const std::string & SFSample::name() const {
+const std::string & SFSample::name() const noexcept {
   return name_;
 }
 
@@ -120,7 +120,7 @@ void SFSample::set_name(std::string name) {
 }
 
 /// Returns the starting point of the loop of this sample.
-uint32_t SFSample::start_loop() const {
+uint32_t SFSample::start_loop() const noexcept {
   return start_loop_;
 }
 
@@ -130,7 +130,7 @@ void SFSample::set_start_loop(uint32_t start_loop) {
 }
 
 /// Returns the ending point of the loop of this sample.
-uint32_t SFSample::end_loop() const {
+uint32_t SFSample::end_loop() const noexcept {
   return end_loop_;
 }
 
@@ -140,7 +140,7 @@ void SFSample::set_end_loop(uint32_t end_loop) {
 }
 
 /// Returns the sample rate.
-uint32_t SFSample::sample_rate() const {
+uint32_t SFSample::sample_rate() const noexcept {
   return sample_rate_;
 }
 
@@ -150,7 +150,7 @@ void SFSample::set_sample_rate(uint32_t sample_rate) {
 }
 
 /// Returns the original MIDI key number of this sample.
-uint8_t SFSample::original_key() const {
+uint8_t SFSample::original_key() const noexcept {
   return original_key_;
 }
 
@@ -160,7 +160,7 @@ void SFSample::set_original_key(uint8_t original_key) {
 }
 
 /// Returns the pitch correction.
-int8_t SFSample::correction() const {
+int8_t SFSample::correction() const noexcept {
   return correction_;
 }
 
@@ -170,12 +170,12 @@ void SFSample::set_correction(int8_t correction) {
 }
 
 /// Returns a pointer to the associated sample.
-std::shared_ptr<SFSample> SFSample::link() const {
+std::shared_ptr<SFSample> SFSample::link() const noexcept {
   return !link_.expired() ? link_.lock() : nullptr;
 }
 
 /// Returns true if this sample has an associated sample.
-bool SFSample::has_link() const {
+bool SFSample::has_link() const noexcept {
   return !link_.expired();
 }
 
@@ -185,12 +185,12 @@ void SFSample::set_link(std::weak_ptr<SFSample> link) {
 }
 
 /// Resets the associated right or left stereo sample.
-void SFSample::reset_link() {
-  link_ = std::weak_ptr<SFSample>();
+void SFSample::reset_link() noexcept {
+  link_.reset();
 }
 
 /// Returns both the type of sample and the whether the sample is located in RAM or ROM memory.
-SFSampleLink SFSample::type() const {
+SFSampleLink SFSample::type() const noexcept {
   return type_;
 }
 
@@ -200,27 +200,27 @@ void SFSample::set_type(SFSampleLink type) {
 }
 
 /// Returns the sample data.
-const std::vector<int16_t> & SFSample::data() const {
+const std::vector<int16_t> & SFSample::data() const noexcept {
   return data_;
 }
 
 /// Returns true if this sample has a parent file.
-bool SFSample::has_parent_file() const {
+bool SFSample::has_parent_file() const noexcept {
   return parent_file_ != nullptr;
 }
 
 /// Returns the parent file.
-SoundFont & SFSample::parent_file() const {
+SoundFont & SFSample::parent_file() const noexcept {
   return *parent_file_;
 }
 
 /// Sets the parent file.
-void SFSample::set_parent_file(SoundFont & parent_file) {
+void SFSample::set_parent_file(SoundFont & parent_file) noexcept {
   parent_file_ = &parent_file;
 }
 
 /// Resets the parent file.
-void SFSample::reset_parent_file() {
+void SFSample::reset_parent_file() noexcept {
   parent_file_ = nullptr;
 }
 

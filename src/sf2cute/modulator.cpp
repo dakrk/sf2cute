@@ -52,17 +52,17 @@ SFModulator::SFModulator(SFMidiController controller,
 }
 
 /// Returns the index of the controller.
-uint8_t SFModulator::controller() const {
+uint8_t SFModulator::controller() const noexcept {
   return controller_;
 }
 
 /// Returns the type of this general controller.
-SFGeneralController SFModulator::general_controller() const {
+SFGeneralController SFModulator::general_controller() const noexcept {
   return SFGeneralController(controller_);
 }
 
 /// Returns the type of this MIDI controller.
-SFMidiController SFModulator::midi_controller() const {
+SFMidiController SFModulator::midi_controller() const noexcept {
   return SFMidiController(controller_);
 }
 
@@ -84,7 +84,7 @@ void SFModulator::set_midi_controller(SFMidiController controller) {
 }
 
 /// Returns the type of controller palette.
-SFControllerPalette SFModulator::controller_palette() const {
+SFControllerPalette SFModulator::controller_palette() const noexcept {
   return controller_palette_;
 }
 
@@ -94,7 +94,7 @@ void SFModulator::set_controller_palette(SFControllerPalette controller_palette)
 }
 
 /// Returns the direction of the controller.
-SFControllerDirection SFModulator::direction() const {
+SFControllerDirection SFModulator::direction() const noexcept {
   return direction_;
 }
 
@@ -104,7 +104,7 @@ void SFModulator::set_direction(SFControllerDirection direction) {
 }
 
 /// Returns the polarity of the controller.
-SFControllerPolarity SFModulator::polarity() const {
+SFControllerPolarity SFModulator::polarity() const noexcept {
   return polarity_;
 }
 
@@ -114,7 +114,7 @@ void SFModulator::set_polarity(SFControllerPolarity polarity) {
 }
 
 /// Returns the source type of the controller.
-SFControllerType SFModulator::type() const {
+SFControllerType SFModulator::type() const noexcept {
   return type_;
 }
 
@@ -124,7 +124,7 @@ void SFModulator::set_type(SFControllerType type) {
 }
 
 /// Converts SFModulator to an integer value.
-SFModulator::operator uint16_t() const {
+SFModulator::operator uint16_t() const noexcept {
   return (controller() & 0x7f) |
     ((static_cast<uint16_t>(controller_palette_) & 1) << 7) |
     ((static_cast<uint16_t>(direction_) & 1) << 8) |

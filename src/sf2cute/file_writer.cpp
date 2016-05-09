@@ -39,7 +39,7 @@ SoundFontWriter::SoundFontWriter(const SoundFont & file) :
 }
 
 /// Returns the input SoundFont object.
-const SoundFont & SoundFontWriter::file() const {
+const SoundFont & SoundFontWriter::file() const noexcept {
   return *file_;
 }
 

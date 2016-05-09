@@ -50,7 +50,7 @@ public:
 
   /// Returns the source of data for the modulator.
   /// @return the source of data for the modulator.
-  SFModulator source_op() const;
+  SFModulator source_op() const noexcept;
 
   /// Sets the source of data for the modulator.
   /// @param source_op the source of data for the modulator.
@@ -58,7 +58,7 @@ public:
 
   /// Returns the destination of the modulator.
   /// @return the destination of the modulator.
-  SFGenerator destination_op() const;
+  SFGenerator destination_op() const noexcept;
 
   /// Sets the destination of the modulator.
   /// @param destination_op the destination of the modulator.
@@ -66,7 +66,7 @@ public:
 
   /// Returns the modulation source to be applied to the modulation amount.
   /// @return the modulation source to be applied to the modulation amount.
-  SFModulator amount_source_op() const;
+  SFModulator amount_source_op() const noexcept;
 
   /// Sets the modulation source to be applied to the modulation amount.
   /// @param amount_source_op the modulation source to be applied to the modulation amount.
@@ -78,7 +78,7 @@ public:
   /// @return true if a SFModulatorIdentifier object is "equal to" the other one.
   friend inline bool operator==(
       const SFModulatorIdentifier & x,
-      const SFModulatorIdentifier & y) {
+      const SFModulatorIdentifier & y) noexcept {
     return std::tie(x.source_op_, x.destination_op_, x.amount_source_op_) ==
       std::tie(y.source_op_, y.destination_op_, y.amount_source_op_);
   }
@@ -89,7 +89,7 @@ public:
   /// @return true if a SFModulatorIdentifier object is "not equal to" the other one.
   friend inline bool operator!=(
       const SFModulatorIdentifier & x,
-      const SFModulatorIdentifier & y) {
+      const SFModulatorIdentifier & y) noexcept {
     return std::tie(x.source_op_, x.destination_op_, x.amount_source_op_) !=
       std::tie(y.source_op_, y.destination_op_, y.amount_source_op_);
   }
@@ -100,7 +100,7 @@ public:
   /// @return true if a SFModulatorIdentifier object is "less than" the other one.
   friend inline bool operator<(
       const SFModulatorIdentifier & x,
-      const SFModulatorIdentifier & y) {
+      const SFModulatorIdentifier & y) noexcept {
     return std::tie(x.source_op_, x.destination_op_, x.amount_source_op_) <
       std::tie(y.source_op_, y.destination_op_, y.amount_source_op_);
   }
@@ -111,7 +111,7 @@ public:
   /// @return true if a SFModulatorIdentifier object is "less than or equal to" the other one.
   friend inline bool operator<=(
       const SFModulatorIdentifier & x,
-      const SFModulatorIdentifier & y) {
+      const SFModulatorIdentifier & y) noexcept {
     return std::tie(x.source_op_, x.destination_op_, x.amount_source_op_) <=
       std::tie(y.source_op_, y.destination_op_, y.amount_source_op_);
   }
@@ -122,7 +122,7 @@ public:
   /// @return true if a SFModulatorIdentifier object is "greater than" the other one.
   friend inline bool operator>(
       const SFModulatorIdentifier & x,
-      const SFModulatorIdentifier & y) {
+      const SFModulatorIdentifier & y) noexcept {
     return std::tie(x.source_op_, x.destination_op_, x.amount_source_op_) >
       std::tie(y.source_op_, y.destination_op_, y.amount_source_op_);
   }
@@ -133,7 +133,7 @@ public:
   /// @return true if a SFModulatorIdentifier object is "greater than or equal to" the other one.
   friend inline bool operator>=(
       const SFModulatorIdentifier & x,
-      const SFModulatorIdentifier & y) {
+      const SFModulatorIdentifier & y) noexcept {
     return std::tie(x.source_op_, x.destination_op_, x.amount_source_op_) >=
       std::tie(y.source_op_, y.destination_op_, y.amount_source_op_);
   }

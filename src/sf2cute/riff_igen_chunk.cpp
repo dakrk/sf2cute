@@ -89,7 +89,7 @@ void SFRIFFIgenChunk::set_sample_index_map(
 }
 
 /// Returns the whole length of this chunk.
-SFRIFFIgenChunk::size_type SFRIFFIgenChunk::size() const {
+SFRIFFIgenChunk::size_type SFRIFFIgenChunk::size() const noexcept {
   return 8 + size_;
 }
 

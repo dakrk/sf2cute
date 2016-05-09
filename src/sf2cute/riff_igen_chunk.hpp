@@ -37,6 +37,7 @@ public:
   /// Constructs a new SFRIFFIgenChunk using the specified instruments.
   /// @param instruments The instruments of the chunk.
   /// @param sample_index_map the map containing the samples as keys and their indices as map values.
+  /// @throws std::length_error Too many instrument generators.
   SFRIFFIgenChunk(
       const std::vector<std::shared_ptr<SFInstrument>> & instruments,
       std::unordered_map<const SFSample *, uint16_t> sample_index_map);
@@ -73,6 +74,7 @@ public:
 
   /// Sets the instruments of this chunk.
   /// @param instruments the instruments of this chunk.
+  /// @throws std::length_error Too many instrument generators.
   void set_instruments(
       const std::vector<std::shared_ptr<SFInstrument>> & instruments);
 
@@ -88,16 +90,21 @@ public:
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const override;
+  virtual size_type size() const noexcept override;
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.
-  /// @throws std::length_error if the chunk size exceeds the maximum.
+  /// @throws std::invalid_argument Global instrument zone has a sample.
+  /// @throws std::invalid_argument Instrument zone does not have a sample.
+  /// @throws std::length_error The chunk size exceeds the maximum.
+  /// @throws std::out_of_range Instrument zone points to an unknown sample.
+  /// @throws std::ios_base::failure An I/O error occurred.
   virtual void Write(std::ostream & out) const override;
 
 private:
   /// Returns the number of instrument generator items.
   /// @return the number of instrument generator items, including the terminator item.
+  /// @throws std::length_error Too many instrument generators.
   uint16_t NumItems() const;
 
   /// Writes an item of igen chunk.
@@ -105,6 +112,7 @@ private:
   /// @param op the type of the generator.
   /// @param amount the amount of the generator.
   /// @return the output stream.
+  /// @throws std::ios_base::failure An I/O error occurred.
   static std::ostream & WriteItem(std::ostream & out,
       SFGenerator op,
       GenAmountType amount);

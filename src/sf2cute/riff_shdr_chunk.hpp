@@ -36,6 +36,7 @@ public:
   /// Constructs a new SFRIFFShdrChunk using the specified samples.
   /// @param samples The samples of the chunk.
   /// @param sample_index_map the map containing the samples as keys and their indices as map values.
+  /// @throws std::length_error Too many samples.
   SFRIFFShdrChunk(const std::vector<std::shared_ptr<SFSample>> & samples,
       std::unordered_map<const SFSample *, uint16_t> sample_index_map);
 
@@ -70,6 +71,7 @@ public:
 
   /// Sets the samples of this chunk.
   /// @param samples the samples of this chunk.
+  /// @throws std::length_error Too many samples.
   void set_samples(const std::vector<std::shared_ptr<SFSample>> & samples);
 
   /// Returns the map containing the samples as keys and their indices as map values.
@@ -82,16 +84,19 @@ public:
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const override;
+  virtual size_type size() const noexcept override;
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.
-  /// @throws std::length_error if the chunk size exceeds the maximum.
+  /// @throws std::length_error The chunk size exceeds the maximum.
+  /// @throws std::out_of_range Sample has a link to an unknown sample.
+  /// @throws std::ios_base::failure An I/O error occurred.
   virtual void Write(std::ostream & out) const override;
 
 private:
   /// Returns the number of sample header items.
   /// @return the number of sample header items, including the terminator item.
+  /// @throws std::length_error Too many samples.
   uint16_t NumItems() const;
 
   /// Writes an item of shdr chunk.
@@ -107,6 +112,7 @@ private:
   /// @param link the associated right or left stereo sample. nullptr is allowed.
   /// @param type both the type of sample and the whether the sample is located in RAM or ROM memory.
   /// @return the output stream.
+  /// @throws std::ios_base::failure An I/O error occurred.
   static std::ostream & WriteItem(std::ostream & out,
       const std::string & name, uint32_t start, uint32_t end,
       uint32_t start_loop, uint32_t end_loop, uint32_t sample_rate,

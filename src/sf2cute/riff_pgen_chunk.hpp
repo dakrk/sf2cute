@@ -37,6 +37,7 @@ public:
   /// Constructs a new SFRIFFPgenChunk using the specified presets.
   /// @param presets the presets of the chunk.
   /// @param instrument_index_map map containing the instruments as keys and their indices as map values.
+  /// @throws std::length_error Too many preset generators.
   SFRIFFPgenChunk(
       const std::vector<std::shared_ptr<SFPreset>> & presets,
       std::unordered_map<const SFInstrument *, uint16_t> instrument_index_map);
@@ -73,6 +74,7 @@ public:
 
   /// Sets the presets of this chunk.
   /// @param presets the presets of this chunk.
+  /// @throws std::length_error Too many preset generators.
   void set_presets(
       const std::vector<std::shared_ptr<SFPreset>> & presets);
 
@@ -88,16 +90,21 @@ public:
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const override;
+  virtual size_type size() const noexcept override;
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.
-  /// @throws std::length_error if the chunk size exceeds the maximum.
+  /// @throws std::invalid_argument Global preset zone has an instrument.
+  /// @throws std::invalid_argument Instrument zone does not have an instrument.
+  /// @throws std::length_error The chunk size exceeds the maximum.
+  /// @throws std::out_of_range Preset zone points to an unknown instrument.
+  /// @throws std::ios_base::failure An I/O error occurred.
   virtual void Write(std::ostream & out) const override;
 
 private:
   /// Returns the number of preset generator items.
   /// @return the number of preset generator items, including the terminator item.
+  /// @throws std::length_error Too many preset generators.
   uint16_t NumItems() const;
 
   /// Writes an item of pgen chunk.
@@ -105,6 +112,7 @@ private:
   /// @param op the type of the generator.
   /// @param amount the amount of the generator.
   /// @return the output stream.
+  /// @throws std::ios_base::failure An I/O error occurred.
   static std::ostream & WriteItem(std::ostream & out,
       SFGenerator op,
       GenAmountType amount);

@@ -73,19 +73,19 @@ public:
   /// @see general_controller()
   /// @see midi_controller()
   /// @see controller_palette()
-  uint8_t controller() const;
+  uint8_t controller() const noexcept;
 
   /// Returns the type of this general controller.
   /// @return the type of this general controller.
   /// @remarks Verify the type of controller palette before getting the value.
   /// @see controller_palette()
-  SFGeneralController general_controller() const;
+  SFGeneralController general_controller() const noexcept;
 
   /// Returns the type of this MIDI controller.
   /// @return the type of this MIDI controller.
   /// @remarks Verify the type of controller palette before getting the value.
   /// @see controller_palette()
-  SFMidiController midi_controller() const;
+  SFMidiController midi_controller() const noexcept;
 
   /// Sets the index of the controller
   /// @param controller the index of the controller.
@@ -104,7 +104,7 @@ public:
 
   /// Returns the type of controller palette.
   /// @return the type of controller palette.
-  SFControllerPalette controller_palette() const;
+  SFControllerPalette controller_palette() const noexcept;
 
   /// Sets the type of controller palette.
   /// @param controller_palette the type of controller palette.
@@ -115,7 +115,7 @@ public:
 
   /// Returns the direction of the controller.
   /// @return the direction of the controller.
-  SFControllerDirection direction() const;
+  SFControllerDirection direction() const noexcept;
 
   /// Sets the direction of the controller.
   /// @param direction the direction of the controller.
@@ -123,7 +123,7 @@ public:
 
   /// Returns the polarity of the controller.
   /// @return the polarity of the controller.
-  SFControllerPolarity polarity() const;
+  SFControllerPolarity polarity() const noexcept;
 
   /// Sets the polarity of the controller.
   /// @param polarity the polarity of the controller.
@@ -131,20 +131,20 @@ public:
 
   /// Returns the source type of the controller.
   /// @return the source type of the controller.
-  SFControllerType type() const;
+  SFControllerType type() const noexcept;
 
   /// Sets the source type of the controller.
   /// @param type the source type of the controller.
   void set_type(SFControllerType type);
 
   /// Converts SFModulator to an integer value.
-  operator uint16_t() const;
+  operator uint16_t() const noexcept;
 
   /// Indicates a SFModulator object is "equal to" the other one.
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "equal to" the other one.
-  friend inline bool operator==(const SFModulator & x, const SFModulator & y) {
+  friend inline bool operator==(const SFModulator & x, const SFModulator & y) noexcept {
     return uint16_t(x) == uint16_t(y);
   }
 
@@ -152,7 +152,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "not equal to" the other one.
-  friend inline bool operator!=(const SFModulator & x, const SFModulator & y) {
+  friend inline bool operator!=(const SFModulator & x, const SFModulator & y) noexcept {
     return uint16_t(x) != uint16_t(y);
   }
 
@@ -160,7 +160,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "less than" the other one.
-  friend inline bool operator<(const SFModulator & x, const SFModulator & y) {
+  friend inline bool operator<(const SFModulator & x, const SFModulator & y) noexcept {
     return uint16_t(x) < uint16_t(y);
   }
 
@@ -168,7 +168,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "less than or equal to" the other one.
-  friend inline bool operator<=(const SFModulator & x, const SFModulator & y) {
+  friend inline bool operator<=(const SFModulator & x, const SFModulator & y) noexcept {
     return uint16_t(x) <= uint16_t(y);
   }
 
@@ -176,7 +176,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "greater than" the other one.
-  friend inline bool operator>(const SFModulator & x, const SFModulator & y) {
+  friend inline bool operator>(const SFModulator & x, const SFModulator & y) noexcept {
     return uint16_t(x) > uint16_t(y);
   }
 
@@ -184,7 +184,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "greater than or equal to" the other one.
-  friend inline bool operator>=(const SFModulator & x, const SFModulator & y) {
+  friend inline bool operator>=(const SFModulator & x, const SFModulator & y) noexcept {
     return uint16_t(x) >= uint16_t(y);
   }
 

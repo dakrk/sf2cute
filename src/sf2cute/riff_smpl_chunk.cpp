@@ -70,7 +70,7 @@ void SFRIFFSmplChunk::set_samples(
 }
 
 /// Returns the whole length of this chunk.
-SFRIFFSmplChunk::size_type SFRIFFSmplChunk::size() const {
+SFRIFFSmplChunk::size_type SFRIFFSmplChunk::size() const noexcept {
   return 8 + size_;
 }
 
@@ -118,6 +118,9 @@ SFRIFFSmplChunk::size_type SFRIFFSmplChunk::GetSamplePoolSize() const {
   for (const auto & sample : samples()) {
     size += sizeof(int16_t) *
         (sample->data().size() + SFSample::kTerminatorSampleLength);
+    if (size > UINT32_MAX) {
+      throw std::length_error("The sample pool size exceeds the maximum.");
+    }
   }
   return size;
 }

@@ -61,7 +61,7 @@ public:
   /// @see source_op()
   /// @see destination_op()
   /// @see amount_source_op()
-  SFModulatorIdentifier identifier() const;
+  SFModulatorIdentifier identifier() const noexcept;
 
   /// Sets the unique key of the modulator.
   /// @param identifier the unique key of the modulator.
@@ -73,7 +73,7 @@ public:
 
   /// Returns the source of data for the modulator.
   /// @return the source of data for the modulator.
-  SFModulator source_op() const;
+  SFModulator source_op() const noexcept;
 
   /// Sets the source of data for the modulator.
   /// @param source_op the source of data for the modulator.
@@ -81,7 +81,7 @@ public:
 
   /// Returns the destination of the modulator.
   /// @return the destination of the modulator.
-  SFGenerator destination_op() const;
+  SFGenerator destination_op() const noexcept;
 
   /// Sets the destination of the modulator.
   /// @param destination_op the destination of the modulator.
@@ -89,7 +89,7 @@ public:
 
   /// Returns the constant of modulation amount.
   /// @return the constant of modulation amount.
-  int16_t amount() const;
+  int16_t amount() const noexcept;
 
   /// Sets the constant of modulation amount.
   /// @param amount the degree to which the source modulates the destination.
@@ -97,7 +97,7 @@ public:
 
   /// Returns the modulation source to be applied to the modulation amount.
   /// @return the modulation source to be applied to the modulation amount.
-  SFModulator amount_source_op() const;
+  SFModulator amount_source_op() const noexcept;
 
   /// Sets the modulation source to be applied to the modulation amount.
   /// @param amount_source_op the modulation source to be applied to the modulation amount.
@@ -105,7 +105,7 @@ public:
 
   /// Returns the transform type to be applied to the modulation source.
   /// @return the transform type to be applied to the modulation source.
-  SFTransform transform_op() const;
+  SFTransform transform_op() const noexcept;
 
   /// Sets the transform type to be applied to the modulation source.
   /// @param transform_op the transform type to be applied to the modulation source.

@@ -72,7 +72,7 @@ void SFRIFFInstChunk::set_instruments(
 }
 
 /// Returns the whole length of this chunk.
-SFRIFFInstChunk::size_type SFRIFFInstChunk::size() const {
+SFRIFFInstChunk::size_type SFRIFFInstChunk::size() const noexcept {
   return 8 + size_;
 }
 

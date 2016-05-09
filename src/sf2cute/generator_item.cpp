@@ -23,7 +23,7 @@ SFGeneratorItem::SFGeneratorItem(SFGenerator op, GenAmountType amount) :
 }
 
 /// Returns the type of the generator.
-SFGenerator SFGeneratorItem::op() const {
+SFGenerator SFGeneratorItem::op() const noexcept {
   return op_;
 }
 
@@ -33,7 +33,7 @@ void SFGeneratorItem::set_op(SFGenerator op) {
 }
 
 /// Returns the amount of the generator.
-GenAmountType SFGeneratorItem::amount() const {
+GenAmountType SFGeneratorItem::amount() const noexcept {
   return amount_;
 }
 
@@ -59,7 +59,7 @@ void SFGeneratorItem::set_amount(uint16_t amount) {
 }
 
 /// Indicates a SFGenerator object is "less than" the other one.
-bool SFGeneratorItem::Compare(const SFGenerator & x, const SFGenerator & y) {
+bool SFGeneratorItem::Compare(const SFGenerator & x, const SFGenerator & y) noexcept {
   std::array<SFGenerator, 2> firstElements{ SFGenerator::kKeyRange, SFGenerator::kVelRange };
   std::array<SFGenerator, 2> lastElements{ SFGenerator::kSampleID, SFGenerator::kInstrument };
 

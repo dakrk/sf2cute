@@ -89,7 +89,7 @@ void SFRIFFPgenChunk::set_instrument_index_map(
 }
 
 /// Returns the whole length of this chunk.
-SFRIFFPgenChunk::size_type SFRIFFPgenChunk::size() const {
+SFRIFFPgenChunk::size_type SFRIFFPgenChunk::size() const noexcept {
   return 8 + size_;
 }
 

@@ -71,7 +71,7 @@ void SFRIFFPhdrChunk::set_presets(
 }
 
 /// Returns the whole length of this chunk.
-SFRIFFPhdrChunk::size_type SFRIFFPhdrChunk::size() const {
+SFRIFFPhdrChunk::size_type SFRIFFPhdrChunk::size() const noexcept {
   return 8 + size_;
 }
 

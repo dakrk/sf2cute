@@ -72,7 +72,7 @@ void SFRIFFPmodChunk::set_presets(
 }
 
 /// Returns the whole length of this chunk.
-SFRIFFPmodChunk::size_type SFRIFFPmodChunk::size() const {
+SFRIFFPmodChunk::size_type SFRIFFPmodChunk::size() const noexcept {
   return 8 + size_;
 }
 

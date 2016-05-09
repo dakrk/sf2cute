@@ -55,7 +55,7 @@ public:
 
   /// Returns the input SoundFont object.
   /// @return the input SoundFont object.
-  const SoundFont & file() const;
+  const SoundFont & file() const noexcept;
 
   /// Sets the input SoundFont object.
   /// @param file the input SoundFont object.

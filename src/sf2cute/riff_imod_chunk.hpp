@@ -34,6 +34,7 @@ public:
 
   /// Constructs a new SFRIFFImodChunk using the specified instruments.
   /// @param instruments The instruments of the chunk.
+  /// @throws std::length_error Too many instrument modulators.
   SFRIFFImodChunk(
       const std::vector<std::shared_ptr<SFInstrument>> & instruments);
 
@@ -69,21 +70,24 @@ public:
 
   /// Sets the instruments of this chunk.
   /// @param instruments the instruments of this chunk.
+  /// @throws std::length_error Too many instrument modulators.
   void set_instruments(
       const std::vector<std::shared_ptr<SFInstrument>> & instruments);
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const override;
+  virtual size_type size() const noexcept override;
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.
-  /// @throws std::length_error if the chunk size exceeds the maximum.
+  /// @throws std::length_error The chunk size exceeds the maximum.
+  /// @throws std::ios_base::failure An I/O error occurred.
   virtual void Write(std::ostream & out) const override;
 
 private:
   /// Returns the number of instrument modulator items.
   /// @return the number of instrument modulator items, including the terminator item.
+  /// @throws std::length_error Too many instrument modulators.
   uint16_t NumItems() const;
 
   /// Writes an item of imod chunk.
@@ -94,6 +98,7 @@ private:
   /// @param amount_source_op the modulation source to be applied to the modulation amount.
   /// @param transform_op the transform type to be applied to the modulation source.
   /// @return the output stream.
+  /// @throws std::ios_base::failure An I/O error occurred.
   static std::ostream & WriteItem(std::ostream & out,
       SFModulator source_op,
       SFGenerator destination_op,

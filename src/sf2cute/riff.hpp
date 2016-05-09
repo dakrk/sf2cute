@@ -30,16 +30,17 @@ public:
 
   /// Sets the name of this chunk.
   /// @param name the name of this chunk (FourCC).
-  /// @throws std::invalid_argument if the given name is not a valid FourCC.
+  /// @throws std::invalid_argument The given name is not a valid FourCC.
   virtual void set_name(std::string name) = 0;
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const = 0;
+  virtual size_type size() const noexcept = 0;
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.
-  /// @throws std::length_error if the chunk size exceeds the maximum.
+  /// @throws std::length_error The chunk size exceeds the maximum.
+  /// @throws std::ios_base::failure An I/O error occurred.
   virtual void Write(std::ostream & out) const = 0;
 };
 
@@ -54,11 +55,13 @@ public:
 
   /// Constructs a new empty RIFFChunk using the specified name.
   /// @param name The name of the chunk (FourCC).
+  /// @throws std::invalid_argument The given name is not a valid FourCC.
   explicit RIFFChunk(std::string name);
 
   /// Constructs a new RIFFChunk using the specified name and data.
   /// @param name The name of the chunk (FourCC).
   /// @param data The data of the chunk.
+  /// @throws std::invalid_argument The given name is not a valid FourCC.
   RIFFChunk(std::string name, std::vector<char> data);
 
   /// Constructs a new copy of specified RIFFChunk.
@@ -96,18 +99,20 @@ public:
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const override;
+  virtual size_type size() const noexcept override;
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.
-  /// @throws std::length_error if the chunk size exceeds the maximum.
+  /// @throws std::length_error The chunk size exceeds the maximum.
+  /// @throws std::ios_base::failure An I/O error occurred.
   virtual void Write(std::ostream & out) const override;
 
   /// Writes a chunk header to the specified output stream.
   /// @param out the output stream.
   /// @param name the name of the chunk (FourCC).
   /// @param size the length of the chunk data, in terms of bytes.
-  /// @throws std::length_error if the chunk size exceeds the maximum.
+  /// @throws std::length_error The chunk size exceeds the maximum.
+  /// @throws std::ios_base::failure An I/O error occurred.
   static void WriteHeader(std::ostream & out,
       const std::string & name,
       size_type size);
@@ -131,6 +136,7 @@ public:
 
   /// Constructs a new empty RIFFListChunk using the specified list type.
   /// @param name The list type of the chunk (FourCC).
+  /// @throws std::invalid_argument The given name is not a valid FourCC.
   explicit RIFFListChunk(std::string name);
 
   /// Constructs a new copy of specified RIFFListChunk.
@@ -160,7 +166,7 @@ public:
   /// @copydoc RIFFChunkInterface::set_name()
   /// Sets the list type of this chunk.
   /// @param name the list type of this chunk (FourCC).
-  /// @throws std::invalid_argument if the given name is not a valid FourCC.
+  /// @throws std::invalid_argument The given name is not a valid FourCC.
   virtual void set_name(std::string name) override;
 
   /// Returns the subchunks of this chunk.
@@ -176,18 +182,20 @@ public:
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const override;
+  virtual size_type size() const noexcept override;
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.
-  /// @throws std::length_error if the chunk size exceeds the maximum.
+  /// @throws std::length_error The chunk size exceeds the maximum.
+  /// @throws std::ios_base::failure An I/O error occurred.
   virtual void Write(std::ostream & out) const override;
 
   /// Writes a "LIST" chunk header to the specified output stream.
   /// @param out the output stream.
   /// @param name the list type of the chunk (FourCC).
   /// @param size the length of the chunk data, in terms of bytes.
-  /// @throws std::length_error if the chunk size exceeds the maximum.
+  /// @throws std::length_error The chunk size exceeds the maximum.
+  /// @throws std::ios_base::failure An I/O error occurred.
   static void WriteHeader(std::ostream & out,
       const std::string & name,
       size_type size);
@@ -211,6 +219,7 @@ public:
 
   /// Constructs a new empty RIFF using the specified form type.
   /// @param name The form type of the chunk (FourCC).
+  /// @throws std::invalid_argument The given name is not a valid FourCC.
   explicit RIFF(std::string name);
 
   /// Constructs a new copy of specified RIFF.
@@ -238,7 +247,7 @@ public:
 
   /// Sets the form type of this chunk.
   /// @param name the form type of this chunk (FourCC).
-  /// @throws std::invalid_argument if the given name is not a valid FourCC.
+  /// @throws std::invalid_argument The given name is not a valid FourCC.
   void set_name(std::string name);
 
   /// Returns the chunks of this RIFF.
@@ -254,18 +263,20 @@ public:
 
   /// Returns the whole length of this RIFF.
   /// @return the length of this RIFF including a chunk header, in terms of bytes.
-  size_type size() const;
+  size_type size() const noexcept;
 
   /// Writes this RIFF to the specified output stream.
   /// @param out the output stream.
-  /// @throws std::length_error if the chunk size exceeds the maximum.
+  /// @throws std::length_error The chunk size exceeds the maximum.
+  /// @throws std::ios_base::failure An I/O error occurred.
   void Write(std::ostream & out) const;
 
   /// Writes a "RIFF" chunk header to the specified output stream.
   /// @param out the output stream.
   /// @param name the form type of the chunk (FourCC).
   /// @param size the length of the chunk data, in terms of bytes.
-  /// @throws std::length_error if the chunk size exceeds the maximum.
+  /// @throws std::length_error The chunk size exceeds the maximum.
+  /// @throws std::ios_base::failure An I/O error occurred.
   static void WriteHeader(std::ostream & out,
       const std::string & name,
       size_type size);

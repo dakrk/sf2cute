@@ -26,7 +26,7 @@ SFModulatorIdentifier::SFModulatorIdentifier(SFModulator source_op,
 }
 
 /// Returns the source of data for the modulator.
-SFModulator SFModulatorIdentifier::source_op() const {
+SFModulator SFModulatorIdentifier::source_op() const noexcept {
   return source_op_;
 }
 
@@ -36,7 +36,7 @@ void SFModulatorIdentifier::set_source_op(SFModulator source_op) {
 }
 
 /// Returns the destination of the modulator.
-SFGenerator SFModulatorIdentifier::destination_op() const {
+SFGenerator SFModulatorIdentifier::destination_op() const noexcept {
   return destination_op_;
 }
 
@@ -46,7 +46,7 @@ void SFModulatorIdentifier::set_destination_op(SFGenerator destination_op) {
 }
 
 /// Returns the modulation source to be applied to the modulation amount.
-SFModulator SFModulatorIdentifier::amount_source_op() const {
+SFModulator SFModulatorIdentifier::amount_source_op() const noexcept {
   return amount_source_op_;
 }
 

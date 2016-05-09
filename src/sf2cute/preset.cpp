@@ -154,7 +154,7 @@ SFPreset & SFPreset::operator=(const SFPreset & origin) {
 }
 
 /// Acquires the contents of specified SFPreset.
-SFPreset::SFPreset(SFPreset && origin) :
+SFPreset::SFPreset(SFPreset && origin) noexcept :
     name_(std::move(origin.name_)),
     preset_number_(std::move(origin.preset_number_)),
     bank_(std::move(origin.bank_)),
@@ -168,7 +168,7 @@ SFPreset::SFPreset(SFPreset && origin) :
 }
 
 /// Move-assigns a new value to the SFPreset, replacing its current contents.
-SFPreset & SFPreset::operator=(SFPreset && origin) {
+SFPreset & SFPreset::operator=(SFPreset && origin) noexcept {
   name_ = std::move(origin.name_);
   preset_number_ = std::move(origin.preset_number_);
   bank_ = std::move(origin.bank_);
@@ -183,7 +183,7 @@ SFPreset & SFPreset::operator=(SFPreset && origin) {
 }
 
 /// Returns the name of this preset.
-const std::string & SFPreset::name() const {
+const std::string & SFPreset::name() const noexcept {
   return name_;
 }
 
@@ -193,7 +193,7 @@ void SFPreset::set_name(std::string name) {
 }
 
 /// Returns the preset number.
-uint16_t SFPreset::preset_number() const {
+uint16_t SFPreset::preset_number() const noexcept {
   return preset_number_;
 }
 
@@ -203,7 +203,7 @@ void SFPreset::set_preset_number(uint16_t preset_number) {
 }
 
 /// Returns the bank number.
-uint16_t SFPreset::bank() const {
+uint16_t SFPreset::bank() const noexcept {
   return bank_;
 }
 
@@ -213,7 +213,7 @@ void SFPreset::set_bank(uint16_t bank) {
 }
 
 /// Returns the library.
-uint32_t SFPreset::library() const {
+uint32_t SFPreset::library() const noexcept {
   return library_;
 }
 
@@ -223,7 +223,7 @@ void SFPreset::set_library(uint32_t library) {
 }
 
 /// Returns the genre.
-uint32_t SFPreset::genre() const {
+uint32_t SFPreset::genre() const noexcept {
   return genre_;
 }
 
@@ -233,7 +233,7 @@ void SFPreset::set_genre(uint32_t genre) {
 }
 
 /// Returns the morphology.
-uint32_t SFPreset::morphology() const {
+uint32_t SFPreset::morphology() const noexcept {
   return morphology_;
 }
 
@@ -243,7 +243,7 @@ void SFPreset::set_morphology(uint32_t morphology) {
 }
 
 /// Returns the list of preset zones.
-const std::vector<std::unique_ptr<SFPresetZone>> & SFPreset::zones() const {
+const std::vector<std::unique_ptr<SFPresetZone>> & SFPreset::zones() const noexcept {
   return zones_;
 }
 
@@ -303,17 +303,17 @@ void SFPreset::RemoveZoneIf(
 }
 
 /// Removes all of the preset zones.
-void SFPreset::ClearZones() {
+void SFPreset::ClearZones() noexcept {
   zones_.clear();
 }
 
 /// Returns true if the preset has a global zone.
-bool SFPreset::has_global_zone() const {
+bool SFPreset::has_global_zone() const noexcept {
   return static_cast<bool>(global_zone_);
 }
 
 /// Returns the global zone.
-SFPresetZone & SFPreset::global_zone() const {
+SFPresetZone & SFPreset::global_zone() const noexcept {
   return *global_zone_;
 }
 
@@ -339,32 +339,32 @@ void SFPreset::set_global_zone(SFPresetZone global_zone) {
 }
 
 /// Resets the global zone.
-void SFPreset::reset_global_zone() {
+void SFPreset::reset_global_zone() noexcept {
   global_zone_ = nullptr;
 }
 
 /// Returns true if the preset has a parent file.
-bool SFPreset::has_parent_file() const {
+bool SFPreset::has_parent_file() const noexcept {
   return parent_file_ != nullptr;
 }
 
 /// Returns the parent file.
-SoundFont & SFPreset::parent_file() const {
+SoundFont & SFPreset::parent_file() const noexcept {
   return *parent_file_;
 }
 
 /// Sets the parent file.
-void SFPreset::set_parent_file(SoundFont & parent_file) {
+void SFPreset::set_parent_file(SoundFont & parent_file) noexcept {
   parent_file_ = &parent_file;
 }
 
 /// Resets the parent file.
-void SFPreset::reset_parent_file() {
+void SFPreset::reset_parent_file() noexcept {
   parent_file_ = nullptr;
 }
 
-/// Sets backward references of every childlen elements.
-void SFPreset::SetBackwardReferences() {
+/// Sets backward references of every children elements.
+void SFPreset::SetBackwardReferences() noexcept {
   // Update the preset zones.
   for (const auto & zone : zones_) {
     zone->set_parent_preset(*this);

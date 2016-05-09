@@ -84,7 +84,7 @@ void SFRIFFShdrChunk::set_sample_index_map(
 }
 
 /// Returns the whole length of this chunk.
-SFRIFFShdrChunk::size_type SFRIFFShdrChunk::size() const {
+SFRIFFShdrChunk::size_type SFRIFFShdrChunk::size() const noexcept {
   return 8 + size_;
 }
 
@@ -110,7 +110,7 @@ void SFRIFFShdrChunk::Write(std::ostream & out) const {
           link_index = sample_index_map().at(link.get());
         }
         else {
-          throw std::out_of_range("Sample has linked to an unknown sample.");
+          throw std::out_of_range("Sample has a link to an unknown sample.");
         }
       }
 

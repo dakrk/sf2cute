@@ -72,7 +72,7 @@ void SFRIFFPbagChunk::set_presets(
 }
 
 /// Returns the whole length of this chunk.
-SFRIFFPbagChunk::size_type SFRIFFPbagChunk::size() const {
+SFRIFFPbagChunk::size_type SFRIFFPbagChunk::size() const noexcept {
   return 8 + size_;
 }
 

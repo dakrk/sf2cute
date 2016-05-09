@@ -46,12 +46,12 @@ SFInstrumentZone & SFInstrumentZone::operator=(const SFInstrumentZone & origin) 
 }
 
 /// Returns true if the zone has an associated sample.
-bool SFInstrumentZone::has_sample() const {
+bool SFInstrumentZone::has_sample() const noexcept {
   return !sample_.expired();
 }
 
 /// Returns the associated sample.
-std::shared_ptr<SFSample> SFInstrumentZone::sample() const {
+std::shared_ptr<SFSample> SFInstrumentZone::sample() const noexcept {
   return sample_.lock();
 }
 
@@ -64,37 +64,38 @@ void SFInstrumentZone::set_sample(std::weak_ptr<SFSample> sample) {
 }
 
 /// Resets the associated sample.
-void SFInstrumentZone::reset_sample() {
-  sample_ = std::weak_ptr<SFSample>();
+void SFInstrumentZone::reset_sample() noexcept {
+  sample_.reset();
 }
 
 /// Returns true if the zone has a parent file.
-bool SFInstrumentZone::has_parent_file() const {
+bool SFInstrumentZone::has_parent_file() const noexcept {
   return has_parent_instrument() && parent_instrument_->has_parent_file();
 }
 
 /// Returns the parent file.
-SoundFont & SFInstrumentZone::parent_file() const {
+SoundFont & SFInstrumentZone::parent_file() const noexcept {
   return parent_instrument_->parent_file();
 }
 
 /// Returns true if the zone has a parent instrument.
-bool SFInstrumentZone::has_parent_instrument() const {
+bool SFInstrumentZone::has_parent_instrument() const noexcept {
   return parent_instrument_ != nullptr;
 }
 
 /// Returns the parent instrument.
-SFInstrument & SFInstrumentZone::parent_instrument() const {
+SFInstrument & SFInstrumentZone::parent_instrument() const noexcept {
   return *parent_instrument_;
 }
 
 /// Sets the parent instrument.
-void SFInstrumentZone::set_parent_instrument(SFInstrument & parent_instrument) {
+void SFInstrumentZone::set_parent_instrument(
+    SFInstrument & parent_instrument) noexcept {
   parent_instrument_ = &parent_instrument;
 }
 
 /// Resets the parent instrument.
-void SFInstrumentZone::reset_parent_instrument() {
+void SFInstrumentZone::reset_parent_instrument() noexcept {
   parent_instrument_ = nullptr;
 }
 

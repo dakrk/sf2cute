@@ -337,7 +337,7 @@ enum class SampleMode : uint16_t {
 /// In SoundFont Technical Specification 2.04.
 struct RangesType {
   /// Constructs a new zero-valued range.
-  RangesType() :
+  RangesType() noexcept :
       lo(0),
       hi(0) {
   }
@@ -345,7 +345,7 @@ struct RangesType {
   /// Constructs a new range using the specified range.
   /// @param lo the low end of range.
   /// @param hi the high end of range.
-  RangesType(uint8_t lo, uint8_t hi) :
+  RangesType(uint8_t lo, uint8_t hi) noexcept :
       lo(std::move(lo)),
       hi(std::move(hi)) {
   }
@@ -364,19 +364,19 @@ struct RangesType {
 /// In SoundFont Technical Specification 2.04.
 union GenAmountType {
   /// Constructs a new zero-valued GenAmountType.
-  GenAmountType() :
+  GenAmountType() noexcept :
       value(0) {
   }
 
   /// Constructs a new GenAmountType using the specified range.
   /// @param range the range.
-  GenAmountType(RangesType range) :
-    range(std::move(range)) {
+  GenAmountType(RangesType range) noexcept :
+      range(std::move(range)) {
   }
 
   /// Constructs a new GenAmountType using the specified integer value.
   /// @param value the amount.
-  GenAmountType(int16_t value) :
+  GenAmountType(int16_t value) noexcept :
       value(std::move(value)) {
   }
 
@@ -399,7 +399,7 @@ struct SFVersionTag;
 /// In SoundFont Technical Specification 2.04.
 struct SFVersionTag {
   /// Constructs a new zero-valued SFVersionTag.
-  SFVersionTag() :
+  SFVersionTag() noexcept :
       major(0),
       minor(0) {
   };
@@ -407,7 +407,7 @@ struct SFVersionTag {
   /// Constructs a new SFVersionTag using the specified version numbers.
   /// @param major the major version number.
   /// @param minor the minor version number.
-  SFVersionTag(uint16_t major, uint16_t minor) :
+  SFVersionTag(uint16_t major, uint16_t minor) noexcept :
       major(std::move(major)),
       minor(std::move(minor)) {
   };
@@ -418,7 +418,7 @@ struct SFVersionTag {
   /// @return true if a SFVersionTag object is "equal to" the other one.
   friend inline bool operator==(
       const SFVersionTag & x,
-      const SFVersionTag & y) {
+      const SFVersionTag & y) noexcept {
     return std::tie(x.major, x.minor) == std::tie(y.major, y.minor);
   }
 
@@ -428,7 +428,7 @@ struct SFVersionTag {
   /// @return true if a SFVersionTag object is "not equal to" the other one.
   friend inline bool operator!=(
       const SFVersionTag & x,
-      const SFVersionTag & y) {
+      const SFVersionTag & y) noexcept {
     return std::tie(x.major, x.minor) != std::tie(y.major, y.minor);
   }
 
@@ -438,7 +438,7 @@ struct SFVersionTag {
   /// @return true if a SFVersionTag object is "less than" the other one.
   friend inline bool operator<(
       const SFVersionTag & x,
-      const SFVersionTag & y) {
+      const SFVersionTag & y) noexcept {
     return std::tie(x.major, x.minor) < std::tie(y.major, y.minor);
   }
 
@@ -448,7 +448,7 @@ struct SFVersionTag {
   /// @return true if a SFVersionTag object is "less than or equal to" the other one.
   friend inline bool operator<=(
       const SFVersionTag & x,
-      const SFVersionTag & y) {
+      const SFVersionTag & y) noexcept {
     return std::tie(x.major, x.minor) <= std::tie(y.major, y.minor);
   }
 
@@ -458,7 +458,7 @@ struct SFVersionTag {
   /// @return true if a SFVersionTag object is "greater than" the other one.
   friend inline bool operator>(
       const SFVersionTag & x,
-      const SFVersionTag & y) {
+      const SFVersionTag & y) noexcept {
     return std::tie(x.major, x.minor) > std::tie(y.major, y.minor);
   }
 
@@ -468,7 +468,7 @@ struct SFVersionTag {
   /// @return true if a SFVersionTag object is "greater than or equal to" the other one.
   friend inline bool operator>=(
       const SFVersionTag & x,
-      const SFVersionTag & y) {
+      const SFVersionTag & y) noexcept {
     return std::tie(x.major, x.minor) >= std::tie(y.major, y.minor);
   }
 

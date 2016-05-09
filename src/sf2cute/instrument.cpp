@@ -110,7 +110,7 @@ SFInstrument & SFInstrument::operator=(const SFInstrument & origin) {
 }
 
 /// Acquires the contents of specified SFInstrument.
-SFInstrument::SFInstrument(SFInstrument && origin) :
+SFInstrument::SFInstrument(SFInstrument && origin) noexcept :
     name_(std::move(origin.name_)),
     zones_(std::move(origin.zones_)),
     global_zone_(std::move(origin.global_zone_)),
@@ -119,7 +119,7 @@ SFInstrument::SFInstrument(SFInstrument && origin) :
 }
 
 /// Move-assigns a new value to the SFInstrument, replacing its current contents.
-SFInstrument & SFInstrument::operator=(SFInstrument && origin) {
+SFInstrument & SFInstrument::operator=(SFInstrument && origin) noexcept {
   // Copy fields.
   name_ = std::move(origin.name_);
   zones_ = std::move(origin.zones_);
@@ -133,7 +133,7 @@ SFInstrument & SFInstrument::operator=(SFInstrument && origin) {
 }
 
 /// Returns the name of this instrument.
-const std::string & SFInstrument::name() const {
+const std::string & SFInstrument::name() const noexcept {
   return name_;
 }
 
@@ -143,7 +143,7 @@ void SFInstrument::set_name(std::string name) {
 }
 
 /// Returns the list of instrument zones.
-const std::vector<std::unique_ptr<SFInstrumentZone>> & SFInstrument::zones() const {
+const std::vector<std::unique_ptr<SFInstrumentZone>> & SFInstrument::zones() const noexcept {
   return zones_;
 }
 
@@ -203,17 +203,17 @@ void SFInstrument::RemoveZoneIf(
 }
 
 /// Removes all of the instrument zones.
-void SFInstrument::ClearZones() {
+void SFInstrument::ClearZones() noexcept {
   zones_.clear();
 }
 
 /// Returns true if the instrument has a global zone.
-bool SFInstrument::has_global_zone() const {
+bool SFInstrument::has_global_zone() const noexcept {
   return static_cast<bool>(global_zone_);
 }
 
 /// Returns the global zone.
-SFInstrumentZone & SFInstrument::global_zone() const {
+SFInstrumentZone & SFInstrument::global_zone() const noexcept {
   return *global_zone_;
 }
 
@@ -239,32 +239,32 @@ void SFInstrument::set_global_zone(SFInstrumentZone global_zone) {
 }
 
 /// Resets the global zone.
-void SFInstrument::reset_global_zone() {
+void SFInstrument::reset_global_zone() noexcept {
   global_zone_ = nullptr;
 }
 
 /// Returns true if the instrument has a parent file.
-bool SFInstrument::has_parent_file() const {
+bool SFInstrument::has_parent_file() const noexcept {
   return parent_file_ != nullptr;
 }
 
 /// Returns the parent file.
-SoundFont & SFInstrument::parent_file() const {
+SoundFont & SFInstrument::parent_file() const noexcept {
   return *parent_file_;
 }
 
 /// Sets the parent file.
-void SFInstrument::set_parent_file(SoundFont & parent_file) {
+void SFInstrument::set_parent_file(SoundFont & parent_file) noexcept {
   parent_file_ = &parent_file;
 }
 
 /// Resets the parent file.
-void SFInstrument::reset_parent_file() {
+void SFInstrument::reset_parent_file() noexcept {
   parent_file_ = nullptr;
 }
 
-/// Sets backward references of every childlen elements.
-void SFInstrument::SetBackwardReferences() {
+/// Sets backward references of every children elements.
+void SFInstrument::SetBackwardReferences() noexcept {
   // Update the instrument zones.
   for (const auto & zone : zones_) {
     zone->set_parent_instrument(*this);

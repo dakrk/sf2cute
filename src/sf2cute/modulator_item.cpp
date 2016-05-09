@@ -26,7 +26,7 @@ SFModulatorItem::SFModulatorItem(SFModulator source_op,
 }
 
 /// Returns the unique key of the modulator.
-SFModulatorIdentifier SFModulatorItem::identifier() const {
+SFModulatorIdentifier SFModulatorItem::identifier() const noexcept {
   return identifier_;
 }
 
@@ -36,7 +36,7 @@ void SFModulatorItem::set_identifier(SFModulatorIdentifier identifier) {
 }
 
 /// Returns the source of data for the modulator.
-SFModulator SFModulatorItem::source_op() const {
+SFModulator SFModulatorItem::source_op() const noexcept {
   return identifier_.source_op();
 }
 
@@ -46,7 +46,7 @@ void SFModulatorItem::set_source_op(SFModulator source_op) {
 }
 
 /// Returns the destination of the modulator.
-SFGenerator SFModulatorItem::destination_op() const {
+SFGenerator SFModulatorItem::destination_op() const noexcept {
   return identifier_.destination_op();
 }
 
@@ -56,7 +56,7 @@ void SFModulatorItem::set_destination_op(SFGenerator destination_op) {
 }
 
 /// Returns the constant of modulation amount.
-int16_t SFModulatorItem::amount() const {
+int16_t SFModulatorItem::amount() const noexcept {
   return amount_;
 }
 
@@ -66,7 +66,7 @@ void SFModulatorItem::set_amount(int16_t amount) {
 }
 
 /// Returns the modulation source to be applied to the modulation amount.
-SFModulator SFModulatorItem::amount_source_op() const {
+SFModulator SFModulatorItem::amount_source_op() const noexcept {
   return identifier_.amount_source_op();
 }
 
@@ -76,7 +76,7 @@ void SFModulatorItem::set_amount_source_op(SFModulator amount_source_op) {
 }
 
 /// Returns the transform type to be applied to the modulation source.
-SFTransform SFModulatorItem::transform_op() const {
+SFTransform SFModulatorItem::transform_op() const noexcept {
   return transform_op_;
 }
 

@@ -61,11 +61,11 @@ public:
 
   /// Acquires the contents of specified SFInstrument.
   /// @param origin a SFInstrument object.
-  SFInstrument(SFInstrument && origin);
+  SFInstrument(SFInstrument && origin) noexcept;
 
   /// Move-assigns a new value to the SFInstrument, replacing its current contents.
   /// @param origin a SFInstrument object.
-  SFInstrument & operator=(SFInstrument && origin);
+  SFInstrument & operator=(SFInstrument && origin) noexcept;
 
   /// Destructs the SFInstrument.
   ~SFInstrument() = default;
@@ -80,7 +80,7 @@ public:
 
   /// Returns the name of this instrument.
   /// @return the name of this instrument.
-  const std::string & name() const;
+  const std::string & name() const noexcept;
 
   /// Sets the name of this instrument.
   /// @param name the name of this instrument.
@@ -88,10 +88,11 @@ public:
 
   /// Returns the list of instrument zones.
   /// @return the list of instrument zones assigned to the instruemnt.
-  const std::vector<std::unique_ptr<SFInstrumentZone>> & zones() const;
+  const std::vector<std::unique_ptr<SFInstrumentZone>> & zones() const noexcept;
 
   /// Adds an instrument zone to the instrument.
   /// @param zone an instrument zone to be assigned to the instrument.
+  /// @throws std::invalid_argument Instrument zone has already been owned by another instrument.
   void AddZone(SFInstrumentZone zone);
 
   /// Removes an instrument zone from the instrument.
@@ -112,41 +113,42 @@ public:
       std::function<bool(const std::unique_ptr<SFInstrumentZone> &)> predicate);
 
   /// Removes all of the instrument zones.
-  void ClearZones();
+  void ClearZones() noexcept;
 
   /// Returns true if the instrument has a global zone.
   /// @return true if the instrument has a global zone.
-  bool has_global_zone() const;
+  bool has_global_zone() const noexcept;
 
   /// Returns the global zone.
   /// @return the global zone.
-  SFInstrumentZone & global_zone() const;
+  SFInstrumentZone & global_zone() const noexcept;
 
   /// Sets the global zone.
   /// @param global_zone the global zone.
+  /// @throws std::invalid_argument Instrument zone has already been owned by another instrument.
   void set_global_zone(SFInstrumentZone global_zone);
 
   /// Resets the global zone.
-  void reset_global_zone();
+  void reset_global_zone() noexcept;
 
   /// Returns true if the instrument has a parent file.
   /// @return true if the instrument has a parent file.
-  bool has_parent_file() const;
+  bool has_parent_file() const noexcept;
 
   /// Returns the parent file.
   /// @return the parent file.
-  SoundFont & parent_file() const;
+  SoundFont & parent_file() const noexcept;
 
 private:
   /// Sets the parent file.
   /// @param parent_file the parent file.
-  void set_parent_file(SoundFont & parent_file);
+  void set_parent_file(SoundFont & parent_file) noexcept;
 
   /// Resets the parent file.
-  void reset_parent_file();
+  void reset_parent_file() noexcept;
 
-  /// Sets backward references of every childlen elements.
-  void SetBackwardReferences();
+  /// Sets backward references of every children elements.
+  void SetBackwardReferences() noexcept;
 
   /// The name of instrument.
   std::string name_;

@@ -113,7 +113,7 @@ SoundFont & SoundFont::operator=(const SoundFont & origin) {
 }
 
 /// Acquires the contents of specified SoundFont.
-SoundFont::SoundFont(SoundFont && origin) :
+SoundFont::SoundFont(SoundFont && origin) noexcept :
     presets_(std::move(origin.presets_)),
     instruments_(std::move(origin.instruments_)),
     samples_(std::move(origin.samples_)),
@@ -133,7 +133,7 @@ SoundFont::SoundFont(SoundFont && origin) :
 }
 
 /// Move-assigns a new value to the SoundFont, replacing its current contents.
-SoundFont & SoundFont::operator=(SoundFont && origin) {
+SoundFont & SoundFont::operator=(SoundFont && origin) noexcept {
   // Copy fields.
   presets_ = std::move(origin.presets_);
   instruments_ = std::move(origin.instruments_);
@@ -157,7 +157,7 @@ SoundFont & SoundFont::operator=(SoundFont && origin) {
 }
 
 /// Returns the list of presets.
-const std::vector<std::shared_ptr<SFPreset>> & SoundFont::presets() const {
+const std::vector<std::shared_ptr<SFPreset>> & SoundFont::presets() const noexcept {
   return presets_;
 }
 
@@ -229,7 +229,7 @@ void SoundFont::RemovePresetIf(
 }
 
 /// Removes all of the presets.
-void SoundFont::ClearPresets() {
+void SoundFont::ClearPresets() noexcept {
   for (const auto & preset : presets_) {
     preset->reset_parent_file();
   }
@@ -237,7 +237,7 @@ void SoundFont::ClearPresets() {
 }
 
 /// Returns the list of instruments.
-const std::vector<std::shared_ptr<SFInstrument>> & SoundFont::instruments() const {
+const std::vector<std::shared_ptr<SFInstrument>> & SoundFont::instruments() const noexcept {
   return instruments_;
 }
 
@@ -309,7 +309,7 @@ void SoundFont::RemoveInstrumentIf(
 }
 
 /// Removes all of the instruments.
-void SoundFont::ClearInstruments() {
+void SoundFont::ClearInstruments() noexcept {
   for (const auto & instrument : instruments_) {
     instrument->reset_parent_file();
   }
@@ -317,7 +317,7 @@ void SoundFont::ClearInstruments() {
 }
 
 /// Returns the list of samples.
-const std::vector<std::shared_ptr<SFSample>> & SoundFont::samples() const {
+const std::vector<std::shared_ptr<SFSample>> & SoundFont::samples() const noexcept {
   return samples_;
 }
 
@@ -382,7 +382,7 @@ void SoundFont::RemoveSampleIf(
 }
 
 /// Removes all of the samples.
-void SoundFont::ClearSamples() {
+void SoundFont::ClearSamples() noexcept {
   for (const auto & sample : samples_) {
     sample->reset_parent_file();
   }
@@ -390,7 +390,7 @@ void SoundFont::ClearSamples() {
 }
 
 /// Returns the target sound engine.
-const std::string & SoundFont::sound_engine() const {
+const std::string & SoundFont::sound_engine() const noexcept {
   return sound_engine_;
 }
 
@@ -400,7 +400,7 @@ void SoundFont::set_sound_engine(std::string sound_engine) {
 }
 
 /// Returns the SoundFont bank name.
-const std::string & SoundFont::bank_name() const {
+const std::string & SoundFont::bank_name() const noexcept {
   return bank_name_;
 }
 
@@ -410,12 +410,12 @@ void SoundFont::set_bank_name(std::string bank_name) {
 }
 
 /// Returns true if the SoundFont has a Sound ROM name.
-bool SoundFont::has_rom_name() const {
+bool SoundFont::has_rom_name() const noexcept {
   return !rom_name_.empty();
 }
 
 /// Returns the Sound ROM name.
-const std::string & SoundFont::rom_name() const {
+const std::string & SoundFont::rom_name() const noexcept {
   return rom_name_;
 }
 
@@ -425,17 +425,17 @@ void SoundFont::set_rom_name(std::string rom_name) {
 }
 
 /// Resets the Sound ROM name.
-void SoundFont::reset_rom_name() {
-  rom_name_ = std::string();
+void SoundFont::reset_rom_name() noexcept {
+  rom_name_.clear();
 }
 
 /// Returns true if the SoundFont has a Sound ROM version.
-bool SoundFont::has_rom_version() const {
+bool SoundFont::has_rom_version() const noexcept {
   return has_rom_version_;
 }
 
 /// Returns the Sound ROM version.
-SFVersionTag SoundFont::rom_version() const {
+SFVersionTag SoundFont::rom_version() const noexcept {
   return rom_version_;
 }
 
@@ -446,17 +446,17 @@ void SoundFont::set_rom_version(SFVersionTag rom_version) {
 }
 
 /// Resets the Sound ROM version.
-void SoundFont::reset_rom_version() {
+void SoundFont::reset_rom_version() noexcept {
   has_rom_version_ = false;
 }
 
 /// Returns true if the SoundFont has a date of creation of the bank.
-bool SoundFont::has_creation_date() const {
+bool SoundFont::has_creation_date() const noexcept {
   return !creation_date_.empty();
 }
 
 /// Returns the date of creation of the bank.
-const std::string & SoundFont::creation_date() const {
+const std::string & SoundFont::creation_date() const noexcept {
   return creation_date_;
 }
 
@@ -466,17 +466,17 @@ void SoundFont::set_creation_date(std::string creation_date) {
 }
 
 /// Resets the date of creation of the bank.
-void SoundFont::reset_creation_date() {
-  creation_date_ = std::string();
+void SoundFont::reset_creation_date() noexcept {
+  creation_date_.clear();
 }
 
 /// Returns true if the SoundFont has the sound designers and engineers information for the bank.
-bool SoundFont::has_engineers() const {
+bool SoundFont::has_engineers() const noexcept {
   return !engineers_.empty();
 }
 
 /// Returns the sound designers and engineers for the bank.
-const std::string & SoundFont::engineers() const {
+const std::string & SoundFont::engineers() const noexcept {
   return engineers_;
 }
 
@@ -486,17 +486,17 @@ void SoundFont::set_engineers(std::string engineers) {
 }
 
 /// Resets the sound designers and engineers for the bank.
-void SoundFont::reset_engineers() {
-  engineers_ = std::string();
+void SoundFont::reset_engineers() noexcept {
+  engineers_.clear();
 }
 
 /// Returns true if the SoundFont has a product name for which the bank was intended.
-bool SoundFont::has_product() const {
+bool SoundFont::has_product() const noexcept {
   return !product_.empty();
 }
 
 /// Returns the product name for which the bank was intended.
-const std::string & SoundFont::product() const {
+const std::string & SoundFont::product() const noexcept {
   return product_;
 }
 
@@ -506,17 +506,17 @@ void SoundFont::set_product(std::string product) {
 }
 
 /// Resets the product name for which the bank was intended.
-void SoundFont::reset_product() {
-  product_ = std::string();
+void SoundFont::reset_product() noexcept {
+  product_.clear();
 }
 
 /// Returns true if the SoundFont has any copyright message.
-bool SoundFont::has_copyright() const {
+bool SoundFont::has_copyright() const noexcept {
   return !copyright_.empty();
 }
 
 /// Returns the copyright message.
-const std::string & SoundFont::copyright() const {
+const std::string & SoundFont::copyright() const noexcept {
   return copyright_;
 }
 
@@ -526,17 +526,17 @@ void SoundFont::set_copyright(std::string copyright) {
 }
 
 /// Resets the copyright message.
-void SoundFont::reset_copyright() {
-  copyright_ = std::string();
+void SoundFont::reset_copyright() noexcept {
+  copyright_.clear();
 }
 
 /// Returns true if the SoundFont has any comments on the bank.
-bool SoundFont::has_comment() const {
+bool SoundFont::has_comment() const noexcept {
   return !comment_.empty();
 }
 
 /// Returns the comments on the bank.
-const std::string & SoundFont::comment() const {
+const std::string & SoundFont::comment() const noexcept {
   return comment_;
 }
 
@@ -546,17 +546,17 @@ void SoundFont::set_comment(std::string comment) {
 }
 
 /// Resets the comments on the bank.
-void SoundFont::reset_comment() {
-  comment_ = std::string();
+void SoundFont::reset_comment() noexcept {
+  comment_.clear();
 }
 
 /// Returns true if the SoundFont the information of SoundFont tools used to create and alter the bank.
-bool SoundFont::has_software() const {
+bool SoundFont::has_software() const noexcept {
   return !software_.empty();
 }
 
 /// Returns the SoundFont tools used to create and alter the bank.
-const std::string & SoundFont::software() const {
+const std::string & SoundFont::software() const noexcept {
   return software_;
 }
 
@@ -566,8 +566,8 @@ void SoundFont::set_software(std::string software) {
 }
 
 /// Resets the SoundFont tools used to create and alter the bank.
-void SoundFont::reset_software() {
-  software_ = std::string();
+void SoundFont::reset_software() noexcept {
+  software_.clear();
 }
 
 /// Writes the SoundFont to a file.
@@ -582,8 +582,8 @@ void SoundFont::Write(std::ostream & out) {
   writer.Write(out);
 }
 
-/// Sets backward references of every childlen elements.
-void SoundFont::SetBackwardReferences() {
+/// Sets backward references of every children elements.
+void SoundFont::SetBackwardReferences() noexcept {
   // Set backward reference from presets to the file.
   for (const auto & preset : presets_) {
     preset->set_parent_file(*this);
@@ -600,7 +600,7 @@ void SoundFont::SetBackwardReferences() {
   }
 }
 
-/// Sets backward references of every childlen elements.
+/// Repairs references in the copied children elements.
 void SoundFont::RepairReferences(const SoundFont & origin) {
   // Construct a map from the original instrument to the copied instrument.
   std::unordered_map<std::shared_ptr<SFInstrument>, std::shared_ptr<SFInstrument>> instrument_map;

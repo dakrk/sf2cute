@@ -64,43 +64,44 @@ public:
   /// Returns true if the zone has an associated sample.
   /// @return true if the zone has an associated sample.
   /// @remarks This function returns false if the associated sample has been deleted.
-  bool has_sample() const;
+  bool has_sample() const noexcept;
 
   /// Returns the associated sample.
   /// @return a pointer to the associated sample.
   /// @remarks This function returns nullptr if the associated sample has been deleted.
-  std::shared_ptr<SFSample> sample() const;
+  std::shared_ptr<SFSample> sample() const noexcept;
 
   /// Sets the associated sample.
   /// @param sample a pointer to the associated sample.
   void set_sample(std::weak_ptr<SFSample> sample);
 
   /// Resets the associated sample.
-  void reset_sample();
+  void reset_sample() noexcept;
 
   /// Returns true if the zone has a parent file.
   /// @return true if the zone has a parent file.
-  bool has_parent_file() const;
+  bool has_parent_file() const noexcept;
 
   /// Returns the parent file.
   /// @return the parent file.
-  SoundFont & parent_file() const;
+  SoundFont & parent_file() const noexcept;
 
   /// Returns true if the zone has a parent instrument.
   /// @return true if the zone has a parent instrument.
-  bool has_parent_instrument() const;
+  bool has_parent_instrument() const noexcept;
 
   /// Returns the parent instrument.
   /// @return the parent instrument.
-  SFInstrument & parent_instrument() const;
+  SFInstrument & parent_instrument() const noexcept;
 
 private:
   /// Sets the parent instrument.
   /// @param parent_instrument the parent instrument.
-  void set_parent_instrument(SFInstrument & parent_instrument);
+  void set_parent_instrument(
+      SFInstrument & parent_instrument) noexcept;
 
   /// Resets the parent instrument.
-  void reset_parent_instrument();
+  void reset_parent_instrument() noexcept;
 
   /// The associated sample.
   std::weak_ptr<SFSample> sample_;

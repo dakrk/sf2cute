@@ -64,43 +64,43 @@ public:
   /// Returns true if the zone has an associated instrument.
   /// @return true if the zone has an associated instrument.
   /// @remarks This function returns false if the associated instrument has been deleted.
-  bool has_instrument() const;
+  bool has_instrument() const noexcept;
 
   /// Returns the associated instrument.
   /// @return a pointer to the associated instrument.
   /// @remarks This function returns nullptr if the associated instrument has been deleted.
-  std::shared_ptr<SFInstrument> instrument() const;
+  std::shared_ptr<SFInstrument> instrument() const noexcept;
 
   /// Sets the associated instrument.
   /// @param instrument a pointer to the associated instrument.
   void set_instrument(std::weak_ptr<SFInstrument> instrument);
 
   /// Resets the associated instrument.
-  void reset_instrument();
+  void reset_instrument() noexcept;
 
   /// Returns true if the zone has a parent file.
   /// @return true if the zone has a parent file.
-  bool has_parent_file() const;
+  bool has_parent_file() const noexcept;
 
   /// Returns the parent file.
   /// @return the parent file.
-  SoundFont & parent_file() const;
+  SoundFont & parent_file() const noexcept;
 
   /// Returns true if the zone has a parent preset.
   /// @return true if the zone has a parent preset.
-  bool has_parent_preset() const;
+  bool has_parent_preset() const noexcept;
 
   /// Returns the parent preset.
   /// @return the parent preset.
-  SFPreset & parent_preset() const;
+  SFPreset & parent_preset() const noexcept;
 
 private:
   /// Sets the parent preset.
   /// @param parent_preset the parent preset.
-  void set_parent_preset(SFPreset & parent_preset);
+  void set_parent_preset(SFPreset & parent_preset) noexcept;
 
   /// Resets the parent preset.
-  void reset_parent_preset();
+  void reset_parent_preset() noexcept;
 
   /// The associated instrument.
   std::weak_ptr<SFInstrument> instrument_;

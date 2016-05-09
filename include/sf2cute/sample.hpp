@@ -91,11 +91,11 @@ public:
 
   /// Acquires the contents of specified SFSample.
   /// @param origin a SFSample object.
-  SFSample(SFSample && origin) noexcept = default;
+  SFSample(SFSample && origin) = default;
 
   /// Move-assigns a new value to the SFSample, replacing its current contents.
   /// @param origin a SFSample object.
-  SFSample & operator=(SFSample && origin) noexcept = default;
+  SFSample & operator=(SFSample && origin) = default;
 
   /// Destructs the SFSample.
   ~SFSample() = default;
@@ -110,7 +110,7 @@ public:
 
   /// Returns the name of this sample.
   /// @return the name of this sample.
-  const std::string & name() const;
+  const std::string & name() const noexcept;
 
   /// Sets the name of this sample.
   /// @param name the name of this sample.
@@ -118,7 +118,7 @@ public:
 
   /// Returns the starting point of the loop of this sample.
   /// @return the beginning index of the loop, in sample data points, inclusive.
-  uint32_t start_loop() const;
+  uint32_t start_loop() const noexcept;
 
   /// Sets the starting point of the loop of this sample.
   /// @param start_loop the beginning index of the loop, in sample data points, inclusive.
@@ -126,7 +126,7 @@ public:
 
   /// Returns the ending point of the loop of this sample.
   /// @return the ending index of the loop, in sample data points, exclusive.
-  uint32_t end_loop() const;
+  uint32_t end_loop() const noexcept;
 
   /// Sets the ending point of the loop of this sample.
   /// @param end_loop the ending index of the loop, in sample data points, exclusive.
@@ -134,7 +134,7 @@ public:
 
   /// Returns the sample rate.
   /// @return the sample rate, in hertz.
-  uint32_t sample_rate() const;
+  uint32_t sample_rate() const noexcept;
 
   /// Sets the sample rate.
   /// @param sample_rate the sample rate, in hertz.
@@ -142,7 +142,7 @@ public:
 
   /// Returns the original MIDI key number of this sample.
   /// @return the MIDI key number of the recorded pitch of the sample.
-  uint8_t original_key() const;
+  uint8_t original_key() const noexcept;
 
   /// Sets the original MIDI key number of this sample.
   /// @param original_key the MIDI key number of the recorded pitch of the sample.
@@ -150,7 +150,7 @@ public:
 
   /// Returns the pitch correction.
   /// @return the pitch correction that should be applied to the sample, in cents.
-  int8_t correction() const;
+  int8_t correction() const noexcept;
 
   /// Sets the pitch correction.
   /// @param correction the pitch correction that should be applied to the sample, in cents.
@@ -159,23 +159,23 @@ public:
   /// Returns the associated right or left stereo sample.
   /// @return a pointer to the associated right or left stereo sample.
   /// @remarks This function returns nullptr if the associated sample has been deleted.
-  std::shared_ptr<SFSample> link() const;
+  std::shared_ptr<SFSample> link() const noexcept;
 
   /// Returns true if this sample has an associated sample.
   /// @return true if this sample has an associated sample.
   /// @remarks This function returns false if the associated sample has been deleted.
-  bool has_link() const;
+  bool has_link() const noexcept;
 
   /// Sets the associated right or left stereo sample.
   /// @param link a pointer to the associated right or left stereo sample.
   void set_link(std::weak_ptr<SFSample> link);
 
   /// Resets the associated right or left stereo sample.
-  void reset_link();
+  void reset_link() noexcept;
 
   /// Returns both the type of sample and the whether the sample is located in RAM or ROM memory.
   /// @return both the type of sample and the whether the sample is located in RAM or ROM memory.
-  SFSampleLink type() const;
+  SFSampleLink type() const noexcept;
 
   /// Sets both the type of sample and the whether the sample is located in RAM or ROM memory.
   /// @param type both the type of sample and the whether the sample is located in RAM or ROM memory.
@@ -183,23 +183,23 @@ public:
 
   /// Returns the sample data.
   /// @return the sample data.
-  const std::vector<int16_t> & data() const;
+  const std::vector<int16_t> & data() const noexcept;
 
   /// Returns true if this sample has a parent file.
   /// @return true if this sample has a parent file.
-  bool has_parent_file() const;
+  bool has_parent_file() const noexcept;
 
   /// Returns the parent file.
   /// @return a reference to the parent file.
-  SoundFont & parent_file() const;
+  SoundFont & parent_file() const noexcept;
 
 private:
   /// Sets the parent file.
   /// @param parent_file the parent file.
-  void set_parent_file(SoundFont & parent_file);
+  void set_parent_file(SoundFont & parent_file) noexcept;
 
   /// Resets the parent file.
-  void reset_parent_file();
+  void reset_parent_file() noexcept;
 
   /// The name of sample.
   std::string name_;

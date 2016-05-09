@@ -79,11 +79,11 @@ public:
 
   /// Acquires the contents of specified SFPreset.
   /// @param origin a SFPreset object.
-  SFPreset(SFPreset && origin);
+  SFPreset(SFPreset && origin) noexcept;
 
   /// Move-assigns a new value to the SFPreset, replacing its current contents.
   /// @param origin a SFPreset object.
-  SFPreset & operator=(SFPreset && origin);
+  SFPreset & operator=(SFPreset && origin) noexcept;
 
   /// Destructs the SFPreset.
   ~SFPreset() = default;
@@ -98,7 +98,7 @@ public:
 
   /// Returns the name of this preset.
   /// @return the name of this preset.
-  const std::string & name() const;
+  const std::string & name() const noexcept;
 
   /// Sets the name of this preset.
   /// @param name the name of this preset.
@@ -106,7 +106,7 @@ public:
 
   /// Returns the preset number.
   /// @return the preset number.
-  uint16_t preset_number() const;
+  uint16_t preset_number() const noexcept;
 
   /// Sets the preset number.
   /// @param preset_number the preset number.
@@ -114,7 +114,7 @@ public:
 
   /// Returns the bank number.
   /// @return the bank number.
-  uint16_t bank() const;
+  uint16_t bank() const noexcept;
 
   /// Sets the bank number.
   /// @param bank the bank number.
@@ -123,7 +123,7 @@ public:
   /// Returns the library.
   /// @return the library.
   /// @remarks The library field represents the unused dwLibrary field of sfPresetHeader type.
-  uint32_t library() const;
+  uint32_t library() const noexcept;
 
   /// Sets the library.
   /// @param library the library.
@@ -133,7 +133,7 @@ public:
   /// Returns the genre.
   /// @return the genre.
   /// @remarks The genre field represents the unused dwGenre field of sfPresetHeader type.
-  uint32_t genre() const;
+  uint32_t genre() const noexcept;
 
   /// Sets the genre.
   /// @param genre the genre.
@@ -143,7 +143,7 @@ public:
   /// Returns the morphology.
   /// @return the morphology.
   /// @remarks The morphology field represents the unused dwMorphology field of sfPresetHeader type.
-  uint32_t morphology() const;
+  uint32_t morphology() const noexcept;
 
   /// Sets the morphology.
   /// @param morphology the morphology.
@@ -152,10 +152,11 @@ public:
 
   /// Returns the list of preset zones.
   /// @return the list of preset zones assigned to the preset.
-  const std::vector<std::unique_ptr<SFPresetZone>> & zones() const;
+  const std::vector<std::unique_ptr<SFPresetZone>> & zones() const noexcept;
 
   /// Adds a preset zone to the preset.
   /// @param zone a preset zone to be assigned to the preset.
+  /// @throws std::invalid_argument Preset zone has already been owned by another preset.
   void AddZone(SFPresetZone zone);
 
   /// Removes a preset zone from the preset.
@@ -176,41 +177,42 @@ public:
       std::function<bool(const std::unique_ptr<SFPresetZone> &)> predicate);
 
   /// Removes all of the preset zones.
-  void ClearZones();
+  void ClearZones() noexcept;
 
   /// Returns true if the preset has a global zone.
   /// @return true if the preset has a global zone.
-  bool has_global_zone() const;
+  bool has_global_zone() const noexcept;
 
   /// Returns the global zone.
   /// @return the global zone.
-  SFPresetZone & global_zone() const;
+  SFPresetZone & global_zone() const noexcept;
 
   /// Sets the global zone.
   /// @param global_zone the global zone.
+  /// @throws std::invalid_argument Preset zone has already been owned by another preset.
   void set_global_zone(SFPresetZone global_zone);
 
   /// Resets the global zone.
-  void reset_global_zone();
+  void reset_global_zone() noexcept;
 
   /// Returns true if the preset has a parent file.
   /// @return true if the preset has a parent file.
-  bool has_parent_file() const;
+  bool has_parent_file() const noexcept;
 
   /// Returns the parent file.
   /// @return the parent file.
-  SoundFont & parent_file() const;
+  SoundFont & parent_file() const noexcept;
 
 private:
   /// Sets the parent file.
   /// @param parent_file the parent file.
-  void set_parent_file(SoundFont & parent_file);
+  void set_parent_file(SoundFont & parent_file) noexcept;
 
   /// Resets the parent file.
-  void reset_parent_file();
+  void reset_parent_file() noexcept;
 
-  /// Sets backward references of every childlen elements.
-  void SetBackwardReferences();
+  /// Sets backward references of every children elements.
+  void SetBackwardReferences() noexcept;
 
   /// The name of preset.
   std::string name_;

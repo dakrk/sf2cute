@@ -72,7 +72,7 @@ void SFRIFFIbagChunk::set_instruments(
 }
 
 /// Returns the whole length of this chunk.
-SFRIFFIbagChunk::size_type SFRIFFIbagChunk::size() const {
+SFRIFFIbagChunk::size_type SFRIFFIbagChunk::size() const noexcept {
   return 8 + size_;
 }
 

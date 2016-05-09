@@ -42,22 +42,23 @@ public:
 
   /// Acquires the contents of specified SoundFont.
   /// @param origin a SoundFont object.
-  SoundFont(SoundFont && origin);
+  SoundFont(SoundFont && origin) noexcept;
 
   /// Move-assigns a new value to the SoundFont, replacing its current contents.
   /// @param origin a SoundFont object.
-  SoundFont & operator=(SoundFont && origin);
+  SoundFont & operator=(SoundFont && origin) noexcept;
 
   /// Destructs the SoundFont.
   ~SoundFont() = default;
 
   /// Returns the list of presets.
   /// @return the list of presets assigned to the SoundFont.
-  const std::vector<std::shared_ptr<SFPreset>> & presets() const;
+  const std::vector<std::shared_ptr<SFPreset>> & presets() const noexcept;
 
   /// Adds a new preset to the SoundFont.
   /// @param args the arguments for the SFPreset constructor.
   /// @return the new SFPreset object.
+  /// @throws std::invalid_argument Preset has already been owned by another file.
   template<typename ... Args>
   std::shared_ptr<SFPreset> NewPreset(Args && ... args) {
     std::shared_ptr<SFPreset> preset =
@@ -68,6 +69,7 @@ public:
 
   /// Adds a preset to the SoundFont.
   /// @param preset a preset to be assigned to the SoundFont.
+  /// @throws std::invalid_argument Preset has already been owned by another file.
   void AddPreset(std::shared_ptr<SFPreset> preset);
 
   /// Removes a preset from the SoundFont.
@@ -88,15 +90,16 @@ public:
       std::function<bool(const std::shared_ptr<SFPreset> &)> predicate);
 
   /// Removes all of the presets.
-  void ClearPresets();
+  void ClearPresets() noexcept;
 
   /// Returns the list of instruments.
   /// @return the list of instruments assigned to the SoundFont.
-  const std::vector<std::shared_ptr<SFInstrument>> & instruments() const;
+  const std::vector<std::shared_ptr<SFInstrument>> & instruments() const noexcept;
 
   /// Adds a new instrument to the SoundFont.
   /// @param args the arguments for the SFInstrument constructor.
   /// @return the new SFInstrument object.
+  /// @throws std::invalid_argument Instrument has already been owned by another file.
   template<typename ... Args>
   std::shared_ptr<SFInstrument> NewInstrument(Args && ... args) {
     std::shared_ptr<SFInstrument> instrument =
@@ -107,6 +110,7 @@ public:
 
   /// Adds an instrument to the SoundFont.
   /// @param instrument an instrument to be assigned to the SoundFont.
+  /// @throws std::invalid_argument Instrument has already been owned by another file.
   void AddInstrument(std::shared_ptr<SFInstrument> instrument);
 
   /// Removes an instrument from the SoundFont.
@@ -127,15 +131,16 @@ public:
       std::function<bool(const std::shared_ptr<SFInstrument> &)> predicate);
 
   /// Removes all of the instruments.
-  void ClearInstruments();
+  void ClearInstruments() noexcept;
 
   /// Returns the list of samples.
   /// @return the list of samples assigned to the SoundFont.
-  const std::vector<std::shared_ptr<SFSample>> & samples() const;
+  const std::vector<std::shared_ptr<SFSample>> & samples() const noexcept;
 
   /// Adds a new sample to the SoundFont.
   /// @param args the arguments for the SFSample constructor.
   /// @return the new SFSample object.
+  /// @throws std::invalid_argument Sample has already been owned by another file.
   template<typename ... Args>
   std::shared_ptr<SFSample> NewSample(Args && ... args) {
     std::shared_ptr<SFSample> sample =
@@ -146,6 +151,7 @@ public:
 
   /// Adds a sample to the SoundFont.
   /// @param sample a sample to be assigned to the SoundFont.
+  /// @throws std::invalid_argument Sample has already been owned by another file.
   void AddSample(std::shared_ptr<SFSample> sample);
 
   /// Removes a sample from the SoundFont.
@@ -166,11 +172,11 @@ public:
       std::function<bool(const std::shared_ptr<SFSample> &)> predicate);
 
   /// Removes all of the samples.
-  void ClearSamples();
+  void ClearSamples() noexcept;
 
   /// Returns the target sound engine.
   /// @return the target sound engine name.
-  const std::string & sound_engine() const;
+  const std::string & sound_engine() const noexcept;
 
   /// Sets the target sound engine.
   /// @param sound_engine the target sound engine name.
@@ -178,7 +184,7 @@ public:
 
   /// Returns the SoundFont bank name.
   /// @return the SoundFont bank name.
-  const std::string & bank_name() const;
+  const std::string & bank_name() const noexcept;
 
   /// Sets the SoundFont bank name.
   /// @param bank_name the SoundFont bank name.
@@ -186,126 +192,128 @@ public:
 
   /// Returns true if the SoundFont has a Sound ROM name.
   /// @return true if the SoundFont has a Sound ROM name.
-  bool has_rom_name() const;
+  bool has_rom_name() const noexcept;
 
   /// Returns the Sound ROM name.
   /// @return the Sound ROM name.
-  const std::string & rom_name() const;
+  const std::string & rom_name() const noexcept;
 
   /// Sets the Sound ROM name.
   /// @param rom_name the Sound ROM name.
   void set_rom_name(std::string rom_name);
 
   /// Resets the Sound ROM name.
-  void reset_rom_name();
+  void reset_rom_name() noexcept;
 
   /// Returns true if the SoundFont has a Sound ROM version.
   /// @return true if the SoundFont has a Sound ROM version.
-  bool has_rom_version() const;
+  bool has_rom_version() const noexcept;
 
   /// Returns the Sound ROM version.
   /// @return the Sound ROM version.
-  SFVersionTag rom_version() const;
+  SFVersionTag rom_version() const noexcept;
 
   /// Sets the Sound ROM version.
   /// @param rom_version the Sound ROM version.
   void set_rom_version(SFVersionTag rom_version);
 
   /// Resets the Sound ROM version.
-  void reset_rom_version();
+  void reset_rom_version() noexcept;
 
   /// Returns true if the SoundFont has a date of creation of the bank.
   /// @return true if the SoundFont has a date of creation of the bank.
-  bool has_creation_date() const;
+  bool has_creation_date() const noexcept;
 
   /// Returns the date of creation of the bank.
   /// @return the date of creation of the bank.
-  const std::string & creation_date() const;
+  const std::string & creation_date() const noexcept;
 
   /// Sets the date of creation of the bank.
   /// @param creation_date the date of creation of the bank.
   void set_creation_date(std::string creation_date);
 
   /// Resets the date of creation of the bank.
-  void reset_creation_date();
+  void reset_creation_date() noexcept;
 
   /// Returns true if the SoundFont has the sound designers and engineers information for the bank.
   /// @return true if the SoundFont has the sound designers and engineers information for the bank.
-  bool has_engineers() const;
+  bool has_engineers() const noexcept;
 
   /// Returns the sound designers and engineers for the bank.
   /// @return the sound designers and engineers for the bank.
-  const std::string & engineers() const;
+  const std::string & engineers() const noexcept;
 
   /// Sets the sound designers and engineers for the bank.
   /// @param engineers the sound designers and engineers for the bank.
   void set_engineers(std::string engineers);
 
   /// Resets the sound designers and engineers for the bank.
-  void reset_engineers();
+  void reset_engineers() noexcept;
 
   /// Returns true if the SoundFont has a product name for which the bank was intended.
   /// @return true if the SoundFont has a product name for which the bank was intended.
-  bool has_product() const;
+  bool has_product() const noexcept;
 
   /// Returns the product name for which the bank was intended.
   /// @return the product name for which the bank was intended.
-  const std::string & product() const;
+  const std::string & product() const noexcept;
 
   /// Sets the product name for which the bank was intended.
   /// @param product the product name for which the bank was intended.
   void set_product(std::string product);
 
   /// Resets the product name for which the bank was intended.
-  void reset_product();
+  void reset_product() noexcept;
 
   /// Returns true if the SoundFont has any copyright message.
   /// @return true if the SoundFont has any copyright message.
-  bool has_copyright() const;
+  bool has_copyright() const noexcept;
 
   /// Returns the copyright message.
   /// @return the copyright message.
-  const std::string & copyright() const;
+  const std::string & copyright() const noexcept;
 
   /// Sets the copyright message.
   /// @param copyright the copyright message.
   void set_copyright(std::string copyright);
 
   /// Resets the copyright message.
-  void reset_copyright();
+  void reset_copyright() noexcept;
 
   /// Returns true if the SoundFont has any comments on the bank.
   /// @return true if the SoundFont has any comments on the bank.
-  bool has_comment() const;
+  bool has_comment() const noexcept;
 
   /// Returns the comments on the bank.
   /// @return the comments on the bank.
-  const std::string & comment() const;
+  const std::string & comment() const noexcept;
 
   /// Sets the comments on the bank.
   /// @param comment the comments on the bank.
   void set_comment(std::string comment);
 
   /// Resets the comments on the bank.
-  void reset_comment();
+  void reset_comment() noexcept;
 
   /// Returns true if the SoundFont the information of SoundFont tools used to create and alter the bank.
   /// @return true if the SoundFont the information of SoundFont tools used to create and alter the bank.
-  bool has_software() const;
+  bool has_software() const noexcept;
 
   /// Returns the SoundFont tools used to create and alter the bank.
   /// @return the SoundFont tools used to create and alter the bank.
-  const std::string & software() const;
+  const std::string & software() const noexcept;
 
   /// Sets the SoundFont tools used to create and alter the bank.
   /// @param software the SoundFont tools used to create and alter the bank.
   void set_software(std::string software);
 
   /// Resets the SoundFont tools used to create and alter the bank.
-  void reset_software();
+  void reset_software() noexcept;
 
   /// Writes the SoundFont to a file.
   /// @param filename the name of the file to write to.
+  /// @throws std::logic_error The SoundFont has a structural error.
+  /// @throws std::ios_base::failure An I/O error occurred.
   void Write(const std::string & filename);
 
   /// Writes the SoundFont to an output stream.
@@ -319,9 +327,10 @@ private:
   /// The default value of the SoundFont bank name.
   static constexpr auto kDefaultBankName = "Unnamed";
 
-  /// Sets backward references of every childlen elements.
-  void SetBackwardReferences();
+  /// Sets backward references of every children elements.
+  void SetBackwardReferences() noexcept;
 
+  /// Repairs references in the copied children elements.
   /// @param origin a SoundFont object used to construct this SoundFont object.
   void RepairReferences(const SoundFont & origin);
 

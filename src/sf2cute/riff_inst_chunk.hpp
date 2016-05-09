@@ -31,6 +31,7 @@ public:
 
   /// Constructs a new SFRIFFInstChunk using the specified instruments.
   /// @param instruments The instruments of the chunk.
+  /// @throws std::length_error Too many instruments.
   SFRIFFInstChunk(
       const std::vector<std::shared_ptr<SFInstrument>> & instruments);
 
@@ -66,21 +67,24 @@ public:
 
   /// Sets the instruments of this chunk.
   /// @param instruments the instruments of this chunk.
+  /// @throws std::length_error Too many instruments.
   void set_instruments(
       const std::vector<std::shared_ptr<SFInstrument>> & instruments);
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const override;
+  virtual size_type size() const noexcept override;
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.
-  /// @throws std::length_error if the chunk size exceeds the maximum.
+  /// @throws std::length_error The chunk size exceeds the maximum.
+  /// @throws std::ios_base::failure An I/O error occurred.
   virtual void Write(std::ostream & out) const override;
 
 private:
   /// Returns the number of instrument items.
   /// @return the number of instrument items, including the terminator item.
+  /// @throws std::length_error Too many instruments.
   uint16_t NumItems() const;
 
   /// Writes an item of inst chunk.
@@ -88,6 +92,7 @@ private:
   /// @param name the name of instrument.
   /// @param inst_bag_index the instrument bag index starting from 0.
   /// @return the output stream.
+  /// @throws std::ios_base::failure An I/O error occurred.
   static std::ostream & WriteItem(std::ostream & out,
       const std::string & name,
       uint16_t inst_bag_index);

@@ -31,6 +31,7 @@ public:
 
   /// Constructs a new SFRIFFIbagChunk using the specified instruments.
   /// @param instruments The instruments of the chunk.
+  /// @throws std::length_error Too many instrument zones.
   SFRIFFIbagChunk(
       const std::vector<std::shared_ptr<SFInstrument>> & instruments);
 
@@ -66,21 +67,24 @@ public:
 
   /// Sets the instruments of this chunk.
   /// @param instruments the instruments of this chunk.
+  /// @throws std::length_error Too many instrument zones.
   void set_instruments(
       const std::vector<std::shared_ptr<SFInstrument>> & instruments);
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const override;
+  virtual size_type size() const noexcept override;
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.
-  /// @throws std::length_error if the chunk size exceeds the maximum.
+  /// @throws std::length_error The chunk size exceeds the maximum.
+  /// @throws std::ios_base::failure An I/O error occurred.
   virtual void Write(std::ostream & out) const override;
 
 private:
   /// Returns the number of instrument zone items.
   /// @return the number of instrument zone items, including the terminator item.
+  /// @throws std::length_error Too many instrument zones.
   uint16_t NumItems() const;
 
   /// Writes an item of ibag chunk.
@@ -88,6 +92,7 @@ private:
   /// @param generator_index the generator index starting from 0.
   /// @param modulator_index the modulator index starting from 0.
   /// @return the output stream.
+  /// @throws std::ios_base::failure An I/O error occurred.
   static std::ostream & WriteItem(std::ostream & out,
       uint16_t generator_index,
       uint16_t modulator_index);

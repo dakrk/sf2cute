@@ -28,6 +28,7 @@ public:
 
   /// Constructs a new SFRIFFSmplChunk using the specified samples.
   /// @param samples The samples of the chunk.
+  /// @throws std::length_error The sample pool size exceeds the maximum.
   SFRIFFSmplChunk(const std::vector<std::shared_ptr<SFSample>> & samples);
 
   /// Constructs a new copy of specified SFRIFFSmplChunk.
@@ -61,20 +62,23 @@ public:
 
   /// Sets the samples of this chunk.
   /// @param samples the samples of this chunk.
+  /// @throws std::length_error The sample pool size exceeds the maximum.
   void set_samples(const std::vector<std::shared_ptr<SFSample>> & samples);
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const override;
+  virtual size_type size() const noexcept override;
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.
-  /// @throws std::length_error if the chunk size exceeds the maximum.
+  /// @throws std::length_error The chunk size exceeds the maximum.
+  /// @throws std::ios_base::failure An I/O error occurred.
   virtual void Write(std::ostream & out) const override;
 
 private:
   /// Returns the total sample pool size.
   /// @return the total sample pool size.
+  /// @throws std::length_error The sample pool size exceeds the maximum.
   size_type GetSamplePoolSize() const;
 
   /// The name of the chunk.

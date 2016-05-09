@@ -72,7 +72,7 @@ void SFRIFFImodChunk::set_instruments(
 }
 
 /// Returns the whole length of this chunk.
-SFRIFFImodChunk::size_type SFRIFFImodChunk::size() const {
+SFRIFFImodChunk::size_type SFRIFFImodChunk::size() const noexcept {
   return 8 + size_;
 }
 

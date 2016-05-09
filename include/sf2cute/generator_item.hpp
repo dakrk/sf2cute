@@ -48,7 +48,7 @@ public:
 
   /// Returns the type of the generator.
   /// @return the type of the generator.
-  SFGenerator op() const;
+  SFGenerator op() const noexcept;
 
   /// Sets the type of the generator.
   /// @param op the type of the generator.
@@ -56,7 +56,7 @@ public:
 
   /// Returns the amount of the generator.
   /// @return the value represents the amount of the generator.
-  GenAmountType amount() const;
+  GenAmountType amount() const noexcept;
 
   /// Sets the amount of the generator.
   /// @param amount the value to be assigned to the generator.
@@ -81,7 +81,7 @@ public:
   /// @return true if a SFGenerator object is "less than" the other one.
   ///
   /// @remarks This function compares two SFGenerator enums based on the ordering requirement of a generator chunk.
-  static bool Compare(const SFGenerator & x, const SFGenerator & y);
+  static bool Compare(const SFGenerator & x, const SFGenerator & y) noexcept;
 
 private:
   /// The type of the generator.

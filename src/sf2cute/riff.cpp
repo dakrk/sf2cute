@@ -64,7 +64,7 @@ void RIFFChunk::set_data(std::vector<char> data) {
 }
 
 /// Returns the whole length of this chunk.
-RIFFChunk::size_type RIFFChunk::size() const {
+RIFFChunk::size_type RIFFChunk::size() const noexcept {
   size_type chunk_size = data_.size();
   if (chunk_size % 2 != 0) {
     chunk_size++;
@@ -176,7 +176,7 @@ void RIFFListChunk::ClearSubchunks() {
 }
 
 /// Returns the whole length of this chunk.
-RIFFListChunk::size_type RIFFListChunk::size() const {
+RIFFListChunk::size_type RIFFListChunk::size() const noexcept {
   size_type chunk_size = 0;
   for (const auto & subchunk : subchunks_) {
     chunk_size += subchunk->size();
@@ -274,7 +274,7 @@ void RIFF::ClearChunks() {
 }
 
 /// Returns the whole length of this RIFF.
-RIFF::size_type RIFF::size() const {
+RIFF::size_type RIFF::size() const noexcept {
   size_type chunk_size = 0;
   for (const auto & chunk : chunks_) {
     chunk_size += chunk->size();
