@@ -15,6 +15,8 @@ git clone https://github.com/gocha/sf2cute
 
 This will create the `sf2cute` directory with the source code for the library.
 
+[SF2cute Documentation](http://gocha.github.io/sf2cute/) is available on the GitHub Pages.
+You can also build the documentation by yourself using [Doxygen](http://www.doxygen.org).
 
 Compiling
 ---------
