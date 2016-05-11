@@ -1,4 +1,4 @@
-sf2cute: C++ Library for SoundFont 2
+SF2cute: C++ Library for SoundFont 2
 ====================================
 
 SF2cute is a C++ library for reading or writing SoundFont 2.
@@ -47,9 +47,6 @@ SoundFont file writing examples
 Here is an example of SoundFont file writing.
 
 ``` cpp
-/// @file
-/// Writes SoundFont 2 file using SF2cute.
-
 #include <algorithm>
 #include <memory>
 #include <vector>
