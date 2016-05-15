@@ -1,7 +1,7 @@
 SF2cute: C++ Library for SoundFont 2
 ====================================
 
-SF2cute is a C++ library for reading or writing SoundFont 2.
+SF2cute is a C++ library for writing SoundFont 2.
 
 Downloading
 -----------
