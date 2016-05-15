@@ -41,8 +41,8 @@ Then compile the library using the generated project file.
 make
 ```
 
-SoundFont file writing examples
--------------------------------
+SoundFont file writing example
+------------------------------
 
 Here is an example of SoundFont file writing.
 
@@ -121,7 +121,8 @@ int main(int argc, char * argv[]) {
 
   // Write SoundFont file.
   try {
-    sf2.Write(std::ofstream("output.sf2", std::ios::binary));
+    std::ofstream ofs("output.sf2", std::ios::binary);
+    sf2.Write(ofs);
     return 0;
   }
   catch (const std::fstream::failure & e) {
