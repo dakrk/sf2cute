@@ -1,19 +1,24 @@
 configurations {
     Toolset {
-        key : "PlatformToolset";
-        choices: { v140, v140_xp, v120, v120_xp };
+        key: "PlatformToolset";
+        choices: { v140, v140_xp };
     };
 
     Configuration {
-        key : "Configuration";
-        choices: { Release, Debug, MinSizeRel, RelWithDebInfo };
+        key: "Configuration";
+        choices: { Release, Debug };
+    };
+
+    RuntimeLibrary {
+        key: "RuntimeLibrary";
+        choices: { MultiThreaded, MultiThreadedDebug, MultiThreadedDLL, MultiThreadedDebugDLL };
     };
 }
 
 nuget {
     nuspec {
         id = sf2cute;
-        version: 0.1.0.0;
+        version: 0.1.0.1;
         title: SF2cute C++ SoundFont Libary;
         authors: { gocha };
         owners: { gocha };
@@ -22,7 +27,9 @@ nuget {
         iconUrl: "https://assets-cdn.github.com/favicon.ico";
         requireLicenseAcceptance: false;
         summary: Modern C++ library for SoundFont 2;
-        description: SF2cute is a Modern C++ library for writing SoundFont 2;
+        description: @"SF2cute is a Modern C++ library for writing SoundFont 2.
+
+This package bundles the static libraries for Visual Studio 2015.";
         releaseNotes: "First public beta release.";  
         copyright: Copyright 2016 (c) gocha;
         tags: { C++, sf2cute, soundfont, native, CoApp, nativepackage }; 
@@ -38,68 +45,100 @@ nuget {
 
         docs: { doc\**\* };
 
-        [Win32, dynamic, Debug] {
-            lib: { Debug\Win32\dynamic\sf2cute.lib };
+        [v140, Win32, static, MultiThreadedDebug] {
+            lib: { build\lib\v140\Win32\static\MultiThreadedDebug\sf2cute.lib };
+            symbols_: {
+                #destination = ${d_lib};
+                build\lib\v140\Win32\static\MultiThreadedDebug\sf2cute.pdb
+            };
         }
 
-        [Win32, dynamic, Release] {
-            lib: { Release\Win32\dynamic\sf2cute.lib };
+        [v140, Win32, static, MultiThreadedDebugDLL] {
+            lib: { build\lib\v140\Win32\static\MultiThreadedDebugDLL\sf2cute.lib };
+            symbols_: {
+                #destination = ${d_lib};
+                build\lib\v140\Win32\static\MultiThreadedDebugDLL\sf2cute.pdb
+            };
         }
 
-        [Win32, dynamic, MinSizeRel] {
-            lib: { MinSizeRel\Win32\dynamic\sf2cute.lib };
+        [v140, Win32, static, MultiThreaded] {
+            lib: { build\lib\v140\Win32\static\MultiThreaded\sf2cute.lib };
         }
 
-        [Win32, dynamic, RelWithDebInfo] {
-            lib: { RelWithDebInfo\Win32\dynamic\sf2cute.lib };
+        [v140, Win32, static, MultiThreadedDLL] {
+            lib: { build\lib\v140\Win32\static\MultiThreadedDLL\sf2cute.lib };
         }
 
-        [Win32, static, Debug] {
-            lib: { Debug\Win32\static\sf2cute.lib };
+        [v140, x64, static, MultiThreadedDebug] {
+            lib: { build\lib\v140\x64\static\MultiThreadedDebug\sf2cute.lib };
+            symbols_: {
+                #destination = ${d_lib};
+                build\lib\v140\x64\static\MultiThreadedDebug\sf2cute.pdb
+            };
         }
 
-        [Win32, static, Release] {
-            lib: { Release\Win32\static\sf2cute.lib };
+        [v140, x64, static, MultiThreadedDebugDLL] {
+            lib: { build\lib\v140\x64\static\MultiThreadedDebugDLL\sf2cute.lib };
+            symbols_: {
+                #destination = ${d_lib};
+                build\lib\v140\x64\static\MultiThreadedDebugDLL\sf2cute.pdb
+            };
         }
 
-        [Win32, static, MinSizeRel] {
-            lib: { MinSizeRel\Win32\static\sf2cute.lib };
+        [v140, x64, static, MultiThreaded] {
+            lib: { build\lib\v140\x64\static\MultiThreaded\sf2cute.lib };
         }
 
-        [Win32, static, RelWithDebInfo] {
-            lib: { RelWithDebInfo\Win32\static\sf2cute.lib };
+        [v140, x64, static, MultiThreadedDLL] {
+            lib: { build\lib\v140\x64\static\MultiThreadedDLL\sf2cute.lib };
         }
 
-        [x64, dynamic, Debug] {
-            lib: { Debug\x64\dynamic\sf2cute.lib };
+        [v140_xp, Win32, static, MultiThreadedDebug] {
+            lib: { build\lib\v140_xp\Win32\static\MultiThreadedDebug\sf2cute.lib };
+            symbols_: {
+                #destination = ${d_lib};
+                build\lib\v140_xp\Win32\static\MultiThreadedDebug\sf2cute.pdb
+            };
         }
 
-        [x64, dynamic, Release] {
-            lib: { Release\x64\dynamic\sf2cute.lib };
+        [v140_xp, Win32, static, MultiThreadedDebugDLL] {
+            lib: { build\lib\v140_xp\Win32\static\MultiThreadedDebugDLL\sf2cute.lib };
+            symbols_: {
+                #destination = ${d_lib};
+                build\lib\v140_xp\Win32\static\MultiThreadedDebugDLL\sf2cute.pdb
+            };
         }
 
-        [x64, dynamic, MinSizeRel] {
-            lib: { MinSizeRel\x64\dynamic\sf2cute.lib };
+        [v140_xp, Win32, static, MultiThreaded] {
+            lib: { build\lib\v140_xp\Win32\static\MultiThreaded\sf2cute.lib };
         }
 
-        [x64, dynamic, RelWithDebInfo] {
-            lib: { RelWithDebInfo\x64\dynamic\sf2cute.lib };
+        [v140_xp, Win32, static, MultiThreadedDLL] {
+            lib: { build\lib\v140_xp\Win32\static\MultiThreadedDLL\sf2cute.lib };
         }
 
-        [x64, static, Debug] {
-            lib: { Debug\x64\static\sf2cute.lib };
+        [v140_xp, x64, static, MultiThreadedDebug] {
+            lib: { build\lib\v140_xp\x64\static\MultiThreadedDebug\sf2cute.lib };
+            symbols_: {
+                #destination = ${d_lib};
+                build\lib\v140_xp\x64\static\MultiThreadedDebug\sf2cute.pdb
+            };
         }
 
-        [x64, static, Release] {
-            lib: { Release\x64\static\sf2cute.lib };
+        [v140_xp, x64, static, MultiThreadedDebugDLL] {
+            lib: { build\lib\v140_xp\x64\static\MultiThreadedDebugDLL\sf2cute.lib };
+            symbols_: {
+                #destination = ${d_lib};
+                build\lib\v140_xp\x64\static\MultiThreadedDebugDLL\sf2cute.pdb
+            };
         }
 
-        [x64, static, MinSizeRel] {
-            lib: { MinSizeRel\x64\static\sf2cute.lib };
+        [v140_xp, x64, static, MultiThreaded] {
+            lib: { build\lib\v140_xp\x64\static\MultiThreaded\sf2cute.lib };
         }
 
-        [x64, static, RelWithDebInfo] {
-            lib: { RelWithDebInfo\x64\static\sf2cute.lib };
+        [v140_xp, x64, static, MultiThreadedDLL] {
+            lib: { build\lib\v140_xp\x64\static\MultiThreadedDLL\sf2cute.lib };
         }
     };
 }
