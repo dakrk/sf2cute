@@ -3,8 +3,8 @@
 ///
 /// @author gocha <https://github.com/gocha>
 
-#ifndef SF2CUTE_MODULATOR_IDENTIFIER_HPP_
-#define SF2CUTE_MODULATOR_IDENTIFIER_HPP_
+#ifndef SF2CUTE_MODULATOR_KEY_HPP_
+#define SF2CUTE_MODULATOR_KEY_HPP_
 
 #include <utility>
 
@@ -13,42 +13,42 @@
 
 namespace sf2cute {
 
-/// The SFModulatorIdentifier class represents the unique key of a modulator.
+/// The SFModulatorKey class represents the unique key of a modulator.
 ///
 /// @remarks This class represents a part of the sfModList/sfInstModList type.
 /// @see "7.4 The PMOD Sub-chunk". In SoundFont Technical Specification 2.04.
 /// @see "7.8 The IMOD Sub-chunk". In SoundFont Technical Specification 2.04.
-class SFModulatorIdentifier {
+class SFModulatorKey {
 public:
-  /// Constructs a new SFModulatorIdentifier.
-  SFModulatorIdentifier();
+  /// Constructs a new SFModulatorKey.
+  SFModulatorKey();
 
-  /// Constructs a new SFModulatorIdentifier using the specified controllers.
+  /// Constructs a new SFModulatorKey using the specified controllers.
   /// @param source_op the source of data for the modulator.
   /// @param destination_op the destination of the modulator.
   /// @param amount_source_op the modulation source to be applied to the modulation amount.
-  SFModulatorIdentifier(SFModulator source_op,
+  SFModulatorKey(SFModulator source_op,
       SFGenerator destination_op,
       SFModulator amount_source_op);
 
-  /// Constructs a new copy of specified SFModulatorIdentifier.
-  /// @param origin a SFModulatorIdentifier object.
-  SFModulatorIdentifier(const SFModulatorIdentifier & origin) = default;
+  /// Constructs a new copy of specified SFModulatorKey.
+  /// @param origin a SFModulatorKey object.
+  SFModulatorKey(const SFModulatorKey & origin) = default;
 
-  /// Copy-assigns a new value to the SFModulatorIdentifier, replacing its current contents.
-  /// @param origin a SFModulatorIdentifier object.
-  SFModulatorIdentifier & operator=(const SFModulatorIdentifier & origin) = default;
+  /// Copy-assigns a new value to the SFModulatorKey, replacing its current contents.
+  /// @param origin a SFModulatorKey object.
+  SFModulatorKey & operator=(const SFModulatorKey & origin) = default;
 
-  /// Acquires the contents of specified SFModulatorIdentifier.
-  /// @param origin a SFModulatorIdentifier object.
-  SFModulatorIdentifier(SFModulatorIdentifier && origin) = default;
+  /// Acquires the contents of specified SFModulatorKey.
+  /// @param origin a SFModulatorKey object.
+  SFModulatorKey(SFModulatorKey && origin) = default;
 
-  /// Move-assigns a new value to the SFModulatorIdentifier, replacing its current contents.
-  /// @param origin a SFModulatorIdentifier object.
-  SFModulatorIdentifier & operator=(SFModulatorIdentifier && origin) = default;
+  /// Move-assigns a new value to the SFModulatorKey, replacing its current contents.
+  /// @param origin a SFModulatorKey object.
+  SFModulatorKey & operator=(SFModulatorKey && origin) = default;
 
-  /// Destructs the SFModulatorIdentifier.
-  ~SFModulatorIdentifier() = default;
+  /// Destructs the SFModulatorKey.
+  ~SFModulatorKey() = default;
 
   /// Returns the source of data for the modulator.
   /// @return the source of data for the modulator.
@@ -74,65 +74,65 @@ public:
   /// @param amount_source_op the modulation source to be applied to the modulation amount.
   void set_amount_source_op(SFModulator amount_source_op);
 
-  /// Indicates a SFModulatorIdentifier object is "equal to" the other one.
+  /// Indicates a SFModulatorKey object is "equal to" the other one.
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
-  /// @return true if a SFModulatorIdentifier object is "equal to" the other one.
+  /// @return true if a SFModulatorKey object is "equal to" the other one.
   friend inline bool operator==(
-      const SFModulatorIdentifier & x,
-      const SFModulatorIdentifier & y) noexcept {
+      const SFModulatorKey & x,
+      const SFModulatorKey & y) noexcept {
     return std::tie(x.source_op_, x.destination_op_, x.amount_source_op_) ==
       std::tie(y.source_op_, y.destination_op_, y.amount_source_op_);
   }
 
-  /// Indicates a SFModulatorIdentifier object is "not equal to" the other one.
+  /// Indicates a SFModulatorKey object is "not equal to" the other one.
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
-  /// @return true if a SFModulatorIdentifier object is "not equal to" the other one.
+  /// @return true if a SFModulatorKey object is "not equal to" the other one.
   friend inline bool operator!=(
-      const SFModulatorIdentifier & x,
-      const SFModulatorIdentifier & y) noexcept {
+      const SFModulatorKey & x,
+      const SFModulatorKey & y) noexcept {
     return std::rel_ops::operator!=(x, y);
   }
 
-  /// Indicates a SFModulatorIdentifier object is "less than" the other one.
+  /// Indicates a SFModulatorKey object is "less than" the other one.
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
-  /// @return true if a SFModulatorIdentifier object is "less than" the other one.
+  /// @return true if a SFModulatorKey object is "less than" the other one.
   friend inline bool operator<(
-      const SFModulatorIdentifier & x,
-      const SFModulatorIdentifier & y) noexcept {
+      const SFModulatorKey & x,
+      const SFModulatorKey & y) noexcept {
     return std::tie(x.source_op_, x.destination_op_, x.amount_source_op_) <
       std::tie(y.source_op_, y.destination_op_, y.amount_source_op_);
   }
 
-  /// Indicates a SFModulatorIdentifier object is "less than or equal to" the other one.
+  /// Indicates a SFModulatorKey object is "less than or equal to" the other one.
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
-  /// @return true if a SFModulatorIdentifier object is "less than or equal to" the other one.
+  /// @return true if a SFModulatorKey object is "less than or equal to" the other one.
   friend inline bool operator<=(
-      const SFModulatorIdentifier & x,
-      const SFModulatorIdentifier & y) noexcept {
+      const SFModulatorKey & x,
+      const SFModulatorKey & y) noexcept {
     return std::rel_ops::operator<=(x, y);
   }
 
-  /// Indicates a SFModulatorIdentifier object is "greater than" the other one.
+  /// Indicates a SFModulatorKey object is "greater than" the other one.
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
-  /// @return true if a SFModulatorIdentifier object is "greater than" the other one.
+  /// @return true if a SFModulatorKey object is "greater than" the other one.
   friend inline bool operator>(
-      const SFModulatorIdentifier & x,
-      const SFModulatorIdentifier & y) noexcept {
+      const SFModulatorKey & x,
+      const SFModulatorKey & y) noexcept {
     return std::rel_ops::operator>(x, y);
   }
 
-  /// Indicates a SFModulatorIdentifier object is "greater than or equal to" the other one.
+  /// Indicates a SFModulatorKey object is "greater than or equal to" the other one.
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
-  /// @return true if a SFModulatorIdentifier object is "greater than or equal to" the other one.
+  /// @return true if a SFModulatorKey object is "greater than or equal to" the other one.
   friend inline bool operator>=(
-      const SFModulatorIdentifier & x,
-      const SFModulatorIdentifier & y) noexcept {
+      const SFModulatorKey & x,
+      const SFModulatorKey & y) noexcept {
     return std::rel_ops::operator>=(x, y);
   }
 
@@ -149,4 +149,4 @@ private:
 
 } // namespace sf2cute
 
-#endif // SF2CUTE_MODULATOR_IDENTIFIER_HPP_
+#endif // SF2CUTE_MODULATOR_KEY_HPP_

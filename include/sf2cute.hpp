@@ -11,7 +11,7 @@
 #include "sf2cute/modulator.hpp"
 #include "sf2cute/sample.hpp"
 #include "sf2cute/generator_item.hpp"
-#include "sf2cute/modulator_identifier.hpp"
+#include "sf2cute/modulator_key.hpp"
 #include "sf2cute/modulator_item.hpp"
 #include "sf2cute/zone.hpp"
 #include "sf2cute/instrument_zone.hpp"

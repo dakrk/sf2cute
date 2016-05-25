@@ -10,7 +10,7 @@
 
 #include "types.hpp"
 #include "modulator.hpp"
-#include "modulator_identifier.hpp"
+#include "modulator_key.hpp"
 
 namespace sf2cute {
 
@@ -61,15 +61,15 @@ public:
   /// @see source_op()
   /// @see destination_op()
   /// @see amount_source_op()
-  SFModulatorIdentifier identifier() const noexcept;
+  SFModulatorKey key() const noexcept;
 
   /// Sets the unique key of the modulator.
-  /// @param identifier the unique key of the modulator.
+  /// @param key the unique key of the modulator.
   /// @remarks Using set_source_op(SFModulator), set_destination_op(SFGenerator) or set_amount_source_op(SFModulator) is recommended for an individual member access.
   /// @see set_source_op(SFModulator)
   /// @see set_destination_op(SFGenerator)
   /// @see set_amount_source_op(SFModulator)
-  void set_identifier(SFModulatorIdentifier identifier);
+  void set_key(SFModulatorKey key);
 
   /// Returns the source of data for the modulator.
   /// @return the source of data for the modulator.
@@ -113,7 +113,7 @@ public:
 
 private:
   /// The unique key of the modulator.
-  SFModulatorIdentifier identifier_;
+  SFModulatorKey key_;
 
   /// The degree to which the source modulates the destination.
   int16_t amount_;

@@ -137,7 +137,7 @@ const std::vector<std::unique_ptr<SFModulatorItem>> & SFZone::modulators() const
 /// Sets a modulator to the zone.
 void SFZone::SetModulator(SFModulatorItem modulator) {
   // Find the modulator.
-  const auto it = FindModulator(modulator.identifier());
+  const auto it = FindModulator(modulator.key());
   if (it == modulators_.end()) {
     modulators_.push_back(std::make_unique<SFModulatorItem>(std::move(modulator)));
   }
@@ -149,10 +149,10 @@ void SFZone::SetModulator(SFModulatorItem modulator) {
 
 /// Finds the modulator which is the specified type.
 const std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator
-  SFZone::FindModulator(SFModulatorIdentifier identifier) const {
+  SFZone::FindModulator(SFModulatorKey key) const {
   return std::find_if(modulators_.begin(), modulators_.end(),
-    [&identifier](const std::unique_ptr<SFModulatorItem> & modulator) {
-      return modulator->identifier() == identifier;
+    [&key](const std::unique_ptr<SFModulatorItem> & modulator) {
+      return modulator->key() == key;
     });
 }
 

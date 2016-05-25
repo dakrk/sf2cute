@@ -27,7 +27,7 @@ set(SF2CUTE_PUBLIC_HDRS
     include/sf2cute/instrument.hpp
     include/sf2cute/instrument_zone.hpp
     include/sf2cute/modulator.hpp
-    include/sf2cute/modulator_identifier.hpp
+    include/sf2cute/modulator_key.hpp
 )
 set(SF2CUTE_PRIVATE_HDRS
     src/sf2cute/byteio.hpp
@@ -51,7 +51,7 @@ set(SF2CUTE_SRCS
     src/sf2cute/instrument.cpp
     src/sf2cute/instrument_zone.cpp
     src/sf2cute/modulator.cpp
-    src/sf2cute/modulator_identifier.cpp
+    src/sf2cute/modulator_key.cpp
     src/sf2cute/modulator_item.cpp
     src/sf2cute/preset.cpp
     src/sf2cute/preset_zone.cpp

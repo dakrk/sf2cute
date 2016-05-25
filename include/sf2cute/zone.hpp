@@ -12,7 +12,7 @@
 
 #include "types.hpp"
 #include "generator_item.hpp"
-#include "modulator_identifier.hpp"
+#include "modulator_key.hpp"
 #include "modulator_item.hpp"
 
 namespace sf2cute {
@@ -99,7 +99,7 @@ public:
   /// Finds the modulator which is the specified type.
   /// @return the position of the found modulator or std::end(modulators()) if no such modulator is found.
   const std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator
-      FindModulator(SFModulatorIdentifier identifier) const;
+      FindModulator(SFModulatorKey key) const;
 
   /// Removes a modulator from the zone.
   /// @param position the modulator to remove.
