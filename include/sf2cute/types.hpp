@@ -499,4 +499,19 @@ struct SFVersionTag {
 
 } // namespace sf2cute
 
+namespace std
+{
+  /// The hash template for the sf2cute::SFVersionTag class.
+  template <>
+  struct hash<sf2cute::SFVersionTag>
+  {
+    /// Calculates the hash of the argument.
+    /// @param key the object to be hashed.
+    /// @return the hash value.
+    std::size_t operator()(sf2cute::SFVersionTag const & key) const noexcept {
+      return std::hash<uint32_t>()((static_cast<uint32_t>(key.major) << 16) + key.minor);
+    }
+  };
+} // namespace std
+
 #endif // SF2CUTE_TYPES_HPP_

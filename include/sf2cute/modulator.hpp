@@ -208,4 +208,19 @@ private:
 
 } // namespace sf2cute
 
+namespace std
+{
+  /// The hash template for the sf2cute::SFModulator class.
+  template <>
+  struct hash<sf2cute::SFModulator>
+  {
+    /// Calculates the hash of the argument.
+    /// @param key the object to be hashed.
+    /// @return the hash value.
+    std::size_t operator()(sf2cute::SFModulator const & key) const noexcept {
+      return std::hash<uint16_t>()(uint16_t(key));
+    }
+  };
+} // namespace std
+
 #endif // SF2CUTE_MODULATOR_HPP_
