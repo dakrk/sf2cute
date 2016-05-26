@@ -6,14 +6,10 @@ SF2cute is a C++ library for writing SoundFont 2.
 Downloading
 -----------
 
-You can download as a ZIP file from the Github page for the sf2cute library, 
-or if you use git, then download with this command:
+You can download a source code package of the latest release
+from [Releases](https://github.com/gocha/sf2cute/releases/latest) page.
 
-``` bash
-git clone https://github.com/gocha/sf2cute
-```
-
-This will create the `sf2cute` directory with the source code for the library.
+Visual Studio users can install the precompiled binaries from the [SF2cute NuGet Gallery](https://www.nuget.org/packages/sf2cute).
 
 [SF2cute Documentation](http://gocha.github.io/sf2cute/) is available on the GitHub Pages.
 You can also build the documentation by yourself using [Doxygen](http://www.doxygen.org).
