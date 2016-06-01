@@ -69,6 +69,9 @@ public:
   /// @param out the output stream to write to.
   void Write(std::ostream & out);
 
+  /// @copydoc SoundFontWriter::Write(std::ostream &)
+  void Write(std::ostream && out);
+
 private:
   /// Make an INFO chunk.
   /// @return the INFO chunk.

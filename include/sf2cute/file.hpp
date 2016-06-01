@@ -320,6 +320,9 @@ public:
   /// @param out the output stream to write to.
   void Write(std::ostream & out);
 
+  /// @copydoc SoundFont::Write(std::ostream &)
+  void Write(std::ostream && out);
+
 private:
   /// The default value of the target sound engine.
   static constexpr auto kDefaultTargetSoundEngine = "EMU8000";

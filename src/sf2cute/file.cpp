@@ -582,6 +582,11 @@ void SoundFont::Write(std::ostream & out) {
   writer.Write(out);
 }
 
+/// Writes the SoundFont to an output stream.
+void SoundFont::Write(std::ostream && out) {
+  Write(out);
+}
+
 /// Sets backward references of every children elements.
 void SoundFont::SetBackwardReferences() noexcept {
   // Set backward reference from presets to the file.

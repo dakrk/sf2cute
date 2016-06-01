@@ -67,6 +67,11 @@ void SoundFontWriter::Write(std::ostream & out) {
   riff.Write(out);
 }
 
+/// Writes the SoundFont to an output stream.
+void SoundFontWriter::Write(std::ostream && out) {
+  Write(out);
+}
+
 /// Make an INFO chunk.
 std::unique_ptr<RIFFChunkInterface> SoundFontWriter::MakeInfoListChunk() {
   std::unique_ptr<RIFFListChunk> info = std::make_unique<RIFFListChunk>("INFO");
