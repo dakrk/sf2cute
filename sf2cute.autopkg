@@ -18,7 +18,7 @@ configurations {
 nuget {
     nuspec {
         id = sf2cute;
-        version: 0.1.0.1;
+        version: 0.1.0.3;
         title: SF2cute C++ SoundFont Libary;
         authors: { gocha };
         owners: { gocha };
@@ -69,6 +69,14 @@ This package bundles the static libraries for Visual Studio 2015.";
             lib: { build\lib\v140\Win32\static\MultiThreadedDLL\sf2cute.lib };
         }
 
+        [v140, Win32, ltcg, MultiThreaded] {
+            lib: { build\lib\v140\Win32\ltcg\MultiThreaded\sf2cute.lib };
+        }
+
+        [v140, Win32, ltcg, MultiThreadedDLL] {
+            lib: { build\lib\v140\Win32\ltcg\MultiThreadedDLL\sf2cute.lib };
+        }
+
         [v140, x64, static, MultiThreadedDebug] {
             lib: { build\lib\v140\x64\static\MultiThreadedDebug\sf2cute.lib };
             symbols_: {
@@ -91,6 +99,14 @@ This package bundles the static libraries for Visual Studio 2015.";
 
         [v140, x64, static, MultiThreadedDLL] {
             lib: { build\lib\v140\x64\static\MultiThreadedDLL\sf2cute.lib };
+        }
+
+        [v140, x64, ltcg, MultiThreaded] {
+            lib: { build\lib\v140\x64\ltcg\MultiThreaded\sf2cute.lib };
+        }
+
+        [v140, x64, ltcg, MultiThreadedDLL] {
+            lib: { build\lib\v140\x64\ltcg\MultiThreadedDLL\sf2cute.lib };
         }
 
         [v140_xp, Win32, static, MultiThreadedDebug] {
@@ -117,6 +133,14 @@ This package bundles the static libraries for Visual Studio 2015.";
             lib: { build\lib\v140_xp\Win32\static\MultiThreadedDLL\sf2cute.lib };
         }
 
+        [v140_xp, Win32, ltcg, MultiThreaded] {
+            lib: { build\lib\v140_xp\Win32\ltcg\MultiThreaded\sf2cute.lib };
+        }
+
+        [v140_xp, Win32, ltcg, MultiThreadedDLL] {
+            lib: { build\lib\v140_xp\Win32\ltcg\MultiThreadedDLL\sf2cute.lib };
+        }
+
         [v140_xp, x64, static, MultiThreadedDebug] {
             lib: { build\lib\v140_xp\x64\static\MultiThreadedDebug\sf2cute.lib };
             symbols_: {
@@ -139,6 +163,14 @@ This package bundles the static libraries for Visual Studio 2015.";
 
         [v140_xp, x64, static, MultiThreadedDLL] {
             lib: { build\lib\v140_xp\x64\static\MultiThreadedDLL\sf2cute.lib };
+        }
+
+        [v140_xp, x64, ltcg, MultiThreaded] {
+            lib: { build\lib\v140_xp\x64\ltcg\MultiThreaded\sf2cute.lib };
+        }
+
+        [v140_xp, x64, ltcg, MultiThreadedDLL] {
+            lib: { build\lib\v140_xp\x64\ltcg\MultiThreadedDLL\sf2cute.lib };
         }
     };
 }
