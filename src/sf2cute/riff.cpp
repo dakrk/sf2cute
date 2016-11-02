@@ -75,7 +75,7 @@ RIFFChunk::size_type RIFFChunk::size() const noexcept {
 /// Writes this chunk to the specified output stream.
 void RIFFChunk::Write(std::ostream & out) const {
   // Save exception bits of output stream.
-  const int old_exception_bits = out.exceptions();
+  const std::ios_base::iostate old_exception_bits = out.exceptions();
   // Set exception bits to get output error as an exception.
   out.exceptions(std::ios::badbit | std::ios::failbit);
 
@@ -112,7 +112,7 @@ void RIFFChunk::WriteHeader(std::ostream & out,
   }
 
   // Save exception bits of output stream.
-  const int old_exception_bits = out.exceptions();
+  const std::ios_base::iostate old_exception_bits = out.exceptions();
   // Set exception bits to get output error as an exception.
   out.exceptions(std::ios::badbit | std::ios::failbit);
 
@@ -207,7 +207,7 @@ void RIFFListChunk::WriteHeader(std::ostream & out,
   }
 
   // Save exception bits of output stream.
-  const int old_exception_bits = out.exceptions();
+  const std::ios_base::iostate old_exception_bits = out.exceptions();
   // Set exception bits to get output error as an exception.
   out.exceptions(std::ios::badbit | std::ios::failbit);
 
@@ -285,7 +285,7 @@ RIFF::size_type RIFF::size() const noexcept {
 /// Writes this RIFF to the specified output stream.
 void RIFF::Write(std::ostream & out) const {
   // Save exception bits of output stream.
-  const int old_exception_bits = out.exceptions();
+  const std::ios_base::iostate old_exception_bits = out.exceptions();
   // Set exception bits to get output error as an exception.
   out.exceptions(std::ios::badbit | std::ios::failbit);
 
@@ -317,7 +317,7 @@ void RIFF::WriteHeader(std::ostream & out,
   }
 
   // Save exception bits of output stream.
-  const int old_exception_bits = out.exceptions();
+  const std::ios_base::iostate old_exception_bits = out.exceptions();
   // Set exception bits to get output error as an exception.
   out.exceptions(std::ios::badbit | std::ios::failbit);
 

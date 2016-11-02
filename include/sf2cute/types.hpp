@@ -401,16 +401,16 @@ struct SFVersionTag;
 struct SFVersionTag {
   /// Constructs a new zero-valued SFVersionTag.
   SFVersionTag() noexcept :
-      major(0),
-      minor(0) {
+      major_version(0),
+      minor_version(0) {
   };
 
   /// Constructs a new SFVersionTag using the specified version numbers.
-  /// @param major the major version number.
-  /// @param minor the minor version number.
-  SFVersionTag(uint16_t major, uint16_t minor) noexcept :
-      major(std::move(major)),
-      minor(std::move(minor)) {
+  /// @param major_version the major version number.
+  /// @param minor_version the minor version number.
+  SFVersionTag(uint16_t major_version, uint16_t minor_version) noexcept :
+      major_version(std::move(major_version)),
+      minor_version(std::move(minor_version)) {
   };
 
   /// Indicates a SFVersionTag object is "equal to" the other one.
@@ -420,7 +420,7 @@ struct SFVersionTag {
   friend inline bool operator==(
       const SFVersionTag & x,
       const SFVersionTag & y) noexcept {
-    return std::tie(x.major, x.minor) == std::tie(y.major, y.minor);
+    return std::tie(x.major_version, x.minor_version) == std::tie(y.major_version, y.minor_version);
   }
 
   /// Indicates a SFVersionTag object is "not equal to" the other one.
@@ -440,7 +440,7 @@ struct SFVersionTag {
   friend inline bool operator<(
       const SFVersionTag & x,
       const SFVersionTag & y) noexcept {
-    return std::tie(x.major, x.minor) < std::tie(y.major, y.minor);
+    return std::tie(x.major_version, x.minor_version) < std::tie(y.major_version, y.minor_version);
   }
 
   /// Indicates a SFVersionTag object is "less than or equal to" the other one.
@@ -486,15 +486,15 @@ struct SFVersionTag {
   /// @return a string representation of the version.
   inline std::string to_string() const {
     std::ostringstream string_builder;
-    string_builder << major << "." << minor;
+    string_builder << major_version << "." << minor_version;
     return string_builder.str();
   }
 
   /// Major version number.
-  uint16_t major;
+  uint16_t major_version;
 
   /// Minor version number.
-  uint16_t minor;
+  uint16_t minor_version;
 };
 
 } // namespace sf2cute
@@ -509,7 +509,7 @@ namespace std
     /// @param key the object to be hashed.
     /// @return the hash value.
     std::size_t operator()(sf2cute::SFVersionTag const & key) const noexcept {
-      return std::hash<uint32_t>()((static_cast<uint32_t>(key.major) << 16) + key.minor);
+      return std::hash<uint32_t>()((static_cast<uint32_t>(key.major_version) << 16) + key.minor_version);
     }
   };
 } // namespace std

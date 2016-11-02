@@ -159,8 +159,8 @@ std::unique_ptr<RIFFChunkInterface> SoundFontWriter::MakePdtaListChunk() {
 /// Make a chunk with a version number.
 std::unique_ptr<RIFFChunkInterface> SoundFontWriter::MakeVersionChunk(std::string name, SFVersionTag version) {
   std::vector<char> data(4);
-  WriteInt16L(&data[0], version.major);
-  WriteInt16L(&data[2], version.minor);
+  WriteInt16L(&data[0], version.major_version);
+  WriteInt16L(&data[2], version.minor_version);
   return std::make_unique<RIFFChunk>(std::move(name), std::move(data));
 }
 

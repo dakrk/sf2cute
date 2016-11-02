@@ -79,7 +79,7 @@ SFRIFFPbagChunk::size_type SFRIFFPbagChunk::size() const noexcept {
 /// Writes this chunk to the specified output stream.
 void SFRIFFPbagChunk::Write(std::ostream & out) const {
   // Save exception bits of output stream.
-  const int old_exception_bits = out.exceptions();
+  const std::ios_base::iostate old_exception_bits = out.exceptions();
   // Set exception bits to get output error as an exception.
   out.exceptions(std::ios::badbit | std::ios::failbit);
 
