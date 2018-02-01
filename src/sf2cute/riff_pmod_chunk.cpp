@@ -19,15 +19,8 @@
 
 namespace sf2cute {
 
-namespace {
-
-constexpr auto kChunkName = "pmod";
-
-} // namespace
-
 /// Constructs a new empty SFRIFFPmodChunk.
 SFRIFFPmodChunk::SFRIFFPmodChunk() :
-    name_(kChunkName),
     size_(0),
     presets_(nullptr) {
 }
@@ -35,22 +28,8 @@ SFRIFFPmodChunk::SFRIFFPmodChunk() :
 /// Constructs a new SFRIFFPmodChunk using the specified presets.
 SFRIFFPmodChunk::SFRIFFPmodChunk(
     const std::vector<std::shared_ptr<SFPreset>> & presets) :
-    name_(kChunkName),
     presets_(&presets) {
   size_ = kItemSize * NumItems();
-}
-
-/// Sets the name of this chunk.
-void SFRIFFPmodChunk::set_name(std::string name) {
-  // Throw exception if the length of chunk name is not 4.
-  if (name.size() != 4) {
-    std::ostringstream message_builder;
-    message_builder << "Invalid RIFF chunk name \"" << name << "\".";
-    throw std::invalid_argument(message_builder.str());
-  }
-
-  // Set the name.
-  name_ = std::move(name);
 }
 
 /// Writes this chunk to the specified output stream.

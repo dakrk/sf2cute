@@ -27,12 +27,7 @@ public:
 
   /// Returns the name of this chunk.
   /// @return the name of this chunk.
-  virtual const std::string & name() const = 0;
-
-  /// Sets the name of this chunk.
-  /// @param name the name of this chunk (FourCC).
-  /// @throws std::invalid_argument The given name is not a valid FourCC.
-  virtual void set_name(std::string name) = 0;
+  virtual std::string name() const = 0;
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
@@ -85,12 +80,14 @@ public:
   virtual ~RIFFChunk() = default;
 
   /// @copydoc RIFFChunkInterface::name()
-  virtual const std::string & name() const {
+  virtual std::string name() const {
     return name_;
   }
 
-  /// @copydoc RIFFChunkInterface::set_name()
-  virtual void set_name(std::string name);
+  /// Sets the name of this chunk.
+  /// @param name the name of this chunk (FourCC).
+  /// @throws std::invalid_argument The given name is not a valid FourCC.
+  void set_name(std::string name);
 
   /// Returns the data of this chunk.
   /// @return the data of this chunk.
@@ -174,15 +171,14 @@ public:
   /// @copydoc RIFFChunkInterface::name()
   /// Returns the name of this chunk.
   /// @return the name of this chunk.
-  virtual const std::string & name() const override {
+  virtual std::string name() const override {
     return name_;
   }
 
-  /// @copydoc RIFFChunkInterface::set_name()
   /// Sets the list type of this chunk.
   /// @param name the list type of this chunk (FourCC).
   /// @throws std::invalid_argument The given name is not a valid FourCC.
-  virtual void set_name(std::string name) override;
+  void set_name(std::string name);
 
   /// Returns the subchunks of this chunk.
   /// @return a collection of pointers to each RIFFChunkInterface objects.
@@ -266,7 +262,7 @@ public:
 
   /// Returns the form type of this chunk.
   /// @return the form type of this chunk.
-  const std::string & name() const {
+  std::string name() const {
     return name_;
   }
 

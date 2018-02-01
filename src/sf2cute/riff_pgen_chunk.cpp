@@ -21,15 +21,8 @@
 
 namespace sf2cute {
 
-namespace {
-
-constexpr auto kChunkName = "pgen";
-
-} // namespace
-
 /// Constructs a new empty SFRIFFPgenChunk.
 SFRIFFPgenChunk::SFRIFFPgenChunk() :
-    name_(kChunkName),
     size_(0),
     presets_(nullptr),
     instrument_index_map_() {
@@ -39,23 +32,9 @@ SFRIFFPgenChunk::SFRIFFPgenChunk() :
 SFRIFFPgenChunk::SFRIFFPgenChunk(
     const std::vector<std::shared_ptr<SFPreset>> & presets,
     std::unordered_map<const SFInstrument *, uint16_t> instrument_index_map) :
-    name_(kChunkName),
     presets_(&presets),
     instrument_index_map_(std::move(instrument_index_map)) {
   size_ = kItemSize * NumItems();
-}
-
-/// Sets the name of this chunk.
-void SFRIFFPgenChunk::set_name(std::string name) {
-  // Throw exception if the length of chunk name is not 4.
-  if (name.size() != 4) {
-    std::ostringstream message_builder;
-    message_builder << "Invalid RIFF chunk name \"" << name << "\".";
-    throw std::invalid_argument(message_builder.str());
-  }
-
-  // Set the name.
-  name_ = std::move(name);
 }
 
 /// Writes this chunk to the specified output stream.

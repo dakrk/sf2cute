@@ -19,15 +19,8 @@
 
 namespace sf2cute {
 
-namespace {
-
-constexpr auto kChunkName = "ibag";
-
-} // namespace
-
 /// Constructs a new empty SFRIFFIbagChunk.
 SFRIFFIbagChunk::SFRIFFIbagChunk() :
-    name_(kChunkName),
     size_(0),
     instruments_(nullptr) {
 }
@@ -35,22 +28,8 @@ SFRIFFIbagChunk::SFRIFFIbagChunk() :
 /// Constructs a new SFRIFFIbagChunk using the specified instruments.
 SFRIFFIbagChunk::SFRIFFIbagChunk(
     const std::vector<std::shared_ptr<SFInstrument>> & instruments) :
-    name_(kChunkName),
     instruments_(&instruments) {
   size_ = kItemSize * NumItems();
-}
-
-/// Sets the name of this chunk.
-void SFRIFFIbagChunk::set_name(std::string name) {
-  // Throw exception if the length of chunk name is not 4.
-  if (name.size() != 4) {
-    std::ostringstream message_builder;
-    message_builder << "Invalid RIFF chunk name \"" << name << "\".";
-    throw std::invalid_argument(message_builder.str());
-  }
-
-  // Set the name.
-  name_ = std::move(name);
 }
 
 /// Writes this chunk to the specified output stream.

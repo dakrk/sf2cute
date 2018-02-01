@@ -18,15 +18,8 @@
 
 namespace sf2cute {
 
-namespace {
-
-constexpr auto kChunkName = "phdr";
-
-} // namespace
-
 /// Constructs a new empty SFRIFFPhdrChunk.
 SFRIFFPhdrChunk::SFRIFFPhdrChunk() :
-    name_(kChunkName),
     size_(0),
     presets_(nullptr) {
 }
@@ -34,22 +27,8 @@ SFRIFFPhdrChunk::SFRIFFPhdrChunk() :
 /// Constructs a new SFRIFFPhdrChunk using the specified presets.
 SFRIFFPhdrChunk::SFRIFFPhdrChunk(
     const std::vector<std::shared_ptr<SFPreset>> & presets) :
-    name_(kChunkName),
     presets_(&presets) {
   size_ = kItemSize * NumItems();
-}
-
-/// Sets the name of this chunk.
-void SFRIFFPhdrChunk::set_name(std::string name) {
-  // Throw exception if the length of chunk name is not 4.
-  if (name.size() != 4) {
-    std::ostringstream message_builder;
-    message_builder << "Invalid RIFF chunk name \"" << name << "\".";
-    throw std::invalid_argument(message_builder.str());
-  }
-
-  // Set the name.
-  name_ = std::move(name);
 }
 
 /// Writes this chunk to the specified output stream.

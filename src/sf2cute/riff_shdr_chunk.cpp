@@ -19,15 +19,8 @@
 
 namespace sf2cute {
 
-namespace {
-
-constexpr auto kChunkName = "shdr";
-
-} // namespace
-
 /// Constructs a new empty SFRIFFShdrChunk.
 SFRIFFShdrChunk::SFRIFFShdrChunk() :
-    name_(kChunkName),
     size_(0),
     samples_(nullptr),
     sample_index_map_() {
@@ -36,23 +29,9 @@ SFRIFFShdrChunk::SFRIFFShdrChunk() :
 /// Constructs a new SFRIFFShdrChunk using the specified samples.
 SFRIFFShdrChunk::SFRIFFShdrChunk(const std::vector<std::shared_ptr<SFSample>> & samples,
       std::unordered_map<const SFSample *, uint16_t> sample_index_map) :
-    name_(kChunkName),
     samples_(&samples),
     sample_index_map_(std::move(sample_index_map)) {
   size_ = kItemSize * NumItems();
-}
-
-/// Sets the name of this chunk.
-void SFRIFFShdrChunk::set_name(std::string name) {
-  // Throw exception if the length of chunk name is not 4.
-  if (name.size() != 4) {
-    std::ostringstream message_builder;
-    message_builder << "Invalid RIFF chunk name \"" << name << "\".";
-    throw std::invalid_argument(message_builder.str());
-  }
-
-  // Set the name.
-  name_ = std::move(name);
 }
 
 /// Writes this chunk to the specified output stream.

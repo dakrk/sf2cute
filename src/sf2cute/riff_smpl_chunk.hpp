@@ -51,12 +51,9 @@ public:
   virtual ~SFRIFFSmplChunk() = default;
 
   /// @copydoc RIFFChunkInterface::name()
-  virtual const std::string & name() const override {
-    return name_;
+  virtual std::string name() const override {
+    return "smpl";
   }
-
-  /// @copydoc RIFFChunkInterface::set_name()
-  virtual void set_name(std::string name) override;
 
   /// Returns the samples of this chunk.
   /// @return the samples of this chunk.
@@ -89,9 +86,6 @@ private:
   /// @return the total sample pool size.
   /// @throws std::length_error The sample pool size exceeds the maximum.
   size_type GetSamplePoolSize() const;
-
-  /// The name of the chunk.
-  std::string name_;
 
   /// The size of the chunk (excluding header).
   size_type size_;

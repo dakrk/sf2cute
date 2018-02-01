@@ -61,12 +61,9 @@ public:
   virtual ~SFRIFFShdrChunk() = default;
 
   /// @copydoc RIFFChunkInterface::name()
-  virtual const std::string & name() const override {
-    return name_;
+  virtual std::string name() const override {
+    return "shdr";
   }
-
-  /// @copydoc RIFFChunkInterface::set_name()
-  virtual void set_name(std::string name) override;
 
   /// Returns the samples of this chunk.
   /// @return the samples of this chunk.
@@ -131,9 +128,6 @@ private:
       const std::string & name, uint32_t start, uint32_t end,
       uint32_t start_loop, uint32_t end_loop, uint32_t sample_rate,
       uint8_t original_key, int8_t correction, uint16_t link, SFSampleLink type);
-
-  /// The name of the chunk.
-  std::string name_;
 
   /// The size of the chunk (excluding header).
   size_type size_;

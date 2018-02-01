@@ -56,12 +56,9 @@ public:
   virtual ~SFRIFFPhdrChunk() = default;
 
   /// @copydoc RIFFChunkInterface::name()
-  virtual const std::string & name() const override {
-    return name_;
+  virtual std::string name() const override {
+    return "phdr";
   }
-
-  /// @copydoc RIFFChunkInterface::set_name()
-  virtual void set_name(std::string name) override;
 
   /// Returns the presets of this chunk.
   /// @return the presets of this chunk.

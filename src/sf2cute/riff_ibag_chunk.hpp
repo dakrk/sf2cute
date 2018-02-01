@@ -56,12 +56,9 @@ public:
   virtual ~SFRIFFIbagChunk() = default;
 
   /// @copydoc RIFFChunkInterface::name()
-  virtual const std::string & name() const override {
-    return name_;
+  virtual std::string name() const override {
+    return "ibag";
   }
-
-  /// @copydoc RIFFChunkInterface::set_name()
-  virtual void set_name(std::string name) override;
 
   /// Returns the instruments of this chunk.
   /// @return the instruments of this chunk.
@@ -106,9 +103,6 @@ private:
   static std::ostream & WriteItem(std::ostream & out,
       uint16_t generator_index,
       uint16_t modulator_index);
-
-  /// The name of the chunk.
-  std::string name_;
 
   /// The size of the chunk (excluding header).
   size_type size_;

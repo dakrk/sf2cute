@@ -63,12 +63,9 @@ public:
   virtual ~SFRIFFPgenChunk() = default;
 
   /// @copydoc RIFFChunkInterface::name()
-  virtual const std::string & name() const override {
-    return name_;
+  virtual std::string name() const override {
+    return "pgen";
   }
-
-  /// @copydoc RIFFChunkInterface::set_name()
-  virtual void set_name(std::string name) override;
 
   /// Returns the presets of this chunk.
   /// @return the presets of this chunk.
@@ -136,9 +133,6 @@ private:
   /// @return the sorted collection of the generator pointers.
   static std::vector<SFGeneratorItem *> SortGenerators(
       const std::vector<std::unique_ptr<SFGeneratorItem>> & generators);
-
-  /// The name of the chunk.
-  std::string name_;
 
   /// The size of the chunk (excluding header).
   size_type size_;

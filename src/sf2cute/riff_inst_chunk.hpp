@@ -56,12 +56,9 @@ public:
   virtual ~SFRIFFInstChunk() = default;
 
   /// @copydoc RIFFChunkInterface::name()
-  virtual const std::string & name() const override {
-    return name_;
+  virtual std::string name() const override {
+    return "inst";
   }
-
-  /// @copydoc RIFFChunkInterface::set_name()
-  virtual void set_name(std::string name) override;
 
   /// Returns the instruments of this chunk.
   /// @return the instruments of this chunk.
@@ -106,9 +103,6 @@ private:
   static std::ostream & WriteItem(std::ostream & out,
       const std::string & name,
       uint16_t inst_bag_index);
-
-  /// The name of the chunk.
-  std::string name_;
 
   /// The size of the chunk (excluding header).
   size_type size_;

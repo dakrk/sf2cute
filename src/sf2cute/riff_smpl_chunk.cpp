@@ -17,15 +17,8 @@
 
 namespace sf2cute {
 
-namespace {
-
-constexpr auto kChunkName = "smpl";
-
-} // namespace
-
 /// Constructs a new empty SFRIFFSmplChunk.
 SFRIFFSmplChunk::SFRIFFSmplChunk() :
-    name_(kChunkName),
     size_(0),
     samples_(nullptr) {
 }
@@ -33,22 +26,8 @@ SFRIFFSmplChunk::SFRIFFSmplChunk() :
 /// Constructs a new SFRIFFSmplChunk using the specified samples.
 SFRIFFSmplChunk::SFRIFFSmplChunk(
     const std::vector<std::shared_ptr<SFSample>> & samples) :
-    name_(kChunkName),
     samples_(&samples) {
   size_ = GetSamplePoolSize();
-}
-
-/// Sets the name of this chunk.
-void SFRIFFSmplChunk::set_name(std::string name) {
-  // Throw exception if the length of chunk name is not 4.
-  if (name.size() != 4) {
-    std::ostringstream message_builder;
-    message_builder << "Invalid RIFF chunk name \"" << name << "\".";
-    throw std::invalid_argument(message_builder.str());
-  }
-
-  // Set the name.
-  name_ = std::move(name);
 }
 
 /// Writes this chunk to the specified output stream.

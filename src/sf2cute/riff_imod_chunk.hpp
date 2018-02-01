@@ -59,12 +59,9 @@ public:
   virtual ~SFRIFFImodChunk() = default;
 
   /// @copydoc RIFFChunkInterface::name()
-  virtual const std::string & name() const override {
-    return name_;
+  virtual std::string name() const override {
+    return "imod";
   }
-
-  /// @copydoc RIFFChunkInterface::set_name()
-  virtual void set_name(std::string name) override;
 
   /// Returns the instruments of this chunk.
   /// @return the instruments of this chunk.
@@ -115,9 +112,6 @@ private:
       int16_t amount,
       SFModulator amount_source_op,
       SFTransform transform_op);
-
-  /// The name of the chunk.
-  std::string name_;
 
   /// The size of the chunk (excluding header).
   size_type size_;
