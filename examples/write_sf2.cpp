@@ -58,8 +58,16 @@ int main(int argc, char * argv[]) {
       SFGeneratorItem(SFGenerator::kSampleModes, uint16_t(SampleMode::kLoopContinuously)),
     },
     std::vector<SFModulatorItem>{});
-  // Add more generators (or modulators) if necessary.
+  // Add more generators or modulators if necessary.
   instrument_zone.SetGenerator(SFGeneratorItem(SFGenerator::kReverbEffectsSend, 618));
+  instrument_zone.SetModulator(SFModulatorItem(
+      SFModulator(SFGeneralController::kNoteOnVelocity,
+      SFControllerDirection::kDecrease, SFControllerPolarity::kUnipolar,
+      SFControllerType::kConcave),
+    SFGenerator::kInitialAttenuation,
+    960,
+    SFModulator(0),
+    SFTransform::kLinear));
 
   // Add an instrument.
   std::shared_ptr<SFInstrument> instrument_50 = sf2.NewInstrument(
