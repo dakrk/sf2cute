@@ -7,6 +7,7 @@
 #define SF2CUTE_MODULATOR_HPP_
 
 #include <stdint.h>
+#include <algorithm>
 #include <utility>
 
 #include "types.hpp"
@@ -74,78 +75,114 @@ public:
   /// @see general_controller()
   /// @see midi_controller()
   /// @see controller_palette()
-  uint8_t controller() const noexcept;
+  uint8_t controller() const noexcept {
+    return controller_;
+  }
 
   /// Returns the type of this general controller.
   /// @return the type of this general controller.
   /// @remarks Verify the type of controller palette before getting the value.
   /// @see controller_palette()
-  SFGeneralController general_controller() const noexcept;
+  SFGeneralController general_controller() const noexcept {
+    return SFGeneralController(controller_);
+  }
 
   /// Returns the type of this MIDI controller.
   /// @return the type of this MIDI controller.
   /// @remarks Verify the type of controller palette before getting the value.
   /// @see controller_palette()
-  SFMidiController midi_controller() const noexcept;
+  SFMidiController midi_controller() const noexcept {
+    return SFMidiController(controller_);
+  }
 
   /// Sets the index of the controller
   /// @param controller the index of the controller.
   /// @remarks Using set_general_controller(SFGeneralController) or set_midi_controller(SFMidiController) is recommended if you want to process a specific controller type.
   /// @see set_general_controller(SFGeneralController)
   /// @see set_midi_controller(SFMidiController)
-  void set_controller(uint8_t controller);
+  void set_controller(uint8_t controller) {
+    controller_ = std::move(controller);
+  }
 
   /// Sets the general controller index and the type of controller palette.
   /// @param controller the type of general controller.
-  void set_general_controller(SFGeneralController controller);
+  void set_general_controller(SFGeneralController controller) {
+    controller_ = std::move(static_cast<uint8_t>(controller));
+    controller_palette_ = std::move(SFControllerPalette::kGeneralController);
+  }
 
   /// Sets the MIDI controller index and the type of controller palette.
   /// @param controller the type of MIDI controller.
-  void set_midi_controller(SFMidiController controller);
+  void set_midi_controller(SFMidiController controller) {
+    controller_ = std::move(static_cast<uint8_t>(controller));
+    controller_palette_ = std::move(SFControllerPalette::kMidiController);
+  }
 
   /// Returns the type of controller palette.
   /// @return the type of controller palette.
-  SFControllerPalette controller_palette() const noexcept;
+  SFControllerPalette controller_palette() const noexcept {
+    return controller_palette_;
+  }
 
   /// Sets the type of controller palette.
   /// @param controller_palette the type of controller palette.
   /// @remarks Using set_general_controller(SFGeneralController) or set_midi_controller(SFMidiController) is recommended.
   /// @see set_general_controller(SFGeneralController)
   /// @see set_midi_controller(SFGeneralController)
-  void set_controller_palette(SFControllerPalette controller_palette);
+  void set_controller_palette(SFControllerPalette controller_palette) {
+    controller_palette_ = std::move(controller_palette);
+  }
 
   /// Returns the direction of the controller.
   /// @return the direction of the controller.
-  SFControllerDirection direction() const noexcept;
+  SFControllerDirection direction() const noexcept {
+    return direction_;
+  }
 
   /// Sets the direction of the controller.
   /// @param direction the direction of the controller.
-  void set_direction(SFControllerDirection direction);
+  void set_direction(SFControllerDirection direction) {
+    direction_ = std::move(direction);
+  }
 
   /// Returns the polarity of the controller.
   /// @return the polarity of the controller.
-  SFControllerPolarity polarity() const noexcept;
+  SFControllerPolarity polarity() const noexcept {
+    return polarity_;
+  }
 
   /// Sets the polarity of the controller.
   /// @param polarity the polarity of the controller.
-  void set_polarity(SFControllerPolarity polarity);
+  void set_polarity(SFControllerPolarity polarity) {
+    polarity_ = std::move(polarity);
+  }
 
   /// Returns the source type of the controller.
   /// @return the source type of the controller.
-  SFControllerType type() const noexcept;
+  SFControllerType type() const noexcept {
+    return type_;
+  }
 
   /// Sets the source type of the controller.
   /// @param type the source type of the controller.
-  void set_type(SFControllerType type);
+  void set_type(SFControllerType type) {
+    type_ = std::move(type);
+  }
 
   /// Converts SFModulator to an integer value.
-  operator uint16_t() const noexcept;
+  operator uint16_t() const noexcept {
+    return (controller() & 0x7f) |
+      ((static_cast<uint16_t>(controller_palette_) & 1) << 7) |
+      ((static_cast<uint16_t>(direction_) & 1) << 8) |
+      ((static_cast<uint16_t>(polarity_) & 1) << 9) |
+      ((static_cast<uint16_t>(type_) & 0x3f) << 10);
+  }
 
   /// Indicates a SFModulator object is "equal to" the other one.
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "equal to" the other one.
-  friend inline bool operator==(const SFModulator & x, const SFModulator & y) noexcept {
+  friend bool operator==(const SFModulator & x, const SFModulator & y) noexcept {
     return uint16_t(x) == uint16_t(y);
   }
 
@@ -153,7 +190,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "not equal to" the other one.
-  friend inline bool operator!=(const SFModulator & x, const SFModulator & y) noexcept {
+  friend bool operator!=(const SFModulator & x, const SFModulator & y) noexcept {
     return std::rel_ops::operator!=(x, y);
   }
 
@@ -161,7 +198,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "less than" the other one.
-  friend inline bool operator<(const SFModulator & x, const SFModulator & y) noexcept {
+  friend bool operator<(const SFModulator & x, const SFModulator & y) noexcept {
     return uint16_t(x) < uint16_t(y);
   }
 
@@ -169,7 +206,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "less than or equal to" the other one.
-  friend inline bool operator<=(const SFModulator & x, const SFModulator & y) noexcept {
+  friend bool operator<=(const SFModulator & x, const SFModulator & y) noexcept {
     return std::rel_ops::operator<=(x, y);
   }
 
@@ -177,7 +214,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "greater than" the other one.
-  friend inline bool operator>(const SFModulator & x, const SFModulator & y) noexcept {
+  friend bool operator>(const SFModulator & x, const SFModulator & y) noexcept {
     return std::rel_ops::operator>(x, y);
   }
 
@@ -185,7 +222,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulator object is "greater than or equal to" the other one.
-  friend inline bool operator>=(const SFModulator & x, const SFModulator & y) noexcept {
+  friend bool operator>=(const SFModulator & x, const SFModulator & y) noexcept {
     return std::rel_ops::operator>=(x, y);
   }
 

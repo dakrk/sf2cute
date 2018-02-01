@@ -55,7 +55,9 @@ public:
 
   /// Returns the list of generators.
   /// @return the list of generators assigned to the zone.
-  const std::vector<std::unique_ptr<SFGeneratorItem>> & generators() const noexcept;
+  const std::vector<std::unique_ptr<SFGeneratorItem>> & generators() const noexcept {
+    return generators_;
+  }
 
   /// Sets a generator to the zone.
   /// @param generator a generator to be assigned to the zone.
@@ -70,14 +72,18 @@ public:
   /// Removes a generator from the zone.
   /// @param position the generator to remove.
   void RemoveGenerator(
-      std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator position);
+      std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator position) {
+    generators_.erase(position);
+  }
 
   /// Removes generators from the zone.
   /// @param first the first generator to remove.
   /// @param last the last generator to remove.
   void RemoveGenerator(
       std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator first,
-      std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator last);
+      std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator last) {
+    generators_.erase(first, last);
+  }
 
   /// Removes generators from the zone.
   /// @param predicate unary predicate which returns true if the generator should be removed.
@@ -85,11 +91,15 @@ public:
       std::function<bool(const std::unique_ptr<SFGeneratorItem> &)> predicate);
 
   /// Removes all of the generators.
-  void ClearGenerators() noexcept;
+  void ClearGenerators() noexcept {
+    generators_.clear();
+  }
 
   /// Returns the list of modulators.
   /// @return the list of modulators assigned to the zone.
-  const std::vector<std::unique_ptr<SFModulatorItem>> & modulators() const noexcept;
+  const std::vector<std::unique_ptr<SFModulatorItem>> & modulators() const noexcept {
+    return modulators_;
+  }
 
   /// Sets a modulator to the zone.
   /// @param modulator a modulator to be assigned to the zone.
@@ -104,14 +114,18 @@ public:
   /// Removes a modulator from the zone.
   /// @param position the modulator to remove.
   void RemoveModulator(
-      std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator position);
+      std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator position) {
+    modulators_.erase(position);
+  }
 
   /// Removes modulators from the zone.
   /// @param first the first modulator to remove.
   /// @param last the last modulator to remove.
   void RemoveModulator(
       std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator first,
-      std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator last);
+      std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator last) {
+    modulators_.erase(first, last);
+  }
 
   /// Removes modulators from the zone.
   /// @param predicate unary predicate which returns true if the modulator should be removed.
@@ -119,7 +133,9 @@ public:
       std::function<bool(const std::unique_ptr<SFModulatorItem> &)> predicate);
 
   /// Removes all of the modulators.
-  void ClearModulators() noexcept;
+  void ClearModulators() noexcept {
+    modulators_.clear();
+  }
 
 protected:
   /// The list of generators.

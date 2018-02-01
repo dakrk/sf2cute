@@ -38,16 +38,6 @@ SoundFontWriter::SoundFontWriter(const SoundFont & file) :
     file_(&file) {
 }
 
-/// Returns the input SoundFont object.
-const SoundFont & SoundFontWriter::file() const noexcept {
-  return *file_;
-}
-
-/// Sets the input SoundFont object.
-void SoundFontWriter::set_file(const SoundFont & file) {
-  file_ = &file;
-}
-
 /// Writes the SoundFont to a file.
 void SoundFontWriter::Write(const std::string & filename) {
   std::ofstream out;

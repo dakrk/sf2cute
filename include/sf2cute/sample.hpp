@@ -7,6 +7,7 @@
 #define SF2CUTE_SAMPLE_HPP_
 
 #include <stdint.h>
+#include <algorithm>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -110,96 +111,142 @@ public:
 
   /// Returns the name of this sample.
   /// @return the name of this sample.
-  const std::string & name() const noexcept;
+  const std::string & name() const noexcept {
+    return name_;
+  }
 
   /// Sets the name of this sample.
   /// @param name the name of this sample.
-  void set_name(std::string name);
+  void set_name(std::string name) {
+    name_ = std::move(name);
+  }
 
   /// Returns the starting point of the loop of this sample.
   /// @return the beginning index of the loop, in sample data points, inclusive.
-  uint32_t start_loop() const noexcept;
+  uint32_t start_loop() const noexcept {
+    return start_loop_;
+  }
 
   /// Sets the starting point of the loop of this sample.
   /// @param start_loop the beginning index of the loop, in sample data points, inclusive.
-  void set_start_loop(uint32_t start_loop);
+  void set_start_loop(uint32_t start_loop) {
+    start_loop_ = std::move(start_loop);
+  }
 
   /// Returns the ending point of the loop of this sample.
   /// @return the ending index of the loop, in sample data points, exclusive.
-  uint32_t end_loop() const noexcept;
+  uint32_t end_loop() const noexcept {
+    return end_loop_;
+  }
 
   /// Sets the ending point of the loop of this sample.
   /// @param end_loop the ending index of the loop, in sample data points, exclusive.
-  void set_end_loop(uint32_t end_loop);
+  void set_end_loop(uint32_t end_loop) {
+    end_loop_ = std::move(end_loop);
+  }
 
   /// Returns the sample rate.
   /// @return the sample rate, in hertz.
-  uint32_t sample_rate() const noexcept;
+  uint32_t sample_rate() const noexcept {
+    return sample_rate_;
+  }
 
   /// Sets the sample rate.
   /// @param sample_rate the sample rate, in hertz.
-  void set_sample_rate(uint32_t sample_rate);
+  void set_sample_rate(uint32_t sample_rate) {
+    sample_rate_ = std::move(sample_rate);
+  }
 
   /// Returns the original MIDI key number of this sample.
   /// @return the MIDI key number of the recorded pitch of the sample.
-  uint8_t original_key() const noexcept;
+  uint8_t original_key() const noexcept {
+    return original_key_;
+  }
 
   /// Sets the original MIDI key number of this sample.
   /// @param original_key the MIDI key number of the recorded pitch of the sample.
-  void set_original_key(uint8_t original_key);
+  void set_original_key(uint8_t original_key) {
+    original_key_ = std::move(original_key);
+  }
 
   /// Returns the pitch correction.
   /// @return the pitch correction that should be applied to the sample, in cents.
-  int8_t correction() const noexcept;
+  int8_t correction() const noexcept {
+    return correction_;
+  }
 
   /// Sets the pitch correction.
   /// @param correction the pitch correction that should be applied to the sample, in cents.
-  void set_correction(int8_t correction);
+  void set_correction(int8_t correction) {
+    correction_ = std::move(correction);
+  }
 
   /// Returns the associated right or left stereo sample.
   /// @return a pointer to the associated right or left stereo sample.
   /// @remarks This function returns nullptr if the associated sample has been deleted.
-  std::shared_ptr<SFSample> link() const noexcept;
+  std::shared_ptr<SFSample> link() const noexcept {
+    return !link_.expired() ? link_.lock() : nullptr;
+  }
 
   /// Returns true if this sample has an associated sample.
   /// @return true if this sample has an associated sample.
   /// @remarks This function returns false if the associated sample has been deleted.
-  bool has_link() const noexcept;
+  bool has_link() const noexcept {
+    return !link_.expired();
+  }
 
   /// Sets the associated right or left stereo sample.
   /// @param link a pointer to the associated right or left stereo sample.
-  void set_link(std::weak_ptr<SFSample> link);
+  void set_link(std::weak_ptr<SFSample> link) {
+    link_ = std::move(link);
+  }
 
   /// Resets the associated right or left stereo sample.
-  void reset_link() noexcept;
+  void reset_link() noexcept {
+    link_.reset();
+  }
 
   /// Returns both the type of sample and the whether the sample is located in RAM or ROM memory.
   /// @return both the type of sample and the whether the sample is located in RAM or ROM memory.
-  SFSampleLink type() const noexcept;
+  SFSampleLink type() const noexcept {
+    return type_;
+  }
 
   /// Sets both the type of sample and the whether the sample is located in RAM or ROM memory.
   /// @param type both the type of sample and the whether the sample is located in RAM or ROM memory.
-  void set_type(SFSampleLink type);
+  void set_type(SFSampleLink type) {
+    type_ = std::move(type);
+  }
 
   /// Returns the sample data.
   /// @return the sample data.
-  const std::vector<int16_t> & data() const noexcept;
+  const std::vector<int16_t> & data() const noexcept {
+    return data_;
+  }
 
   /// Returns true if this sample has a parent file.
   /// @return true if this sample has a parent file.
-  bool has_parent_file() const noexcept;
+  bool has_parent_file() const noexcept {
+    return parent_file_ != nullptr;
+  }
 
   /// Returns the parent file.
   /// @return a reference to the parent file.
-  SoundFont & parent_file() const noexcept;
+  SoundFont & parent_file() const noexcept {
+    return *parent_file_;
+  }
 
 private:
   /// Sets the parent file.
   /// @param parent_file the parent file.
-  void set_parent_file(SoundFont & parent_file) noexcept;
+  void set_parent_file(SoundFont & parent_file) noexcept {
+    parent_file_ = &parent_file;
+  }
 
   /// Resets the parent file.
-  void reset_parent_file() noexcept;
+  void reset_parent_file() noexcept {
+    parent_file_ = nullptr;
+  }
 
   /// The name of sample.
   std::string name_;

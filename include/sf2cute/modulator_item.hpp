@@ -7,6 +7,7 @@
 #define SF2CUTE_MODULATOR_ITEM_HPP_
 
 #include <stdint.h>
+#include <algorithm>
 
 #include "types.hpp"
 #include "modulator.hpp"
@@ -61,7 +62,9 @@ public:
   /// @see source_op()
   /// @see destination_op()
   /// @see amount_source_op()
-  SFModulatorKey key() const noexcept;
+  SFModulatorKey key() const noexcept {
+    return key_;
+  }
 
   /// Sets the unique key of the modulator.
   /// @param key the unique key of the modulator.
@@ -69,47 +72,69 @@ public:
   /// @see set_source_op(SFModulator)
   /// @see set_destination_op(SFGenerator)
   /// @see set_amount_source_op(SFModulator)
-  void set_key(SFModulatorKey key);
+  void set_key(SFModulatorKey key) {
+    key_ = std::move(key);
+  }
 
   /// Returns the source of data for the modulator.
   /// @return the source of data for the modulator.
-  SFModulator source_op() const noexcept;
+  SFModulator source_op() const noexcept {
+    return key_.source_op();
+  }
 
   /// Sets the source of data for the modulator.
   /// @param source_op the source of data for the modulator.
-  void set_source_op(SFModulator source_op);
+  void set_source_op(SFModulator source_op) {
+    key_.set_source_op(std::move(source_op));
+  }
 
   /// Returns the destination of the modulator.
   /// @return the destination of the modulator.
-  SFGenerator destination_op() const noexcept;
+  SFGenerator destination_op() const noexcept {
+    return key_.destination_op();
+  }
 
   /// Sets the destination of the modulator.
   /// @param destination_op the destination of the modulator.
-  void set_destination_op(SFGenerator destination_op);
+  void set_destination_op(SFGenerator destination_op) {
+    key_.set_destination_op(std::move(destination_op));
+  }
 
   /// Returns the constant of modulation amount.
   /// @return the constant of modulation amount.
-  int16_t amount() const noexcept;
+  int16_t amount() const noexcept {
+    return amount_;
+  }
 
   /// Sets the constant of modulation amount.
   /// @param amount the degree to which the source modulates the destination.
-  void set_amount(int16_t amount);
+  void set_amount(int16_t amount) {
+    amount_ = std::move(amount);
+  }
 
   /// Returns the modulation source to be applied to the modulation amount.
   /// @return the modulation source to be applied to the modulation amount.
-  SFModulator amount_source_op() const noexcept;
+  SFModulator amount_source_op() const noexcept {
+    return key_.amount_source_op();
+  }
 
   /// Sets the modulation source to be applied to the modulation amount.
   /// @param amount_source_op the modulation source to be applied to the modulation amount.
-  void set_amount_source_op(SFModulator amount_source_op);
+  void set_amount_source_op(SFModulator amount_source_op) {
+    key_.set_amount_source_op(std::move(amount_source_op));
+  }
 
   /// Returns the transform type to be applied to the modulation source.
   /// @return the transform type to be applied to the modulation source.
-  SFTransform transform_op() const noexcept;
+  SFTransform transform_op() const noexcept {
+    return transform_op_;
+  }
 
   /// Sets the transform type to be applied to the modulation source.
   /// @param transform_op the transform type to be applied to the modulation source.
-  void set_transform_op(SFTransform transform_op);
+  void set_transform_op(SFTransform transform_op) {
+    transform_op_ = std::move(transform_op);
+  }
 
 private:
   /// The unique key of the modulator.

@@ -40,11 +40,6 @@ SFRIFFIbagChunk::SFRIFFIbagChunk(
   size_ = kItemSize * NumItems();
 }
 
-/// Returns the name of this chunk.
-const std::string & SFRIFFIbagChunk::name() const {
-  return name_;
-}
-
 /// Sets the name of this chunk.
 void SFRIFFIbagChunk::set_name(std::string name) {
   // Throw exception if the length of chunk name is not 4.
@@ -56,24 +51,6 @@ void SFRIFFIbagChunk::set_name(std::string name) {
 
   // Set the name.
   name_ = std::move(name);
-}
-
-/// Returns the instruments of this chunk.
-const std::vector<std::shared_ptr<SFInstrument>> &
-    SFRIFFIbagChunk::instruments() const {
-  return *instruments_;
-}
-
-/// Sets the instruments of this chunk.
-void SFRIFFIbagChunk::set_instruments(
-    const std::vector<std::shared_ptr<SFInstrument>> & instruments) {
-  instruments_ = &instruments;
-  size_ = kItemSize * NumItems();
-}
-
-/// Returns the whole length of this chunk.
-SFRIFFIbagChunk::size_type SFRIFFIbagChunk::size() const noexcept {
-  return 8 + size_;
 }
 
 /// Writes this chunk to the specified output stream.

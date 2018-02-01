@@ -38,11 +38,6 @@ SFRIFFSmplChunk::SFRIFFSmplChunk(
   size_ = GetSamplePoolSize();
 }
 
-/// Returns the name of this chunk.
-const std::string & SFRIFFSmplChunk::name() const {
-  return name_;
-}
-
 /// Sets the name of this chunk.
 void SFRIFFSmplChunk::set_name(std::string name) {
   // Throw exception if the length of chunk name is not 4.
@@ -54,24 +49,6 @@ void SFRIFFSmplChunk::set_name(std::string name) {
 
   // Set the name.
   name_ = std::move(name);
-}
-
-/// Returns the samples of this chunk.
-const std::vector<std::shared_ptr<SFSample>> &
-    SFRIFFSmplChunk::samples() const {
-  return *samples_;
-}
-
-/// Sets the samples of this chunk.
-void SFRIFFSmplChunk::set_samples(
-    const std::vector<std::shared_ptr<SFSample>> & samples) {
-  samples_ = &samples;
-  size_ = GetSamplePoolSize();
-}
-
-/// Returns the whole length of this chunk.
-SFRIFFSmplChunk::size_type SFRIFFSmplChunk::size() const noexcept {
-  return 8 + size_;
 }
 
 /// Writes this chunk to the specified output stream.

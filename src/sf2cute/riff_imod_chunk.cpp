@@ -40,11 +40,6 @@ SFRIFFImodChunk::SFRIFFImodChunk(
   size_ = kItemSize * NumItems();
 }
 
-/// Returns the name of this chunk.
-const std::string & SFRIFFImodChunk::name() const {
-  return name_;
-}
-
 /// Sets the name of this chunk.
 void SFRIFFImodChunk::set_name(std::string name) {
   // Throw exception if the length of chunk name is not 4.
@@ -56,24 +51,6 @@ void SFRIFFImodChunk::set_name(std::string name) {
 
   // Set the name.
   name_ = std::move(name);
-}
-
-/// Returns the instruments of this chunk.
-const std::vector<std::shared_ptr<SFInstrument>> &
-    SFRIFFImodChunk::instruments() const {
-  return *instruments_;
-}
-
-/// Sets the instruments of this chunk.
-void SFRIFFImodChunk::set_instruments(
-    const std::vector<std::shared_ptr<SFInstrument>> & instruments) {
-  instruments_ = &instruments;
-  size_ = kItemSize * NumItems();
-}
-
-/// Returns the whole length of this chunk.
-SFRIFFImodChunk::size_type SFRIFFImodChunk::size() const noexcept {
-  return 8 + size_;
 }
 
 /// Writes this chunk to the specified output stream.

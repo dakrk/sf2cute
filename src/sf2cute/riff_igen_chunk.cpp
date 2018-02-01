@@ -45,11 +45,6 @@ SFRIFFIgenChunk::SFRIFFIgenChunk(
   size_ = kItemSize * NumItems();
 }
 
-/// Returns the name of this chunk.
-const std::string & SFRIFFIgenChunk::name() const {
-  return name_;
-}
-
 /// Sets the name of this chunk.
 void SFRIFFIgenChunk::set_name(std::string name) {
   // Throw exception if the length of chunk name is not 4.
@@ -61,36 +56,6 @@ void SFRIFFIgenChunk::set_name(std::string name) {
 
   // Set the name.
   name_ = std::move(name);
-}
-
-/// Returns the instruments of this chunk.
-const std::vector<std::shared_ptr<SFInstrument>> &
-    SFRIFFIgenChunk::instruments() const {
-  return *instruments_;
-}
-
-/// Sets the instruments of this chunk.
-void SFRIFFIgenChunk::set_instruments(
-    const std::vector<std::shared_ptr<SFInstrument>> & instruments) {
-  instruments_ = &instruments;
-  size_ = kItemSize * NumItems();
-}
-
-/// Returns the map containing the samples as keys and their keys as map values.
-const std::unordered_map<const SFSample *, uint16_t> &
-    SFRIFFIgenChunk::sample_index_map() const {
-  return sample_index_map_;
-}
-
-/// Sets the map containing the samples as keys and their keys as map values.
-void SFRIFFIgenChunk::set_sample_index_map(
-    std::unordered_map<const SFSample *, uint16_t> sample_index_map) {
-  sample_index_map_ = std::move(sample_index_map);
-}
-
-/// Returns the whole length of this chunk.
-SFRIFFIgenChunk::size_type SFRIFFIgenChunk::size() const noexcept {
-  return 8 + size_;
 }
 
 /// Writes this chunk to the specified output stream.

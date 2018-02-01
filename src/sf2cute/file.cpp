@@ -156,11 +156,6 @@ SoundFont & SoundFont::operator=(SoundFont && origin) noexcept {
   return *this;
 }
 
-/// Returns the list of presets.
-const std::vector<std::shared_ptr<SFPreset>> & SoundFont::presets() const noexcept {
-  return presets_;
-}
-
 /// Adds a preset to the SoundFont.
 void SoundFont::AddPreset(std::shared_ptr<SFPreset> preset) {
   // Do nothing if nullptr specified.
@@ -234,11 +229,6 @@ void SoundFont::ClearPresets() noexcept {
     preset->reset_parent_file();
   }
   presets_.clear();
-}
-
-/// Returns the list of instruments.
-const std::vector<std::shared_ptr<SFInstrument>> & SoundFont::instruments() const noexcept {
-  return instruments_;
 }
 
 /// Adds an instrument to the SoundFont.
@@ -316,11 +306,6 @@ void SoundFont::ClearInstruments() noexcept {
   instruments_.clear();
 }
 
-/// Returns the list of samples.
-const std::vector<std::shared_ptr<SFSample>> & SoundFont::samples() const noexcept {
-  return samples_;
-}
-
 /// Adds a sample to the SoundFont.
 void SoundFont::AddSample(std::shared_ptr<SFSample> sample) {
   // Do nothing if nullptr specified.
@@ -387,187 +372,6 @@ void SoundFont::ClearSamples() noexcept {
     sample->reset_parent_file();
   }
   samples_.clear();
-}
-
-/// Returns the target sound engine.
-const std::string & SoundFont::sound_engine() const noexcept {
-  return sound_engine_;
-}
-
-/// Sets the target sound engine.
-void SoundFont::set_sound_engine(std::string sound_engine) {
-  sound_engine_ = std::move(sound_engine);
-}
-
-/// Returns the SoundFont bank name.
-const std::string & SoundFont::bank_name() const noexcept {
-  return bank_name_;
-}
-
-/// Sets the SoundFont bank name.
-void SoundFont::set_bank_name(std::string bank_name) {
-  bank_name_ = std::move(bank_name);
-}
-
-/// Returns true if the SoundFont has a Sound ROM name.
-bool SoundFont::has_rom_name() const noexcept {
-  return !rom_name_.empty();
-}
-
-/// Returns the Sound ROM name.
-const std::string & SoundFont::rom_name() const noexcept {
-  return rom_name_;
-}
-
-/// Sets the Sound ROM name.
-void SoundFont::set_rom_name(std::string rom_name) {
-  rom_name_ = std::move(rom_name);
-}
-
-/// Resets the Sound ROM name.
-void SoundFont::reset_rom_name() noexcept {
-  rom_name_.clear();
-}
-
-/// Returns true if the SoundFont has a Sound ROM version.
-bool SoundFont::has_rom_version() const noexcept {
-  return has_rom_version_;
-}
-
-/// Returns the Sound ROM version.
-SFVersionTag SoundFont::rom_version() const noexcept {
-  return rom_version_;
-}
-
-/// Sets the Sound ROM version.
-void SoundFont::set_rom_version(SFVersionTag rom_version) {
-  rom_version_ = std::move(rom_version);
-  has_rom_version_ = true;
-}
-
-/// Resets the Sound ROM version.
-void SoundFont::reset_rom_version() noexcept {
-  has_rom_version_ = false;
-}
-
-/// Returns true if the SoundFont has a date of creation of the bank.
-bool SoundFont::has_creation_date() const noexcept {
-  return !creation_date_.empty();
-}
-
-/// Returns the date of creation of the bank.
-const std::string & SoundFont::creation_date() const noexcept {
-  return creation_date_;
-}
-
-/// Sets the date of creation of the bank.
-void SoundFont::set_creation_date(std::string creation_date) {
-  creation_date_ = std::move(creation_date);
-}
-
-/// Resets the date of creation of the bank.
-void SoundFont::reset_creation_date() noexcept {
-  creation_date_.clear();
-}
-
-/// Returns true if the SoundFont has the sound designers and engineers information for the bank.
-bool SoundFont::has_engineers() const noexcept {
-  return !engineers_.empty();
-}
-
-/// Returns the sound designers and engineers for the bank.
-const std::string & SoundFont::engineers() const noexcept {
-  return engineers_;
-}
-
-/// Sets the sound designers and engineers for the bank.
-void SoundFont::set_engineers(std::string engineers) {
-  engineers_ = std::move(engineers);
-}
-
-/// Resets the sound designers and engineers for the bank.
-void SoundFont::reset_engineers() noexcept {
-  engineers_.clear();
-}
-
-/// Returns true if the SoundFont has a product name for which the bank was intended.
-bool SoundFont::has_product() const noexcept {
-  return !product_.empty();
-}
-
-/// Returns the product name for which the bank was intended.
-const std::string & SoundFont::product() const noexcept {
-  return product_;
-}
-
-/// Sets the product name for which the bank was intended.
-void SoundFont::set_product(std::string product) {
-  product_ = std::move(product);
-}
-
-/// Resets the product name for which the bank was intended.
-void SoundFont::reset_product() noexcept {
-  product_.clear();
-}
-
-/// Returns true if the SoundFont has any copyright message.
-bool SoundFont::has_copyright() const noexcept {
-  return !copyright_.empty();
-}
-
-/// Returns the copyright message.
-const std::string & SoundFont::copyright() const noexcept {
-  return copyright_;
-}
-
-/// Sets the copyright message.
-void SoundFont::set_copyright(std::string copyright) {
-  copyright_ = std::move(copyright);
-}
-
-/// Resets the copyright message.
-void SoundFont::reset_copyright() noexcept {
-  copyright_.clear();
-}
-
-/// Returns true if the SoundFont has any comments on the bank.
-bool SoundFont::has_comment() const noexcept {
-  return !comment_.empty();
-}
-
-/// Returns the comments on the bank.
-const std::string & SoundFont::comment() const noexcept {
-  return comment_;
-}
-
-/// Sets the comments on the bank.
-void SoundFont::set_comment(std::string comment) {
-  comment_ = std::move(comment);
-}
-
-/// Resets the comments on the bank.
-void SoundFont::reset_comment() noexcept {
-  comment_.clear();
-}
-
-/// Returns true if the SoundFont the information of SoundFont tools used to create and alter the bank.
-bool SoundFont::has_software() const noexcept {
-  return !software_.empty();
-}
-
-/// Returns the SoundFont tools used to create and alter the bank.
-const std::string & SoundFont::software() const noexcept {
-  return software_;
-}
-
-/// Sets the SoundFont tools used to create and alter the bank.
-void SoundFont::set_software(std::string software) {
-  software_ = std::move(software);
-}
-
-/// Resets the SoundFont tools used to create and alter the bank.
-void SoundFont::reset_software() noexcept {
-  software_.clear();
 }
 
 /// Writes the SoundFont to a file.

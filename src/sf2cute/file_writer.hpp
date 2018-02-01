@@ -6,6 +6,7 @@
 #ifndef SF2CUTE_FILE_WRITER_HPP_
 #define SF2CUTE_FILE_WRITER_HPP_
 
+#include <algorithm>
 #include <memory>
 #include <string>
 #include <ostream>
@@ -55,11 +56,15 @@ public:
 
   /// Returns the input SoundFont object.
   /// @return the input SoundFont object.
-  const SoundFont & file() const noexcept;
+  const SoundFont & file() const noexcept {
+    return *file_;
+  }
 
   /// Sets the input SoundFont object.
   /// @param file the input SoundFont object.
-  void set_file(const SoundFont & file);
+  void set_file(const SoundFont & file) {
+    file_ = &file;
+  }
 
   /// Writes the SoundFont to a file.
   /// @param filename the name of the file to write to.

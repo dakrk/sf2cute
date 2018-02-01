@@ -39,11 +39,6 @@ SFRIFFPhdrChunk::SFRIFFPhdrChunk(
   size_ = kItemSize * NumItems();
 }
 
-/// Returns the name of this chunk.
-const std::string & SFRIFFPhdrChunk::name() const {
-  return name_;
-}
-
 /// Sets the name of this chunk.
 void SFRIFFPhdrChunk::set_name(std::string name) {
   // Throw exception if the length of chunk name is not 4.
@@ -55,24 +50,6 @@ void SFRIFFPhdrChunk::set_name(std::string name) {
 
   // Set the name.
   name_ = std::move(name);
-}
-
-/// Returns the presets of this chunk.
-const std::vector<std::shared_ptr<SFPreset>> &
-    SFRIFFPhdrChunk::presets() const {
-  return *presets_;
-}
-
-/// Sets the presets of this chunk.
-void SFRIFFPhdrChunk::set_presets(
-    const std::vector<std::shared_ptr<SFPreset>> & presets) {
-  presets_ = &presets;
-  size_ = kItemSize * NumItems();
-}
-
-/// Returns the whole length of this chunk.
-SFRIFFPhdrChunk::size_type SFRIFFPhdrChunk::size() const noexcept {
-  return 8 + size_;
 }
 
 /// Writes this chunk to the specified output stream.

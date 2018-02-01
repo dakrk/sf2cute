@@ -70,11 +70,6 @@ SFZone & SFZone::operator=(const SFZone & origin) {
   return *this;
 }
 
-/// Returns the list of generators.
-const std::vector<std::unique_ptr<SFGeneratorItem>> & SFZone::generators() const noexcept {
-  return generators_;
-}
-
 /// Sets a generator to the zone.
 void SFZone::SetGenerator(SFGeneratorItem generator) {
   // Find the generator.
@@ -97,19 +92,6 @@ const std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator
     });
 }
 
-/// Removes a generator from the zone.
-void SFZone::RemoveGenerator(
-    std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator position) {
-  generators_.erase(position);
-}
-
-/// Removes generators from the zone.
-void SFZone::RemoveGenerator(
-    std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator first,
-    std::vector<std::unique_ptr<SFGeneratorItem>>::const_iterator last) {
-  generators_.erase(first, last);
-}
-
 /// Removes generators from the zone.
 void SFZone::RemoveGeneratorIf(
     std::function<bool(const std::unique_ptr<SFGeneratorItem> &)> predicate) {
@@ -122,16 +104,6 @@ void SFZone::RemoveGeneratorIf(
       return false;
     }
   }), generators_.end());
-}
-
-/// Removes all of the generators.
-void SFZone::ClearGenerators() noexcept {
-  generators_.clear();
-}
-
-/// Returns the list of modulators.
-const std::vector<std::unique_ptr<SFModulatorItem>> & SFZone::modulators() const noexcept {
-  return modulators_;
 }
 
 /// Sets a modulator to the zone.
@@ -156,19 +128,6 @@ const std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator
     });
 }
 
-/// Removes a modulator from the zone.
-void SFZone::RemoveModulator(
-    std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator position) {
-  modulators_.erase(position);
-}
-
-/// Removes modulators from the zone.
-void SFZone::RemoveModulator(
-    std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator first,
-    std::vector<std::unique_ptr<SFModulatorItem>>::const_iterator last) {
-  modulators_.erase(first, last);
-}
-
 /// Removes modulators from the zone.
 void SFZone::RemoveModulatorIf(
     std::function<bool(const std::unique_ptr<SFModulatorItem> &)> predicate) {
@@ -181,11 +140,6 @@ void SFZone::RemoveModulatorIf(
       return false;
     }
   }), modulators_.end());
-}
-
-/// Removes all of the modulators.
-void SFZone::ClearModulators() noexcept {
-  modulators_.clear();
 }
 
 } // namespace sf2cute

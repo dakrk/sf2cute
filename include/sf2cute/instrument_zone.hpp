@@ -6,6 +6,7 @@
 #ifndef SF2CUTE_INSTRUMENT_ZONE_HPP_
 #define SF2CUTE_INSTRUMENT_ZONE_HPP_
 
+#include <algorithm>
 #include <memory>
 #include <vector>
 
@@ -64,19 +65,25 @@ public:
   /// Returns true if the zone has an associated sample.
   /// @return true if the zone has an associated sample.
   /// @remarks This function returns false if the associated sample has been deleted.
-  bool has_sample() const noexcept;
+  bool has_sample() const noexcept {
+    return !sample_.expired();
+  }
 
   /// Returns the associated sample.
   /// @return a pointer to the associated sample.
   /// @remarks This function returns nullptr if the associated sample has been deleted.
-  std::shared_ptr<SFSample> sample() const noexcept;
+  std::shared_ptr<SFSample> sample() const noexcept {
+    return sample_.lock();
+  }
 
   /// Sets the associated sample.
   /// @param sample a pointer to the associated sample.
   void set_sample(std::weak_ptr<SFSample> sample);
 
   /// Resets the associated sample.
-  void reset_sample() noexcept;
+  void reset_sample() noexcept {
+    sample_.reset();
+  }
 
   /// Returns true if the zone has a parent file.
   /// @return true if the zone has a parent file.
@@ -88,7 +95,9 @@ public:
 
   /// Returns true if the zone has a parent instrument.
   /// @return true if the zone has a parent instrument.
-  bool has_parent_instrument() const noexcept;
+  bool has_parent_instrument() const noexcept {
+    return parent_instrument_ != nullptr;
+  }
 
   /// Returns the parent instrument.
   /// @return the parent instrument.
@@ -101,7 +110,9 @@ private:
       SFInstrument & parent_instrument) noexcept;
 
   /// Resets the parent instrument.
-  void reset_parent_instrument() noexcept;
+  void reset_parent_instrument() noexcept {
+    parent_instrument_ = nullptr;
+  }
 
   /// The associated sample.
   std::weak_ptr<SFSample> sample_;

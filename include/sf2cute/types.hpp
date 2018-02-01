@@ -417,7 +417,7 @@ struct SFVersionTag {
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFVersionTag object is "equal to" the other one.
-  friend inline bool operator==(
+  friend bool operator==(
       const SFVersionTag & x,
       const SFVersionTag & y) noexcept {
     return std::tie(x.major_version, x.minor_version) == std::tie(y.major_version, y.minor_version);
@@ -427,7 +427,7 @@ struct SFVersionTag {
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFVersionTag object is "not equal to" the other one.
-  friend inline bool operator!=(
+  friend bool operator!=(
       const SFVersionTag & x,
       const SFVersionTag & y) noexcept {
     return std::rel_ops::operator!=(x, y);
@@ -437,7 +437,7 @@ struct SFVersionTag {
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFVersionTag object is "less than" the other one.
-  friend inline bool operator<(
+  friend bool operator<(
       const SFVersionTag & x,
       const SFVersionTag & y) noexcept {
     return std::tie(x.major_version, x.minor_version) < std::tie(y.major_version, y.minor_version);
@@ -447,7 +447,7 @@ struct SFVersionTag {
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFVersionTag object is "less than or equal to" the other one.
-  friend inline bool operator<=(
+  friend bool operator<=(
       const SFVersionTag & x,
       const SFVersionTag & y) noexcept {
     return std::rel_ops::operator<=(x, y);
@@ -457,7 +457,7 @@ struct SFVersionTag {
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFVersionTag object is "greater than" the other one.
-  friend inline bool operator>(
+  friend bool operator>(
       const SFVersionTag & x,
       const SFVersionTag & y) noexcept {
     return std::rel_ops::operator>(x, y);
@@ -467,7 +467,7 @@ struct SFVersionTag {
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFVersionTag object is "greater than or equal to" the other one.
-  friend inline bool operator>=(
+  friend bool operator>=(
       const SFVersionTag & x,
       const SFVersionTag & y) noexcept {
     return std::rel_ops::operator>=(x, y);
@@ -476,7 +476,7 @@ struct SFVersionTag {
   /// Outputs the version number to the specified output stream.
   /// @param out the output stream.
   /// @param version the version tag.
-  friend inline std::ostream & operator<<(
+  friend std::ostream & operator<<(
       std::ostream & out,
       const SFVersionTag & version) {
     return out << version.to_string();
@@ -484,7 +484,7 @@ struct SFVersionTag {
 
   /// Returns a string represents the version.
   /// @return a string representation of the version.
-  inline std::string to_string() const {
+  std::string to_string() const {
     std::ostringstream string_builder;
     string_builder << major_version << "." << minor_version;
     return string_builder.str();

@@ -42,11 +42,6 @@ SFRIFFShdrChunk::SFRIFFShdrChunk(const std::vector<std::shared_ptr<SFSample>> & 
   size_ = kItemSize * NumItems();
 }
 
-/// Returns the name of this chunk.
-const std::string & SFRIFFShdrChunk::name() const {
-  return name_;
-}
-
 /// Sets the name of this chunk.
 void SFRIFFShdrChunk::set_name(std::string name) {
   // Throw exception if the length of chunk name is not 4.
@@ -58,34 +53,6 @@ void SFRIFFShdrChunk::set_name(std::string name) {
 
   // Set the name.
   name_ = std::move(name);
-}
-
-/// Returns the samples of this chunk.
-const std::vector<std::shared_ptr<SFSample>> & SFRIFFShdrChunk::samples() const {
-  return *samples_;
-}
-
-/// Sets the samples of this chunk.
-void SFRIFFShdrChunk::set_samples(const std::vector<std::shared_ptr<SFSample>> & samples) {
-  samples_ = &samples;
-  size_ = kItemSize * NumItems();
-}
-
-/// Returns the map containing the samples as keys and their keys as map values.
-const std::unordered_map<const SFSample *, uint16_t> &
-    SFRIFFShdrChunk::sample_index_map() const {
-  return sample_index_map_;
-}
-
-/// Sets the map containing the samples as keys and their keys as map values.
-void SFRIFFShdrChunk::set_sample_index_map(
-     std::unordered_map<const SFSample *, uint16_t> sample_index_map) {
-  sample_index_map_ = std::move(sample_index_map);
-}
-
-/// Returns the whole length of this chunk.
-SFRIFFShdrChunk::size_type SFRIFFShdrChunk::size() const noexcept {
-  return 8 + size_;
 }
 
 /// Writes this chunk to the specified output stream.

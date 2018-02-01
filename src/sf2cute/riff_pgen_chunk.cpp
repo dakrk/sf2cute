@@ -45,11 +45,6 @@ SFRIFFPgenChunk::SFRIFFPgenChunk(
   size_ = kItemSize * NumItems();
 }
 
-/// Returns the name of this chunk.
-const std::string & SFRIFFPgenChunk::name() const {
-  return name_;
-}
-
 /// Sets the name of this chunk.
 void SFRIFFPgenChunk::set_name(std::string name) {
   // Throw exception if the length of chunk name is not 4.
@@ -61,36 +56,6 @@ void SFRIFFPgenChunk::set_name(std::string name) {
 
   // Set the name.
   name_ = std::move(name);
-}
-
-/// Returns the presets of this chunk.
-const std::vector<std::shared_ptr<SFPreset>> &
-    SFRIFFPgenChunk::presets() const {
-  return *presets_;
-}
-
-/// Sets the presets of this chunk.
-void SFRIFFPgenChunk::set_presets(
-    const std::vector<std::shared_ptr<SFPreset>> & presets) {
-  presets_ = &presets;
-  size_ = kItemSize * NumItems();
-}
-
-/// Returns the map containing the samples as keys and their keys as map values.
-const std::unordered_map<const SFInstrument *, uint16_t> &
-    SFRIFFPgenChunk::instrument_index_map() const {
-  return instrument_index_map_;
-}
-
-/// Sets the map containing the samples as keys and their keys as map values.
-void SFRIFFPgenChunk::set_instrument_index_map(
-    std::unordered_map<const SFInstrument *, uint16_t> instrument_index_map) {
-  instrument_index_map_ = std::move(instrument_index_map);
-}
-
-/// Returns the whole length of this chunk.
-SFRIFFPgenChunk::size_type SFRIFFPgenChunk::size() const noexcept {
-  return 8 + size_;
 }
 
 /// Writes this chunk to the specified output stream.

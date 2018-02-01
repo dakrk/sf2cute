@@ -6,6 +6,7 @@
 #ifndef SF2CUTE_FILE_HPP_
 #define SF2CUTE_FILE_HPP_
 
+#include <algorithm>
 #include <memory>
 #include <utility>
 #include <functional>
@@ -53,7 +54,9 @@ public:
 
   /// Returns the list of presets.
   /// @return the list of presets assigned to the SoundFont.
-  const std::vector<std::shared_ptr<SFPreset>> & presets() const noexcept;
+  const std::vector<std::shared_ptr<SFPreset>> & presets() const noexcept {
+    return presets_;
+  }
 
   /// Adds a new preset to the SoundFont.
   /// @param args the arguments for the SFPreset constructor.
@@ -94,7 +97,9 @@ public:
 
   /// Returns the list of instruments.
   /// @return the list of instruments assigned to the SoundFont.
-  const std::vector<std::shared_ptr<SFInstrument>> & instruments() const noexcept;
+  const std::vector<std::shared_ptr<SFInstrument>> & instruments() const noexcept {
+    return instruments_;
+  }
 
   /// Adds a new instrument to the SoundFont.
   /// @param args the arguments for the SFInstrument constructor.
@@ -135,7 +140,9 @@ public:
 
   /// Returns the list of samples.
   /// @return the list of samples assigned to the SoundFont.
-  const std::vector<std::shared_ptr<SFSample>> & samples() const noexcept;
+  const std::vector<std::shared_ptr<SFSample>> & samples() const noexcept {
+    return samples_;
+  }
 
   /// Adds a new sample to the SoundFont.
   /// @param args the arguments for the SFSample constructor.
@@ -176,139 +183,212 @@ public:
 
   /// Returns the target sound engine.
   /// @return the target sound engine name.
-  const std::string & sound_engine() const noexcept;
+  const std::string & sound_engine() const noexcept {
+    return sound_engine_;
+  }
 
   /// Sets the target sound engine.
   /// @param sound_engine the target sound engine name.
-  void set_sound_engine(std::string sound_engine);
+  void set_sound_engine(std::string sound_engine) {
+    sound_engine_ = std::move(sound_engine);
+  }
 
   /// Returns the SoundFont bank name.
   /// @return the SoundFont bank name.
-  const std::string & bank_name() const noexcept;
+  const std::string & bank_name() const noexcept {
+    return bank_name_;
+  }
 
   /// Sets the SoundFont bank name.
   /// @param bank_name the SoundFont bank name.
-  void set_bank_name(std::string bank_name);
+  void set_bank_name(std::string bank_name) {
+    bank_name_ = std::move(bank_name);
+  }
 
   /// Returns true if the SoundFont has a Sound ROM name.
   /// @return true if the SoundFont has a Sound ROM name.
-  bool has_rom_name() const noexcept;
+  bool has_rom_name() const noexcept {
+    return !rom_name_.empty();
+  }
 
   /// Returns the Sound ROM name.
   /// @return the Sound ROM name.
-  const std::string & rom_name() const noexcept;
+  const std::string & rom_name() const noexcept {
+    return rom_name_;
+  }
 
   /// Sets the Sound ROM name.
   /// @param rom_name the Sound ROM name.
-  void set_rom_name(std::string rom_name);
+  void set_rom_name(std::string rom_name) {
+    rom_name_ = std::move(rom_name);
+  }
 
   /// Resets the Sound ROM name.
-  void reset_rom_name() noexcept;
+  void reset_rom_name() noexcept {
+    rom_name_.clear();
+  }
 
   /// Returns true if the SoundFont has a Sound ROM version.
   /// @return true if the SoundFont has a Sound ROM version.
-  bool has_rom_version() const noexcept;
+  bool has_rom_version() const noexcept {
+    return has_rom_version_;
+  }
 
   /// Returns the Sound ROM version.
   /// @return the Sound ROM version.
-  SFVersionTag rom_version() const noexcept;
+  SFVersionTag rom_version() const noexcept {
+    return rom_version_;
+  }
 
   /// Sets the Sound ROM version.
   /// @param rom_version the Sound ROM version.
-  void set_rom_version(SFVersionTag rom_version);
+  void set_rom_version(SFVersionTag rom_version) {
+    rom_version_ = std::move(rom_version);
+    has_rom_version_ = true;
+  }
 
   /// Resets the Sound ROM version.
-  void reset_rom_version() noexcept;
+  void reset_rom_version() noexcept {
+    has_rom_version_ = false;
+  }
 
   /// Returns true if the SoundFont has a date of creation of the bank.
   /// @return true if the SoundFont has a date of creation of the bank.
-  bool has_creation_date() const noexcept;
+  bool has_creation_date() const noexcept {
+    return !creation_date_.empty();
+  }
 
   /// Returns the date of creation of the bank.
   /// @return the date of creation of the bank.
-  const std::string & creation_date() const noexcept;
+  const std::string & creation_date() const noexcept {
+    return creation_date_;
+  }
 
   /// Sets the date of creation of the bank.
   /// @param creation_date the date of creation of the bank.
-  void set_creation_date(std::string creation_date);
+  void set_creation_date(std::string creation_date) {
+    creation_date_ = std::move(creation_date);
+  }
 
   /// Resets the date of creation of the bank.
-  void reset_creation_date() noexcept;
+  void reset_creation_date() noexcept {
+    creation_date_.clear();
+  }
 
   /// Returns true if the SoundFont has the sound designers and engineers information for the bank.
   /// @return true if the SoundFont has the sound designers and engineers information for the bank.
-  bool has_engineers() const noexcept;
+  bool has_engineers() const noexcept {
+    return !engineers_.empty();
+  }
 
   /// Returns the sound designers and engineers for the bank.
   /// @return the sound designers and engineers for the bank.
-  const std::string & engineers() const noexcept;
+  const std::string & engineers() const noexcept {
+    return engineers_;
+  }
 
   /// Sets the sound designers and engineers for the bank.
   /// @param engineers the sound designers and engineers for the bank.
-  void set_engineers(std::string engineers);
+  void set_engineers(std::string engineers) {
+    engineers_ = std::move(engineers);
+  }
 
   /// Resets the sound designers and engineers for the bank.
-  void reset_engineers() noexcept;
+  void reset_engineers() noexcept {
+    engineers_.clear();
+  }
 
   /// Returns true if the SoundFont has a product name for which the bank was intended.
   /// @return true if the SoundFont has a product name for which the bank was intended.
-  bool has_product() const noexcept;
+  bool has_product() const noexcept {
+    return !product_.empty();
+  }
 
   /// Returns the product name for which the bank was intended.
   /// @return the product name for which the bank was intended.
-  const std::string & product() const noexcept;
+  const std::string & product() const noexcept {
+    return product_;
+  }
 
   /// Sets the product name for which the bank was intended.
   /// @param product the product name for which the bank was intended.
-  void set_product(std::string product);
+  void set_product(std::string product) {
+    product_ = std::move(product);
+  }
 
   /// Resets the product name for which the bank was intended.
-  void reset_product() noexcept;
+  void reset_product() noexcept {
+    product_.clear();
+  }
 
   /// Returns true if the SoundFont has any copyright message.
   /// @return true if the SoundFont has any copyright message.
-  bool has_copyright() const noexcept;
+  bool has_copyright() const noexcept {
+    return !copyright_.empty();
+  }
 
   /// Returns the copyright message.
   /// @return the copyright message.
-  const std::string & copyright() const noexcept;
+  const std::string & copyright() const noexcept {
+    return copyright_;
+  }
 
   /// Sets the copyright message.
   /// @param copyright the copyright message.
-  void set_copyright(std::string copyright);
+  void set_copyright(std::string copyright) {
+    copyright_ = std::move(copyright);
+  }
 
   /// Resets the copyright message.
-  void reset_copyright() noexcept;
+  void reset_copyright() noexcept {
+    copyright_.clear();
+  }
 
   /// Returns true if the SoundFont has any comments on the bank.
   /// @return true if the SoundFont has any comments on the bank.
-  bool has_comment() const noexcept;
+  bool has_comment() const noexcept {
+    return !comment_.empty();
+  }
 
   /// Returns the comments on the bank.
   /// @return the comments on the bank.
-  const std::string & comment() const noexcept;
+  const std::string & comment() const noexcept {
+    return comment_;
+  }
 
   /// Sets the comments on the bank.
   /// @param comment the comments on the bank.
-  void set_comment(std::string comment);
+  void set_comment(std::string comment) {
+    comment_ = std::move(comment);
+  }
 
   /// Resets the comments on the bank.
-  void reset_comment() noexcept;
+  void reset_comment() noexcept {
+    comment_.clear();
+  }
 
   /// Returns true if the SoundFont the information of SoundFont tools used to create and alter the bank.
   /// @return true if the SoundFont the information of SoundFont tools used to create and alter the bank.
-  bool has_software() const noexcept;
+  bool has_software() const noexcept {
+    return !software_.empty();
+  }
 
   /// Returns the SoundFont tools used to create and alter the bank.
   /// @return the SoundFont tools used to create and alter the bank.
-  const std::string & software() const noexcept;
+  const std::string & software() const noexcept {
+    return software_;
+  }
 
   /// Sets the SoundFont tools used to create and alter the bank.
   /// @param software the SoundFont tools used to create and alter the bank.
-  void set_software(std::string software);
+  void set_software(std::string software) {
+    software_ = std::move(software);
+  }
 
   /// Resets the SoundFont tools used to create and alter the bank.
-  void reset_software() noexcept;
+  void reset_software() noexcept {
+    software_.clear();
+  }
 
   /// Writes the SoundFont to a file.
   /// @param filename the name of the file to write to.

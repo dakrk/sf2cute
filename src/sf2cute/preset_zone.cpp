@@ -46,27 +46,12 @@ SFPresetZone & SFPresetZone::operator=(const SFPresetZone & origin) {
   return *this;
 }
 
-/// Returns true if the zone has an associated instrument.
-bool SFPresetZone::has_instrument() const noexcept {
-  return !instrument_.expired();
-}
-
-/// Returns the associated instrument.
-std::shared_ptr<SFInstrument> SFPresetZone::instrument() const noexcept {
-  return instrument_.lock();
-}
-
 /// Sets the associated instrument.
 void SFPresetZone::set_instrument(std::weak_ptr<SFInstrument> instrument) {
   if (has_parent_file() && !instrument.expired()) {
     parent_file().AddInstrument(instrument.lock());
   }
   instrument_ = std::move(instrument);
-}
-
-/// Resets the associated instrument.
-void SFPresetZone::reset_instrument() noexcept {
-  instrument_.reset();
 }
 
 /// Returns true if the zone has a parent file.
@@ -79,11 +64,6 @@ SoundFont & SFPresetZone::parent_file() const noexcept {
   return parent_preset_->parent_file();
 }
 
-/// Returns true if the zone has a parent preset.
-bool SFPresetZone::has_parent_preset() const noexcept {
-  return parent_preset_ != nullptr;
-}
-
 /// Returns the parent preset.
 SFPreset & SFPresetZone::parent_preset() const noexcept {
   return *parent_preset_;
@@ -92,11 +72,6 @@ SFPreset & SFPresetZone::parent_preset() const noexcept {
 /// Sets the parent preset.
 void SFPresetZone::set_parent_preset(SFPreset & parent_preset) noexcept {
   parent_preset_ = &parent_preset;
-}
-
-/// Resets the parent preset.
-void SFPresetZone::reset_parent_preset() noexcept {
-  parent_preset_ = nullptr;
 }
 
 } // namespace sf2cute

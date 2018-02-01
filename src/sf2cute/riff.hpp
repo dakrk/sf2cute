@@ -8,6 +8,7 @@
 #ifndef SF2CUTE_RIFF_HPP_
 #define SF2CUTE_RIFF_HPP_
 
+#include <algorithm>
 #include <memory>
 #include <string>
 #include <vector>
@@ -84,22 +85,34 @@ public:
   virtual ~RIFFChunk() = default;
 
   /// @copydoc RIFFChunkInterface::name()
-  virtual const std::string & name() const override;
+  virtual const std::string & name() const {
+    return name_;
+  }
 
   /// @copydoc RIFFChunkInterface::set_name()
-  virtual void set_name(std::string name) override;
+  virtual void set_name(std::string name);
 
   /// Returns the data of this chunk.
   /// @return the data of this chunk.
-  const std::vector<char> & data() const;
+  const std::vector<char> & data() const {
+    return data_;
+  }
 
   /// Sets the data of this chunk.
   /// @param data the data of this chunk.
-  void set_data(std::vector<char> data);
+  void set_data(std::vector<char> data) {
+    data_ = std::move(data);
+  }
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const noexcept override;
+  virtual size_type size() const noexcept override {
+    size_type chunk_size = data_.size();
+    if (chunk_size % 2 != 0) {
+      chunk_size++;
+    }
+    return 8 + chunk_size;
+  }
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.
@@ -161,7 +174,9 @@ public:
   /// @copydoc RIFFChunkInterface::name()
   /// Returns the name of this chunk.
   /// @return the name of this chunk.
-  virtual const std::string & name() const override;
+  virtual const std::string & name() const override {
+    return name_;
+  }
 
   /// @copydoc RIFFChunkInterface::set_name()
   /// Sets the list type of this chunk.
@@ -171,7 +186,9 @@ public:
 
   /// Returns the subchunks of this chunk.
   /// @return a collection of pointers to each RIFFChunkInterface objects.
-  const std::vector<std::unique_ptr<RIFFChunkInterface>> & subchunks() const;
+  const std::vector<std::unique_ptr<RIFFChunkInterface>> & subchunks() const {
+    return subchunks_;
+  }
 
   /// Appends the specified RIFFChunkInterface to this chunk.
   /// @param subchunk a pointer to RIFFChunkInterface object.
@@ -182,7 +199,13 @@ public:
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const noexcept override;
+  virtual size_type size() const noexcept override {
+    size_type chunk_size = 0;
+    for (const auto & subchunk : subchunks_) {
+      chunk_size += subchunk->size();
+    }
+    return 12 + chunk_size;
+  }
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.
@@ -243,7 +266,9 @@ public:
 
   /// Returns the form type of this chunk.
   /// @return the form type of this chunk.
-  const std::string & name() const;
+  const std::string & name() const {
+    return name_;
+  }
 
   /// Sets the form type of this chunk.
   /// @param name the form type of this chunk (FourCC).
@@ -252,18 +277,30 @@ public:
 
   /// Returns the chunks of this RIFF.
   /// @return a collection of pointers to each RIFFChunkInterface objects.
-  const std::vector<std::unique_ptr<RIFFChunkInterface>> & chunks() const;
+  const std::vector<std::unique_ptr<RIFFChunkInterface>> & chunks() const {
+    return chunks_;
+  }
 
   /// Appends the specified RIFFChunkInterface to this RIFF.
   /// @param chunk a pointer to RIFFChunkInterface object.
-  void AddChunk(std::unique_ptr<RIFFChunkInterface> && chunk);
+  void AddChunk(std::unique_ptr<RIFFChunkInterface> && chunk) {
+    chunks_.push_back(std::move(chunk));
+  }
 
   /// Removes all chunks from this RIFF.
-  void ClearChunks();
+  void ClearChunks() {
+    chunks_.clear();
+  }
 
   /// Returns the whole length of this RIFF.
   /// @return the length of this RIFF including a chunk header, in terms of bytes.
-  size_type size() const noexcept;
+  size_type size() const noexcept {
+    size_type chunk_size = 0;
+    for (const auto & chunk : chunks_) {
+      chunk_size += chunk->size();
+    }
+    return 12 + chunk_size;
+  }
 
   /// Writes this RIFF to the specified output stream.
   /// @param out the output stream.

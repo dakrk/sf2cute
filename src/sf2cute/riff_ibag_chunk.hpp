@@ -6,6 +6,7 @@
 #ifndef SF2CUTE_RIFF_IBAG_CHUNK_HPP_
 #define SF2CUTE_RIFF_IBAG_CHUNK_HPP_
 
+#include <algorithm>
 #include <memory>
 #include <string>
 #include <vector>
@@ -55,7 +56,9 @@ public:
   virtual ~SFRIFFIbagChunk() = default;
 
   /// @copydoc RIFFChunkInterface::name()
-  virtual const std::string & name() const override;
+  virtual const std::string & name() const override {
+    return name_;
+  }
 
   /// @copydoc RIFFChunkInterface::set_name()
   virtual void set_name(std::string name) override;
@@ -63,17 +66,24 @@ public:
   /// Returns the instruments of this chunk.
   /// @return the instruments of this chunk.
   const std::vector<std::shared_ptr<SFInstrument>> &
-      instruments() const;
+      instruments() const {
+    return *instruments_;
+  }
 
   /// Sets the instruments of this chunk.
   /// @param instruments the instruments of this chunk.
   /// @throws std::length_error Too many instrument zones.
   void set_instruments(
-      const std::vector<std::shared_ptr<SFInstrument>> & instruments);
+      const std::vector<std::shared_ptr<SFInstrument>> & instruments) {
+    instruments_ = &instruments;
+    size_ = kItemSize * NumItems();
+  }
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const noexcept override;
+  virtual size_type size() const noexcept override {
+    return 8 + size_;
+  }
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.

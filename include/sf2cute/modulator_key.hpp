@@ -6,6 +6,7 @@
 #ifndef SF2CUTE_MODULATOR_KEY_HPP_
 #define SF2CUTE_MODULATOR_KEY_HPP_
 
+#include <algorithm>
 #include <utility>
 
 #include "types.hpp"
@@ -52,33 +53,45 @@ public:
 
   /// Returns the source of data for the modulator.
   /// @return the source of data for the modulator.
-  SFModulator source_op() const noexcept;
+  SFModulator source_op() const noexcept {
+    return source_op_;
+  }
 
   /// Sets the source of data for the modulator.
   /// @param source_op the source of data for the modulator.
-  void set_source_op(SFModulator source_op);
+  void set_source_op(SFModulator source_op) {
+    source_op_ = std::move(source_op);
+  }
 
   /// Returns the destination of the modulator.
   /// @return the destination of the modulator.
-  SFGenerator destination_op() const noexcept;
+  SFGenerator destination_op() const noexcept {
+    return destination_op_;
+  }
 
   /// Sets the destination of the modulator.
   /// @param destination_op the destination of the modulator.
-  void set_destination_op(SFGenerator destination_op);
+  void set_destination_op(SFGenerator destination_op) {
+    destination_op_ = std::move(destination_op);
+  }
 
   /// Returns the modulation source to be applied to the modulation amount.
   /// @return the modulation source to be applied to the modulation amount.
-  SFModulator amount_source_op() const noexcept;
+  SFModulator amount_source_op() const noexcept {
+    return amount_source_op_;
+  }
 
   /// Sets the modulation source to be applied to the modulation amount.
   /// @param amount_source_op the modulation source to be applied to the modulation amount.
-  void set_amount_source_op(SFModulator amount_source_op);
+  void set_amount_source_op(SFModulator amount_source_op) {
+    amount_source_op_ = std::move(amount_source_op);
+  }
 
   /// Indicates a SFModulatorKey object is "equal to" the other one.
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulatorKey object is "equal to" the other one.
-  friend inline bool operator==(
+  friend bool operator==(
       const SFModulatorKey & x,
       const SFModulatorKey & y) noexcept {
     return std::tie(x.source_op_, x.destination_op_, x.amount_source_op_) ==
@@ -89,7 +102,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulatorKey object is "not equal to" the other one.
-  friend inline bool operator!=(
+  friend bool operator!=(
       const SFModulatorKey & x,
       const SFModulatorKey & y) noexcept {
     return std::rel_ops::operator!=(x, y);
@@ -99,7 +112,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulatorKey object is "less than" the other one.
-  friend inline bool operator<(
+  friend bool operator<(
       const SFModulatorKey & x,
       const SFModulatorKey & y) noexcept {
     return std::tie(x.source_op_, x.destination_op_, x.amount_source_op_) <
@@ -110,7 +123,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulatorKey object is "less than or equal to" the other one.
-  friend inline bool operator<=(
+  friend bool operator<=(
       const SFModulatorKey & x,
       const SFModulatorKey & y) noexcept {
     return std::rel_ops::operator<=(x, y);
@@ -120,7 +133,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulatorKey object is "greater than" the other one.
-  friend inline bool operator>(
+  friend bool operator>(
       const SFModulatorKey & x,
       const SFModulatorKey & y) noexcept {
     return std::rel_ops::operator>(x, y);
@@ -130,7 +143,7 @@ public:
   /// @param x the first object to be compared.
   /// @param y the second object to be compared.
   /// @return true if a SFModulatorKey object is "greater than or equal to" the other one.
-  friend inline bool operator>=(
+  friend bool operator>=(
       const SFModulatorKey & x,
       const SFModulatorKey & y) noexcept {
     return std::rel_ops::operator>=(x, y);

@@ -7,6 +7,7 @@
 #define SF2CUTE_GENERATOR_ITEM_HPP_
 
 #include <stdint.h>
+#include <algorithm>
 
 #include "types.hpp"
 
@@ -48,32 +49,47 @@ public:
 
   /// Returns the type of the generator.
   /// @return the type of the generator.
-  SFGenerator op() const noexcept;
+  SFGenerator op() const noexcept {
+    return op_;
+  }
 
   /// Sets the type of the generator.
   /// @param op the type of the generator.
-  void set_op(SFGenerator op);
+  void set_op(SFGenerator op) {
+    op_ = std::move(op);
+  }
 
   /// Returns the amount of the generator.
   /// @return the value represents the amount of the generator.
-  GenAmountType amount() const noexcept;
+  GenAmountType amount() const noexcept {
+    return amount_;
+  }
 
   /// Sets the amount of the generator.
   /// @param amount the value to be assigned to the generator.
-  void set_amount(GenAmountType amount);
+  void set_amount(GenAmountType amount) {
+    amount_ = std::move(amount);
+  }
 
   /// Sets the amount of the generator in a range.
   /// @param lo the low end of range.
   /// @param hi the high end of range.
-  void set_amount(uint8_t lo, uint8_t hi);
+  void set_amount(uint8_t lo, uint8_t hi) {
+    amount_.range.lo = std::move(lo);
+    amount_.range.hi = std::move(hi);
+  }
 
   /// Sets the amount of the generator in an integer.
   /// @param amount the value to be assigned to the generator.
-  void set_amount(int16_t amount);
+  void set_amount(int16_t amount) {
+    amount_.value = std::move(amount);
+  }
 
   /// Sets the amount of the generator in an unsigned integer.
   /// @param amount the value to be assigned to the generator.
-  void set_amount(uint16_t amount);
+  void set_amount(uint16_t amount) {
+    amount_.uvalue = std::move(amount);
+  }
 
   /// Indicates a SFGenerator object is "less than" the other one.
   /// @param x the first SFGenerator to be compared.

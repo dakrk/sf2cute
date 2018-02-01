@@ -182,71 +182,6 @@ SFPreset & SFPreset::operator=(SFPreset && origin) noexcept {
   return *this;
 }
 
-/// Returns the name of this preset.
-const std::string & SFPreset::name() const noexcept {
-  return name_;
-}
-
-/// Sets the name of this preset.
-void SFPreset::set_name(std::string name) {
-  name_ = std::move(name);
-}
-
-/// Returns the preset number.
-uint16_t SFPreset::preset_number() const noexcept {
-  return preset_number_;
-}
-
-/// Sets the preset number.
-void SFPreset::set_preset_number(uint16_t preset_number) {
-  preset_number_ = std::move(preset_number);
-}
-
-/// Returns the bank number.
-uint16_t SFPreset::bank() const noexcept {
-  return bank_;
-}
-
-/// Sets the bank number.
-void SFPreset::set_bank(uint16_t bank) {
-  bank_ = std::move(bank);
-}
-
-/// Returns the library.
-uint32_t SFPreset::library() const noexcept {
-  return library_;
-}
-
-/// Sets the library.
-void SFPreset::set_library(uint32_t library) {
-  library_ = std::move(library);
-}
-
-/// Returns the genre.
-uint32_t SFPreset::genre() const noexcept {
-  return genre_;
-}
-
-/// Sets the genre.
-void SFPreset::set_genre(uint32_t genre) {
-  genre_ = std::move(genre);
-}
-
-/// Returns the morphology.
-uint32_t SFPreset::morphology() const noexcept {
-  return morphology_;
-}
-
-/// Sets the morphology.
-void SFPreset::set_morphology(uint32_t morphology) {
-  morphology_ = std::move(morphology);
-}
-
-/// Returns the list of preset zones.
-const std::vector<std::unique_ptr<SFPresetZone>> & SFPreset::zones() const noexcept {
-  return zones_;
-}
-
 /// Adds a preset zone to the preset.
 void SFPreset::AddZone(SFPresetZone zone) {
   // Check the parent preset of the zone.
@@ -275,19 +210,6 @@ void SFPreset::AddZone(SFPresetZone zone) {
   zones_.push_back(std::make_unique<SFPresetZone>(std::move(zone)));
 }
 
-/// Removes a preset zone from the preset.
-void SFPreset::RemoveZone(
-    std::vector<std::unique_ptr<SFPresetZone>>::const_iterator position) {
-  zones_.erase(std::move(position));
-}
-
-/// Removes preset zones from the preset.
-void SFPreset::RemoveZone(
-    std::vector<std::unique_ptr<SFPresetZone>>::const_iterator first,
-    std::vector<std::unique_ptr<SFPresetZone>>::const_iterator last) {
-  zones_.erase(first, last);
-}
-
 /// Removes preset zones from the preset.
 void SFPreset::RemoveZoneIf(
     std::function<bool(const std::unique_ptr<SFPresetZone> &)> predicate) {
@@ -300,21 +222,6 @@ void SFPreset::RemoveZoneIf(
       return false;
     }
   }), zones_.end());
-}
-
-/// Removes all of the preset zones.
-void SFPreset::ClearZones() noexcept {
-  zones_.clear();
-}
-
-/// Returns true if the preset has a global zone.
-bool SFPreset::has_global_zone() const noexcept {
-  return static_cast<bool>(global_zone_);
-}
-
-/// Returns the global zone.
-SFPresetZone & SFPreset::global_zone() const noexcept {
-  return *global_zone_;
 }
 
 /// Sets the global zone.
@@ -336,31 +243,6 @@ void SFPreset::set_global_zone(SFPresetZone global_zone) {
 
   // Set the global zone to this preset.
   global_zone_ = std::make_unique<SFPresetZone>(std::move(global_zone));
-}
-
-/// Resets the global zone.
-void SFPreset::reset_global_zone() noexcept {
-  global_zone_ = nullptr;
-}
-
-/// Returns true if the preset has a parent file.
-bool SFPreset::has_parent_file() const noexcept {
-  return parent_file_ != nullptr;
-}
-
-/// Returns the parent file.
-SoundFont & SFPreset::parent_file() const noexcept {
-  return *parent_file_;
-}
-
-/// Sets the parent file.
-void SFPreset::set_parent_file(SoundFont & parent_file) noexcept {
-  parent_file_ = &parent_file;
-}
-
-/// Resets the parent file.
-void SFPreset::reset_parent_file() noexcept {
-  parent_file_ = nullptr;
 }
 
 /// Sets backward references of every children elements.

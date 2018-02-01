@@ -6,6 +6,7 @@
 #ifndef SF2CUTE_RIFF_PGEN_CHUNK_HPP_
 #define SF2CUTE_RIFF_PGEN_CHUNK_HPP_
 
+#include <algorithm>
 #include <memory>
 #include <string>
 #include <vector>
@@ -62,7 +63,9 @@ public:
   virtual ~SFRIFFPgenChunk() = default;
 
   /// @copydoc RIFFChunkInterface::name()
-  virtual const std::string & name() const override;
+  virtual const std::string & name() const override {
+    return name_;
+  }
 
   /// @copydoc RIFFChunkInterface::set_name()
   virtual void set_name(std::string name) override;
@@ -70,27 +73,38 @@ public:
   /// Returns the presets of this chunk.
   /// @return the presets of this chunk.
   const std::vector<std::shared_ptr<SFPreset>> &
-      presets() const;
+      presets() const {
+    return *presets_;
+  }
 
   /// Sets the presets of this chunk.
   /// @param presets the presets of this chunk.
   /// @throws std::length_error Too many preset generators.
   void set_presets(
-      const std::vector<std::shared_ptr<SFPreset>> & presets);
+      const std::vector<std::shared_ptr<SFPreset>> & presets) {
+    presets_ = &presets;
+    size_ = kItemSize * NumItems();
+  }
 
   /// Returns the map containing the instruments as keys and their indices as map values.
   /// @return the map containing the instruments as keys and their indices as map values.
   const std::unordered_map<const SFInstrument *, uint16_t> &
-      instrument_index_map() const;
+      instrument_index_map() const {
+    return instrument_index_map_;
+  }
 
   /// Sets the map containing the instruments as keys and their indices as map values.
   /// @param instrument_index_map the map containing the instruments as keys and their indices as map values.
   void set_instrument_index_map(
-      std::unordered_map<const SFInstrument *, uint16_t> instrument_index_map);
+      std::unordered_map<const SFInstrument *, uint16_t> instrument_index_map) {
+    instrument_index_map_ = std::move(instrument_index_map);
+  }
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const noexcept override;
+  virtual size_type size() const noexcept override {
+    return 8 + size_;
+  }
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.

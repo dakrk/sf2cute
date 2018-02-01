@@ -51,23 +51,32 @@ public:
   virtual ~SFRIFFSmplChunk() = default;
 
   /// @copydoc RIFFChunkInterface::name()
-  virtual const std::string & name() const override;
+  virtual const std::string & name() const override {
+    return name_;
+  }
 
   /// @copydoc RIFFChunkInterface::set_name()
   virtual void set_name(std::string name) override;
 
   /// Returns the samples of this chunk.
   /// @return the samples of this chunk.
-  const std::vector<std::shared_ptr<SFSample>> & samples() const;
+  const std::vector<std::shared_ptr<SFSample>> & samples() const {
+    return *samples_;
+  }
 
   /// Sets the samples of this chunk.
   /// @param samples the samples of this chunk.
   /// @throws std::length_error The sample pool size exceeds the maximum.
-  void set_samples(const std::vector<std::shared_ptr<SFSample>> & samples);
+  void set_samples(const std::vector<std::shared_ptr<SFSample>> & samples) {
+    samples_ = &samples;
+    size_ = GetSamplePoolSize();
+  }
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const noexcept override;
+  virtual size_type size() const noexcept override {
+    return 8 + size_;
+  }
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.

@@ -6,15 +6,17 @@
 #ifndef SF2CUTE_INSTRUMENT_HPP_
 #define SF2CUTE_INSTRUMENT_HPP_
 
+#include <algorithm>
 #include <memory>
 #include <utility>
 #include <functional>
 #include <string>
 #include <vector>
 
+#include "instrument_zone.hpp"
+
 namespace sf2cute {
 
-class SFInstrumentZone;
 class SoundFont;
 
 /// The SFInstrument class represents an instrument.
@@ -80,15 +82,21 @@ public:
 
   /// Returns the name of this instrument.
   /// @return the name of this instrument.
-  const std::string & name() const noexcept;
+  const std::string & name() const noexcept {
+    return name_;
+  }
 
   /// Sets the name of this instrument.
   /// @param name the name of this instrument.
-  void set_name(std::string name);
+  void set_name(std::string name) {
+    name_ = std::move(name);
+  }
 
   /// Returns the list of instrument zones.
   /// @return the list of instrument zones assigned to the instruemnt.
-  const std::vector<std::unique_ptr<SFInstrumentZone>> & zones() const noexcept;
+  const std::vector<std::unique_ptr<SFInstrumentZone>> & zones() const noexcept {
+    return zones_;
+  }
 
   /// Adds an instrument zone to the instrument.
   /// @param zone an instrument zone to be assigned to the instrument.
@@ -98,14 +106,18 @@ public:
   /// Removes an instrument zone from the instrument.
   /// @param position the instrument zone to remove.
   void RemoveZone(
-      std::vector<std::unique_ptr<SFInstrumentZone>>::const_iterator position);
+      std::vector<std::unique_ptr<SFInstrumentZone>>::const_iterator position) {
+    zones_.erase(position);
+  }
 
   /// Removes instrument zones from the instrument.
   /// @param first the first instrument zone to remove.
   /// @param last the last instrument zone to remove.
   void RemoveZone(
       std::vector<std::unique_ptr<SFInstrumentZone>>::const_iterator first,
-      std::vector<std::unique_ptr<SFInstrumentZone>>::const_iterator last);
+      std::vector<std::unique_ptr<SFInstrumentZone>>::const_iterator last) {
+    zones_.erase(first, last);
+  }
 
   /// Removes instrument zones from the instrument.
   /// @param predicate unary predicate which returns true if the instrument zone should be removed.
@@ -113,15 +125,21 @@ public:
       std::function<bool(const std::unique_ptr<SFInstrumentZone> &)> predicate);
 
   /// Removes all of the instrument zones.
-  void ClearZones() noexcept;
+  void ClearZones() noexcept {
+    zones_.clear();
+  }
 
   /// Returns true if the instrument has a global zone.
   /// @return true if the instrument has a global zone.
-  bool has_global_zone() const noexcept;
+  bool has_global_zone() const noexcept {
+    return static_cast<bool>(global_zone_);
+  }
 
   /// Returns the global zone.
   /// @return the global zone.
-  SFInstrumentZone & global_zone() const noexcept;
+  SFInstrumentZone & global_zone() const noexcept {
+    return *global_zone_;
+  }
 
   /// Sets the global zone.
   /// @param global_zone the global zone.
@@ -129,23 +147,33 @@ public:
   void set_global_zone(SFInstrumentZone global_zone);
 
   /// Resets the global zone.
-  void reset_global_zone() noexcept;
+  void reset_global_zone() noexcept {
+    global_zone_ = nullptr;
+  }
 
   /// Returns true if the instrument has a parent file.
   /// @return true if the instrument has a parent file.
-  bool has_parent_file() const noexcept;
+  bool has_parent_file() const noexcept {
+    return parent_file_ != nullptr;
+  }
 
   /// Returns the parent file.
   /// @return the parent file.
-  SoundFont & parent_file() const noexcept;
+  SoundFont & parent_file() const noexcept {
+    return *parent_file_;
+  }
 
 private:
   /// Sets the parent file.
   /// @param parent_file the parent file.
-  void set_parent_file(SoundFont & parent_file) noexcept;
+  void set_parent_file(SoundFont & parent_file) noexcept {
+    parent_file_ = &parent_file;
+  }
 
   /// Resets the parent file.
-  void reset_parent_file() noexcept;
+  void reset_parent_file() noexcept {
+    parent_file_ = nullptr;
+  }
 
   /// Sets backward references of every children elements.
   void SetBackwardReferences() noexcept;

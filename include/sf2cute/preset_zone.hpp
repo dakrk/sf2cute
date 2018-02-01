@@ -6,6 +6,7 @@
 #ifndef SF2CUTE_PRESET_ZONE_HPP_
 #define SF2CUTE_PRESET_ZONE_HPP_
 
+#include <algorithm>
 #include <memory>
 #include <vector>
 
@@ -64,19 +65,25 @@ public:
   /// Returns true if the zone has an associated instrument.
   /// @return true if the zone has an associated instrument.
   /// @remarks This function returns false if the associated instrument has been deleted.
-  bool has_instrument() const noexcept;
+  bool has_instrument() const noexcept {
+    return !instrument_.expired();
+  }
 
   /// Returns the associated instrument.
   /// @return a pointer to the associated instrument.
   /// @remarks This function returns nullptr if the associated instrument has been deleted.
-  std::shared_ptr<SFInstrument> instrument() const noexcept;
+  std::shared_ptr<SFInstrument> instrument() const noexcept {
+    return instrument_.lock();
+  }
 
   /// Sets the associated instrument.
   /// @param instrument a pointer to the associated instrument.
   void set_instrument(std::weak_ptr<SFInstrument> instrument);
 
   /// Resets the associated instrument.
-  void reset_instrument() noexcept;
+  void reset_instrument() noexcept {
+    instrument_.reset();
+  }
 
   /// Returns true if the zone has a parent file.
   /// @return true if the zone has a parent file.
@@ -88,7 +95,9 @@ public:
 
   /// Returns true if the zone has a parent preset.
   /// @return true if the zone has a parent preset.
-  bool has_parent_preset() const noexcept;
+  bool has_parent_preset() const noexcept {
+    return parent_preset_ != nullptr;
+  }
 
   /// Returns the parent preset.
   /// @return the parent preset.
@@ -100,7 +109,9 @@ private:
   void set_parent_preset(SFPreset & parent_preset) noexcept;
 
   /// Resets the parent preset.
-  void reset_parent_preset() noexcept;
+  void reset_parent_preset() noexcept {
+    parent_preset_ = nullptr;
+  }
 
   /// The associated instrument.
   std::weak_ptr<SFInstrument> instrument_;

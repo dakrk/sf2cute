@@ -6,6 +6,7 @@
 #ifndef SF2CUTE_RIFF_SHDR_CHUNK_HPP_
 #define SF2CUTE_RIFF_SHDR_CHUNK_HPP_
 
+#include <algorithm>
 #include <memory>
 #include <string>
 #include <vector>
@@ -60,31 +61,44 @@ public:
   virtual ~SFRIFFShdrChunk() = default;
 
   /// @copydoc RIFFChunkInterface::name()
-  virtual const std::string & name() const override;
+  virtual const std::string & name() const override {
+    return name_;
+  }
 
   /// @copydoc RIFFChunkInterface::set_name()
   virtual void set_name(std::string name) override;
 
   /// Returns the samples of this chunk.
   /// @return the samples of this chunk.
-  const std::vector<std::shared_ptr<SFSample>> & samples() const;
+  const std::vector<std::shared_ptr<SFSample>> & samples() const {
+    return *samples_;
+  }
 
   /// Sets the samples of this chunk.
   /// @param samples the samples of this chunk.
   /// @throws std::length_error Too many samples.
-  void set_samples(const std::vector<std::shared_ptr<SFSample>> & samples);
+  void set_samples(const std::vector<std::shared_ptr<SFSample>> & samples) {
+    samples_ = &samples;
+    size_ = kItemSize * NumItems();
+  }
 
   /// Returns the map containing the samples as keys and their indices as map values.
   /// @return the map containing the samples as keys and their indices as map values.
-  const std::unordered_map<const SFSample *, uint16_t> & sample_index_map() const;
+  const std::unordered_map<const SFSample *, uint16_t> & sample_index_map() const {
+    return sample_index_map_;
+  }
 
   /// Sets the map containing the samples as keys and their indices as map values.
   /// @param sample_index_map the map containing the samples as keys and their indices as map values.
-  void set_sample_index_map(std::unordered_map<const SFSample *, uint16_t> sample_index_map);
+  void set_sample_index_map(std::unordered_map<const SFSample *, uint16_t> sample_index_map) {
+    sample_index_map_ = std::move(sample_index_map);
+  }
 
   /// Returns the whole length of this chunk.
   /// @return the length of this chunk including a chunk header, in terms of bytes.
-  virtual size_type size() const noexcept override;
+  virtual size_type size() const noexcept override {
+    return 8 + size_;
+  }
 
   /// Writes this chunk to the specified output stream.
   /// @param out the output stream.

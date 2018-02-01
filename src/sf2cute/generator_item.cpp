@@ -22,42 +22,6 @@ SFGeneratorItem::SFGeneratorItem(SFGenerator op, GenAmountType amount) :
     amount_(std::move(amount)) {
 }
 
-/// Returns the type of the generator.
-SFGenerator SFGeneratorItem::op() const noexcept {
-  return op_;
-}
-
-/// Sets the type of the generator.
-void SFGeneratorItem::set_op(SFGenerator op) {
-  op_ = std::move(op);
-}
-
-/// Returns the amount of the generator.
-GenAmountType SFGeneratorItem::amount() const noexcept {
-  return amount_;
-}
-
-/// Sets the amount of the generator.
-void SFGeneratorItem::set_amount(GenAmountType amount) {
-  amount_ = std::move(amount);
-}
-
-/// Sets the amount of the generator in a range.
-void SFGeneratorItem::set_amount(uint8_t lo, uint8_t hi) {
-  amount_.range.lo = std::move(lo);
-  amount_.range.hi = std::move(hi);
-}
-
-/// Sets the amount of the generator in an integer.
-void SFGeneratorItem::set_amount(int16_t amount) {
-  amount_.value = std::move(amount);
-}
-
-/// Sets the amount of the generator in an unsigned integer.
-void SFGeneratorItem::set_amount(uint16_t amount) {
-  amount_.uvalue = std::move(amount);
-}
-
 /// Indicates a SFGenerator object is "less than" the other one.
 bool SFGeneratorItem::Compare(const SFGenerator & x, const SFGenerator & y) noexcept {
   std::array<SFGenerator, 2> firstElements{ SFGenerator::kKeyRange, SFGenerator::kVelRange };

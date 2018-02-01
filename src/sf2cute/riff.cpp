@@ -35,11 +35,6 @@ RIFFChunk::RIFFChunk(std::string name, std::vector<char> data) {
   set_data(std::move(data));
 }
 
-/// Returns the name of this chunk.
-const std::string & RIFFChunk::name() const {
-  return name_;
-}
-
 /// Sets the name of this chunk.
 void RIFFChunk::set_name(std::string name) {
   // Throw exception if the length of chunk name is not 4.
@@ -51,25 +46,6 @@ void RIFFChunk::set_name(std::string name) {
 
   // Set the name.
   name_ = std::move(name);
-}
-
-/// Returns the data of this chunk.
-const std::vector<char> & RIFFChunk::data() const {
-  return data_;
-}
-
-/// Sets the data of this chunk.
-void RIFFChunk::set_data(std::vector<char> data) {
-  data_ = std::move(data);
-}
-
-/// Returns the whole length of this chunk.
-RIFFChunk::size_type RIFFChunk::size() const noexcept {
-  size_type chunk_size = data_.size();
-  if (chunk_size % 2 != 0) {
-    chunk_size++;
-  }
-  return 8 + chunk_size;
 }
 
 /// Writes this chunk to the specified output stream.
@@ -142,11 +118,6 @@ RIFFListChunk::RIFFListChunk(std::string name) {
   set_name(std::move(name));
 }
 
-/// Returns the form type of this chunk.
-const std::string & RIFFListChunk::name() const {
-  return name_;
-}
-
 /// Sets the form type of this chunk.
 void RIFFListChunk::set_name(std::string name) {
   // Throw exception if the length of chunk name is not 4.
@@ -160,11 +131,6 @@ void RIFFListChunk::set_name(std::string name) {
   name_ = std::move(name);
 }
 
-/// Returns the subchunks of this chunk.
-const std::vector<std::unique_ptr<RIFFChunkInterface>> & RIFFListChunk::subchunks() const {
-  return subchunks_;
-}
-
 /// Appends the specified RIFFChunkInterface to this chunk.
 void RIFFListChunk::AddSubchunk(std::unique_ptr<RIFFChunkInterface> && subchunk) {
   subchunks_.push_back(std::move(subchunk));
@@ -173,15 +139,6 @@ void RIFFListChunk::AddSubchunk(std::unique_ptr<RIFFChunkInterface> && subchunk)
 /// Removes all subchunks from this chunk.
 void RIFFListChunk::ClearSubchunks() {
   subchunks_.clear();
-}
-
-/// Returns the whole length of this chunk.
-RIFFListChunk::size_type RIFFListChunk::size() const noexcept {
-  size_type chunk_size = 0;
-  for (const auto & subchunk : subchunks_) {
-    chunk_size += subchunk->size();
-  }
-  return 12 + chunk_size;
 }
 
 /// Writes this chunk to the specified output stream.
@@ -240,11 +197,6 @@ RIFF::RIFF(std::string name) {
   set_name(std::move(name));
 }
 
-/// Returns the form type of this chunk.
-const std::string & RIFF::name() const {
-  return name_;
-}
-
 /// Sets the form type of this chunk.
 void RIFF::set_name(std::string name) {
   // Throw exception if the length of form type is not 4.
@@ -256,30 +208,6 @@ void RIFF::set_name(std::string name) {
 
   // Set the name.
   name_ = std::move(name);
-}
-
-/// Returns the chunks of this RIFF.
-const std::vector<std::unique_ptr<RIFFChunkInterface>> & RIFF::chunks() const {
-  return chunks_;
-}
-
-/// Appends the specified RIFFChunkInterface to this RIFF.
-void RIFF::AddChunk(std::unique_ptr<RIFFChunkInterface> && chunk) {
-  chunks_.push_back(std::move(chunk));
-}
-
-/// Removes all chunks from this RIFF.
-void RIFF::ClearChunks() {
-  chunks_.clear();
-}
-
-/// Returns the whole length of this RIFF.
-RIFF::size_type RIFF::size() const noexcept {
-  size_type chunk_size = 0;
-  for (const auto & chunk : chunks_) {
-    chunk_size += chunk->size();
-  }
-  return 12 + chunk_size;
 }
 
 /// Writes this RIFF to the specified output stream.
