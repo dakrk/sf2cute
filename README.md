@@ -21,8 +21,8 @@ First of all, install the following prerequisite softwares.
 
 * [CMake](https://cmake.org/)
 * Modern C++ compiler (requires C++14 features)
-    - Clang 3.4 or later
-    - GCC (G++) 5.1 or later
+    - Clang 3.6 or later
+    - GCC (G++) 5 or later
     - [Visual Studio Community Edition](https://www.visualstudio.com/products/visual-studio-community-vs) 2015 or later (Windows only)
 
 The following command will generate a Makefile for your system. You can use `cmake-gui` if you want to use a GUI and configure the options.
