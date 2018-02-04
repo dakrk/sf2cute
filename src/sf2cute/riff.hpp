@@ -80,7 +80,7 @@ public:
   virtual ~RIFFChunk() = default;
 
   /// @copydoc RIFFChunkInterface::name()
-  virtual std::string name() const {
+  virtual std::string name() const override {
     return name_;
   }
 
