@@ -37,8 +37,8 @@ after_build:
   - set package_name=sf2cute-%my_version%-%arch%
   - mkdir lib
   - copy build\%config%\sf2cute.lib lib
-  - 7z a -mx9 %package_name%.7z examples include lib README.md LICENSE
+  - 7z a %package_name%.zip examples include lib README.md LICENSE
 
 artifacts:
-  - path: $(package_name).7z
+  - path: $(package_name).zip
     name: $(arch)
