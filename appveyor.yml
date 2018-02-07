@@ -37,7 +37,7 @@ after_build:
   - ps: $env:my_version = "$env:gitrev"
   - set package_name=sf2cute-%my_version%-%arch%
   - mkdir lib
-  - copy build\%config%\sf2cute.lib lib
+  - copy "build\%config%\sf2cute.lib" lib
   - 7z a %package_name%.zip examples include lib README.md LICENSE
 
 artifacts:
