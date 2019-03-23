@@ -4,7 +4,8 @@ project(sf2cute
     LANGUAGES C CXX
     VERSION 0.2.0)
 
-set(EXAMPLES_INSTALL_DIR "bin" CACHE "PATH" "Where to install the examples")
+set(SF2CUTE_EXAMPLES_INSTALL_DIR "bin" CACHE "PATH" "Where to install the examples")
+option(SF2CUTE_INSTALL_EXAMPLES "Install example executables" ON)
 
 #============================================================================
 # sf2cute library
@@ -139,9 +140,9 @@ install(
     DESTINATION share/sf2cute
 )
 
-if(NOT DISABLE_INSTALL_EXAMPLES)
+if(SF2CUTE_INSTALL_EXAMPLES)
     install(
         TARGETS write_sf2
-        RUNTIME DESTINATION ${EXAMPLES_INSTALL_DIR}
+        RUNTIME DESTINATION ${SF2CUTE_EXAMPLES_INSTALL_DIR}
     )
 endif()
